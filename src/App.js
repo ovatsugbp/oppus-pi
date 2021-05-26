@@ -1,11 +1,14 @@
 import InputSimples from './components/inputs/InputSimples'
-import InputSelect from './components/inputs/InputSelect'
+// eslint-disable-next-line no-unused-vars
+import React, {Component} from 'react';
+
+
 
 function App() {
   return (
     <div>
-    <InputSimples />
-    <InputSelect />
+    <InputSimples className=" InputText" type="text"></InputSimples>
+ 
     </div>
   );
 }
