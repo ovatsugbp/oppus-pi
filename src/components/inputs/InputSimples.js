@@ -22,9 +22,10 @@ import styled from 'styled-components';
 // }
 
  const InputSimples= styled.input`
-width:20%;
+max-width:200px;
 border:#E6AF2E 100px;
 border-radius:2px;
+
 
 
 &:hover{
