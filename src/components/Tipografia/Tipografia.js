@@ -1,6 +1,6 @@
 import styled, {css} from 'styled-components'
 
-export const Style = styled.div`
+export const Tipografia = styled.div`
    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600&family=Roboto&display=swap');
 
    background-color: ${props=> props.BackgroundColor};

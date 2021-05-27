@@ -1,9 +1,10 @@
-import {Style} from './components/Style'
+import {Tipografia} from './components/Tipografia/Tipografia'
+
 function App() {
   return (
     <>
-      <Style TitleFont FontSize=""></Style>
-      <Style BodyFont BackgroundColor="" FontSize="" FontColor=""></Style>
+      <Tipografia TitleFont FontSize="" BackgroundColor="" FontColor=""></Tipografia>
+      <Tipografia BodyFont FontSize="" BackgroundColor="" FontColor=""></Tipografia>
     </>
   );
 }
