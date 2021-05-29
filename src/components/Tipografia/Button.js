@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.css';
+import Icon from '../assets/img/Whatsapp';
+
 
 const Button = ({ text, onClick }) => {
     return ( 
-        <button  style={buttonStyle} onClick={onClick}>{text}</button>
+        <button  style={buttonStyle} onClick={onClick}><img src={Icon} alt='wpp' />{text}</button>
     );
 };
 
