@@ -1,10 +1,10 @@
-import {Tipografia} from './components/Tipografia/Tipografia'
+import {Home} from './pages/Home';
+import './App.scss'
 
 function App() {
   return (
     <>
-      <Tipografia TitleFont FontSize="" BackgroundColor="" FontColor=""></Tipografia>
-      <Tipografia BodyFont FontSize="" BackgroundColor="" FontColor=""></Tipografia>
+      <Home/>
     </>
   );
 }
