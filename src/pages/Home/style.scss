@@ -1,0 +1,38 @@
+@import '../../vars.scss';
+
+main {
+    width: 100vw;
+    height: 100vh;
+    background-color: $mediumBlue;
+    display: flex;
+
+    color: $white;
+    section {
+        flex: .5;
+        height: 100%;
+        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        font: $fontTittle;
+        article {
+            text-align: center;
+            h2{
+                font-size: 1.8rem;
+                font-weight: normal;
+            }
+            p {
+                font-size: 1.1rem;
+            }
+            .element-spacing {
+                margin: 20px 0;
+            }
+
+        }
+        &.left-container {
+            justify-content: space-evenly;
+        }
+    }
+}

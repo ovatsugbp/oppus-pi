@@ -1,14 +1,11 @@
-import InputSimples from './components/inputs/InputSimples'
-// eslint-disable-next-line no-unused-vars
-import React, {Component} from 'react';
-import ListarProfissionais from './pages/ListarProfissionais/ListarProfissionais'
+import {Home} from './pages/Home';
+import './App.scss'
 
 function App() {
   return (
-    <div>
-    {/* <InputSimples className=" InputText" type="text"></InputSimples> */}
- <ListarProfissionais></ListarProfissionais>
-    </div>
+    <>
+      <Home/>
+    </>
   );
 }
 
