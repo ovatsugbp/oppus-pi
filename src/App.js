@@ -1,11 +1,14 @@
-import {Tipografia} from './components/Tipografia/Tipografia'
+import InputSimples from './components/inputs/InputSimples'
+// eslint-disable-next-line no-unused-vars
+import React, {Component} from 'react';
+import ListarProfissionais from './pages/ListarProfissionais/ListarProfissionais'
 
 function App() {
   return (
-    <>
-      <Tipografia TitleFont FontSize="" BackgroundColor="" FontColor=""></Tipografia>
-      <Tipografia BodyFont FontSize="" BackgroundColor="" FontColor=""></Tipografia>
-    </>
+    <div>
+    {/* <InputSimples className=" InputText" type="text"></InputSimples> */}
+ <ListarProfissionais></ListarProfissionais>
+    </div>
   );
 }
 
