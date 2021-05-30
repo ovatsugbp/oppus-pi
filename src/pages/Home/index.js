@@ -1,6 +1,8 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import image from "../../assets/img/home_img.png";
 import logo from "../../assets/img/OPPUS_logo.png";
+import Button from '../../components/Button';
 import './style.scss'
 
 
@@ -14,7 +16,9 @@ export const Home = () => {
                 </article>
                 <article>
                     <p className="element-spacing">Qual profissional você está precisando?</p>
-                    <button className="element-spacing">Buscar</button>
+                    <Link to='/pesquisa'>
+                        <Button btnStyle="btn-secondary" className="element-spacing">Buscar</Button>
+                    </Link>
                 </article>
             </section>
             <section className="right-container">

@@ -1,0 +1,25 @@
+@import '../../vars.scss';
+
+header {
+    width: 100%;
+    height: 15rem;
+    background-color: $mediumBlue;
+
+    color: $white;
+    .header-top{
+        padding: 2rem 8rem;
+        display: flex;
+        justify-content: space-between;
+        
+    }
+
+    .header-info{
+        width: 40%;
+        h1{
+            font-family: $fontTittle;
+            margin-left: 15rem;
+            font-size: 26px;
+            font-weight: bold;
+        }
+    }
+}

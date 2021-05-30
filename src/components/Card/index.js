@@ -2,6 +2,9 @@ import React from 'react'
 import './style.scss'
 import StarIcon from '@material-ui/icons/Star';
 import { yellow } from '@material-ui/core/colors';
+import Icon from '../../assets/img/Whatsapp.png';
+import Button from '../Button';
+
 
 
 export const Card = ({name, profession, price}) => {
@@ -34,7 +37,7 @@ export const Card = ({name, profession, price}) => {
                     <p>R$ {price}</p>
                 </div>   
                 <div className="professional-contact">
-                    <button>Entrar em contato</button>
+                    <Button btnStyle="btn-primary" icon={Icon}>Entrar em contato</Button>
                 </div>
             </div>            
         </section>
