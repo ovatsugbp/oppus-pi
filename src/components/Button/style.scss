@@ -1,0 +1,29 @@
+@import '../../vars.scss';
+
+.btn {
+    color: $white;
+    background-color: $buttonPrimary;
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+    font-family: $fontBody;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    &.btn-primary {
+        padding: 15px 30px;
+        margin: 10px 5px;
+        img {
+            margin-right: 5px;
+        }
+    }
+    &.btn-secondary {
+        width: 450px;
+        height: 50px;
+        font-size: 18px;
+    }
+    &:hover{
+        background-color: $lightBlue;
+        color: $darkBlue;
+    }
+}
