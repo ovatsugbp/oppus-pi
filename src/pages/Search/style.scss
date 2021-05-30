@@ -1,0 +1,16 @@
+@import '../../vars.scss';
+
+.search-content {
+    background-color: $lightBlue;
+    height: 100%;
+    width: 100%;
+    .search-results{
+        width: 75%;
+        margin: 0 auto;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}

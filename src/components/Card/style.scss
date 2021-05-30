@@ -1,0 +1,79 @@
+@import '../../vars.scss';
+
+.card{
+    width: 40rem;
+    height: 20rem;
+    margin: 20px 0;
+    background-color: $white;
+    color: $darkBlue;
+
+    border: 1px solid $borderColor;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .card-top{
+        .profile{
+            display: flex;
+            margin: 20px;            
+            .profile-pic{
+                margin-right: 10px;
+                img {
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+            }
+            .profile-info{
+                font: $fontTittle;
+                align-self: center;
+                display: flex;
+                h2{
+                    font-size: 1rem;
+                    color: $darkBlue;
+                }
+                span {
+                    font-size: .8rem;
+                    color: $mediumBlue;
+                }
+                .rating {
+                    align-self: flex-end;
+                    justify-self: space-between;
+                    .star-rating {
+                        margin-top: 1rem;
+                    }
+                }
+            }
+        }
+    }
+
+    .card-medium {
+        margin: 0 20px 20px;
+    }
+
+    .card-bottom {
+        width: 100%;
+        background-color: #FAFAFC;
+        height: 30%;
+        border-top: 1px solid $borderColor;
+        border-bottom-left-radius: inherit;
+        border-bottom-right-radius: inherit;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        line-height: 1.5;
+        .professional-price{
+            display: flex;
+            p {
+                margin-right: 10px;
+                color: $mediumBlue;
+                &:last-of-type{
+                    color: $darkBlue;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+    
+}
