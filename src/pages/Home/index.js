@@ -6,7 +6,7 @@ import './style.scss'
 
 export const Home = () => {
     return (
-        <main>
+        <section className="home-content">
             <section className="left-container">
                 <article>
                     <img src={logo} className="element-spacing" alt="oppus logo"/>
@@ -20,6 +20,6 @@ export const Home = () => {
             <section className="right-container">
                 <img src={image} alt="mulher segurando uma lupa e apontando para uma página web" />
             </section>
-        </main>
+        </section>
     )
 }
