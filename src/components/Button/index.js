@@ -5,7 +5,7 @@ import cn from "classnames";
 import './style.scss'
 
 
-const Button = ({btnStyle, icon, onClick, children }) => {
+const Button = ({ btnStyle, icon, onClick, children }) => {
     return ( 
         <button className={cn(`btn ${btnStyle}`)} onClick={onClick}>
             {icon && <img src={icon} alt='wpp' />}

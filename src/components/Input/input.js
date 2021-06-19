@@ -7,7 +7,7 @@ const Input = ({pattern, subtitle, field, inputStyle}) => {
         <> 
         <section className="inputs-area">
             <label className="input-label" htmlFor={field}>{subtitle}</label>
-            <input className={cn(`input-field ${inputStyle}`)} type={pattern} name={field}/>
+            <input required className={cn(`input-field ${inputStyle}`)} type={pattern} name={field}/>
         </section>
         </>
     )
