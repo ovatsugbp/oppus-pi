@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { Search } from './pages/Search';
 import { SignOut } from './pages/SignOut';
+import { Login } from './pages/Login';
+import { ClientRegistration } from './pages/ClientRegistration';
 
 
 import './App.scss'
@@ -20,6 +22,12 @@ function App() {
         </Route>
         <Route path="/registro">
           <SignOut/>
+        </Route>
+        <Route path="/entrar">
+          <Login/>
+        </Route>
+        <Route path="/usuario">
+          <ClientRegistration/>
         </Route>
       </Switch>
     </Router>
