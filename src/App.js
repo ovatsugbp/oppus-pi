@@ -5,6 +5,7 @@ import { Home } from './pages/Home';
 import { Search } from './pages/Search';
 import { SignOut } from './pages/SignOut';
 import { Login } from './pages/Login';
+import { About } from './pages/About';
 import { ClientRegistration } from './pages/ClientRegistration';
 
 
@@ -28,6 +29,9 @@ function App() {
         </Route>
         <Route path="/usuario">
           <ClientRegistration/>
+        </Route>
+        <Route path="/como-funciona">
+          <About />
         </Route>
       </Switch>
     </Router>

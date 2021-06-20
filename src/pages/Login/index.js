@@ -7,7 +7,7 @@ import Button from '../../components/Button';
 
 
 import image from "../../assets/img/Imagem-Login.png";
-import voltar from '../../assets/img/Voltar.png';
+import voltar from '../../assets/img/voltar-blue.png';
 import logo from '../../assets/img/OPPUS_small.png';
 
 
