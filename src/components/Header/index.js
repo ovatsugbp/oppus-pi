@@ -2,12 +2,15 @@ import React from 'react';
 import {Link} from 'react-router-dom'
 import voltar from '../../assets/img/Voltar.png';
 import logo from '../../assets/img/OPPUS_small.png';
+import Menu from '../Menu'
 import "./style.scss";
 
-export const Header = ({subtitle,children}) => {
+export const Header = ({subtitle}) => {
     return (
         <header>
-            {children}
+            <Menu>
+                {[{item:'Meu perfil',rout:'/usuario'},{item:'Como funciona ',rout:'/como-funciona'}]}
+            </Menu>
             <section className="header-top">
                 <div className="return">
                     <Link to="/">

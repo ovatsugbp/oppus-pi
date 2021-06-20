@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import './style.scss'
+import {Link} from 'react-router-dom'
 
 function Menu({children}){
    const [status, setStatus] = useState('close')
@@ -15,9 +16,9 @@ function Menu({children}){
          <div className={`menu-body ${status}`}>
             <ul>
                <li className={`menu-itens menu-top ${status}`}>Menu</li>
-               {children.map((objValue,index)=>{
+               {children.map(({item,rout})=>{
                   return (
-                     <a href={objValue.url}><li className={`menu-itens ${status}`}>{objValue.item}</li></a>
+                     <Link to={rout}><li className={`menu-itens ${status}`}>{item}</li></Link>
                   )
                })}
             </ul>
