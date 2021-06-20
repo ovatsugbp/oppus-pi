@@ -4,9 +4,10 @@ import voltar from '../../assets/img/Voltar.png';
 import logo from '../../assets/img/OPPUS_small.png';
 import "./style.scss";
 
-export const Header = ({subtitle}) => {
+export const Header = ({subtitle,children}) => {
     return (
         <header>
+            {children}
             <section className="header-top">
                 <div className="return">
                     <Link to="/">
