@@ -24,7 +24,13 @@ export const Home = () => {
             <section className="right-container">
                 <img src={image} alt="mulher segurando uma lupa e apontando para uma página web" />
             </section>
-            <Menu>{[{item:'Entrar',rout:'/entrar'},{item:'Registre-se',rout:'/registro'},{item:'Como funciona',rout:'/como-funciona'}]}</Menu>
+            <Menu>
+                {[
+                    {item:'Entrar',rout:'/entrar'},
+                    {item:'Registre-se',rout:'/registro'},
+                    {item:'Como funciona',rout:'/como-funciona'},
+                ]}
+            </Menu>
         </section>
     )
 }

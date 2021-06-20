@@ -9,7 +9,10 @@ export const Header = ({subtitle}) => {
     return (
         <header>
             <Menu>
-                {[{item:'Meu perfil',rout:'/usuario'},{item:'Como funciona ',rout:'/como-funciona'}]}
+                {[
+                    {item:'Meu perfil',rout:'/usuario'},
+                    {item:'Como funciona ',rout:'/como-funciona'},
+                ]}
             </Menu>
             <section className="header-top">
                 <div className="return">

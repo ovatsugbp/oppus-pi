@@ -18,7 +18,12 @@ export const Login = () => {
                 <Link to="/">
                     <img src={voltar} alt="voltar para a página anterior" />
                 </Link>
-                <Menu>{[{item:'Registre-se',rout:'/registro'},{item:'Como funciona ',rout:'/como-funciona'}]}</Menu>
+                <Menu>
+                    {[
+                        {item:'Registre-se',rout:'/registro'},
+                        {item:'Como funciona ',rout:'/como-funciona'},
+                    ]}
+                </Menu>
                 <div className="menu-container">
                     <Link to="/">
                         <img src={logo} className="logo" alt="oppus logo" />
