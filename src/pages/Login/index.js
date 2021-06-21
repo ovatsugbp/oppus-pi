@@ -1,10 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 import "./style.scss"
 import { Link } from "react-router-dom"
 import Menu from '../../components/Menu'
 import Input from '../../components/Input/input';
 import Button from '../../components/Button';
-
+import RedefinePassword from '../../components/RedefinePassword'
 
 import image from "../../assets/img/Imagem-Login.png";
 import voltar from '../../assets/img/voltar-blue.png';
@@ -12,6 +12,7 @@ import logo from '../../assets/img/OPPUS_small.png';
 
 
 export const Login = () => {
+    const [statusRedefinePassword, setStatusRedefinePassword] = useState('redefinePasswordClosed')
     return (
         <div className="login-page">
             <div className="header">
@@ -35,7 +36,7 @@ export const Login = () => {
                     <form className="input-container">
                         <Input field="email" pattern="email" subtitle="E-mail"/>
 
-                        <div className="forgot-password">
+                        <div className="forgot-password" onClick={()=> setStatusRedefinePassword(statusRedefinePassword === 'redefinePasswordClosed' ? 'redefinePasswordClosed' : 'redefinePasswordOpen')}>
                             <p>Esqueci minha senha</p>
                         </div>
 
@@ -47,7 +48,9 @@ export const Login = () => {
                         <p className="redirect">Precisa de uma conta? <Link to="/registro">Registre-se aqui</Link></p>
                     </form>
                 </article>
+                    <RedefinePassword Status={statusRedefinePassword}></RedefinePassword>
             </section>
+
             <section className="right-container">
                 <img className="door-guy" src={image} alt="garoto entrando por uma porta" />
             </section>
