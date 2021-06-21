@@ -1,7 +1,7 @@
 import React from 'react'
 import "./style.scss"
 import { Link } from "react-router-dom"
-
+import Menu from '../../components/Menu'
 import Input from '../../components/Input/input';
 import Button from '../../components/Button';
 
@@ -18,6 +18,11 @@ export const Login = () => {
                 <Link to="/">
                     <img src={voltar} alt="voltar para a página anterior" />
                 </Link>
+                <Menu>
+                    {[
+                        {item:'Registre-se',rout:'/registro'},
+                    ]}
+                </Menu>
                 <div className="menu-container">
                     <Link to="/">
                         <img src={logo} className="logo" alt="oppus logo" />
