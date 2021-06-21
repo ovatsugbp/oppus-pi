@@ -11,7 +11,6 @@ export const Header = ({subtitle}) => {
             <Menu>
                 {[
                     {item:'Meu perfil',rout:'/usuario'},
-                    {item:'Como funciona ',rout:'/como-funciona'},
                 ]}
             </Menu>
             <section className="header-top">

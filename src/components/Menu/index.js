@@ -15,12 +15,13 @@ function Menu({children}){
          </div>
          <div className={`menu-body ${status}`}>
             <ul>
-               <li className={`menu-itens menu-top ${status}`}>Menu</li>
+               <li className={`menu-itens menu-item-top ${status}`}>Menu</li>
                {children.map(({item,rout})=>{
                   return (
                      <Link to={rout}><li className={`menu-itens ${status}`}>{item}</li></Link>
                   )
                })}
+               <Link to="/como-funciona"><li className={`menu-itens menu-item-bottom ${status}`}>Como funciona</li></Link>
             </ul>
          </div>
       </div>

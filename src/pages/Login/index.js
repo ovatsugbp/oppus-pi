@@ -21,7 +21,6 @@ export const Login = () => {
                 <Menu>
                     {[
                         {item:'Registre-se',rout:'/registro'},
-                        {item:'Como funciona ',rout:'/como-funciona'},
                     ]}
                 </Menu>
                 <div className="menu-container">

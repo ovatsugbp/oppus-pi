@@ -28,7 +28,6 @@ export const Home = () => {
                 {[
                     {item:'Entrar',rout:'/entrar'},
                     {item:'Registre-se',rout:'/registro'},
-                    {item:'Como funciona',rout:'/como-funciona'},
                 ]}
             </Menu>
         </section>
