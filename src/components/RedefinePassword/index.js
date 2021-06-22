@@ -17,7 +17,6 @@ function RedefinePassword(props){
             <h5>Recebemos sua solicitação</h5>
             <Tipografia BodyFont FontSize="16"><p className="message">Você receberá um e-mail de nossa equipe com as orientações para trocar sua senha, fique atento a caixa de spam!</p></Tipografia>
       </div>
-      {/* {props.children()} */}
    </div>
   )
 
@@ -27,5 +26,5 @@ function RedefinePassword(props){
 
 }
 
-
 export default RedefinePassword
+
