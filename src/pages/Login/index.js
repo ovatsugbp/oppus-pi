@@ -12,7 +12,7 @@ import logo from '../../assets/img/OPPUS_small.png';
 
 
 export const Login = () => {
-    const [statusRedefinePassword, setStatusRedefinePassword] = useState('redefinePasswordClosed')
+    const [statusRedefinePassword, setStatusRedefinePassword] = useState('closed')
     return (
         <div className="login-page">
             <div className="header">
@@ -36,7 +36,7 @@ export const Login = () => {
                     <form className="input-container">
                         <Input field="email" pattern="email" subtitle="E-mail"/>
 
-                        <div className="forgot-password" onClick={()=> setStatusRedefinePassword(statusRedefinePassword === 'redefinePasswordClosed' ? 'redefinePasswordClosed' : 'redefinePasswordOpen')}>
+                        <div className="forgot-password" onClick={()=> setStatusRedefinePassword(statusRedefinePassword === 'closed' ? 'open' : 'closed')}>
                             <p>Esqueci minha senha</p>
                         </div>
 
