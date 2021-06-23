@@ -10,6 +10,7 @@ export const Header = ({subtitle}) => {
         <header>
             <Menu>
                 {[
+                    {item:'Home',rout:'/'},
                     {item:'Meu perfil',rout:'/usuario'},
                 ]}
             </Menu>
