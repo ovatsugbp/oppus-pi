@@ -7,6 +7,8 @@ import { SignOut } from './pages/SignOut';
 import { Login } from './pages/Login';
 import { About } from './pages/About';
 import { ClientRegistration } from './pages/ClientRegistration';
+import { ProfessionalRegistration } from './pages/ProfessionalRegistration';
+
 
 
 import './App.scss'
@@ -29,6 +31,9 @@ function App() {
         </Route>
         <Route path="/usuario">
           <ClientRegistration/>
+        </Route>
+        <Route path="/profissional">
+          <ProfessionalRegistration/>
         </Route>
         <Route path="/como-funciona">
           <About />
