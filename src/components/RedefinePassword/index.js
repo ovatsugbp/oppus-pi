@@ -20,8 +20,9 @@ function RedefinePassword(props){
    </div>
   )
 
-  function callbackRedefinePassword(){
+  function callbackRedefinePassword(event){
       return setRedefinePasswordStatus('sended')
+      
    }
 
 }
