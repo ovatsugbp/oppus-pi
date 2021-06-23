@@ -26,6 +26,7 @@ export const Login = () => {
                     </Link>
                     <Menu>
                         {[
+                            {item:'Home',rout:'/'},
                             {item:'Registre-se',rout:'/registro'},
                         ]}
                     </Menu>
