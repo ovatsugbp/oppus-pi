@@ -21,6 +21,7 @@ function RedefinePassword(props){
   )
 
   function callbackRedefinePassword(event){
+     event.preventDefault()
       return setRedefinePasswordStatus('sended')
       
    }
