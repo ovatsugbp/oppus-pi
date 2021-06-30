@@ -4,10 +4,11 @@ import { Footer } from '../../components/Footer';
 import { Header } from '../../components/Header';
 import Input from '../../components/Input/input';
 import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
-
+import setPageTitle from "../../setPageTitle"
 import './style.scss';
 
 export const ClientRegistration = () => {
+    setPageTitle('Dados do Cliente')
     return (
         <div>
             <Header subtitle="Seja bem-vindo à nossa plataforma (:" />

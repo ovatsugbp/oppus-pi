@@ -5,6 +5,7 @@ import Menu from '../../components/Menu'
 import Input from '../../components/Input/input';
 import Button from '../../components/Button';
 import RedefinePassword from '../../components/RedefinePassword'
+import setPageTitle from "../../setPageTitle"
 
 import image from "../../assets/img/Imagem-Login.png";
 import voltar from '../../assets/img/voltar-blue.png';
@@ -12,6 +13,7 @@ import logo from '../../assets/img/OPPUS_small.png';
 
 
 export const Login = () => {
+    setPageTitle('Entrar')
     const [statusRedefinePassword, setStatusRedefinePassword] = useState('closed')
     return (
         <div className="login-page">

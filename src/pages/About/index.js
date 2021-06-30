@@ -4,10 +4,11 @@ import { Header } from '../../components/Header';
 import imageOne from "../../assets/img/about-1.png";
 import imageTwo from "../../assets/img/about-2.png";
 import imageThree from "../../assets/img/about-3.png";
-
+import setPageTitle from "../../setPageTitle"
 import './style.scss';
 
 export const About = () => {
+    setPageTitle('Como Funciona')
     return (
         <div>
             <Header subtitle="Saiba mais sobre como funciona nossa plataforma"/>
