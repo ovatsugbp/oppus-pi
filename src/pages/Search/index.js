@@ -3,7 +3,6 @@ import { Card } from '../../components/Card';
 import { Footer } from '../../components/Footer';
 import { Header } from '../../components/Header';
 import Input from '../../components/Input/input.js';
-
 import './style.scss';
 
 export const Search = () => {
@@ -13,7 +12,7 @@ export const Search = () => {
             <section className="search-content">
                 <section className="search-fields">
                     <Input inputStyle="input-small" pattern="text" field="area" subtitle="Qual profissional você precisa?"></Input>
-                    <Input inputStyle="input-small" pattern="password" field="where" subtitle="Onde você precisa?"></Input>
+                    <Input inputStyle="input-small" pattern="text" field="where" subtitle="Onde você precisa?"></Input>
                     <Input inputStyle="input-small" pattern="datetime-local" field="when" subtitle="Quando você precisa?"></Input>
                 </section>
                 <section className="search-results">

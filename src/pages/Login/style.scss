@@ -1,0 +1,84 @@
+@import '../../vars.scss';
+
+.login-page{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    
+    .menu-container{
+        margin-top: -30px; 
+        margin-left: 120px;   
+    }
+
+    .header{
+        width: 100%;
+        padding: 2rem 2rem;
+        position: fixed;
+        top: 0;
+        display: flex;
+        justify-content: space-between;
+        .logo{
+            object-fit: contain;
+        }
+    }
+
+    .left-container {
+        width: 50%;
+
+        background-color: $lightBlue;
+        color: $darkBlue;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .login-container{
+            width: 50%;
+        }
+
+        h1{
+            font-family: $fontTittle;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .input-container{
+            .input-label {
+                margin-top: .2rem;
+            }
+            .btn-secondary--blue{
+                margin: 3rem 0;
+            }
+            .redirect {
+                text-align: center;
+            }
+            .forgot-password{
+                cursor: pointer;
+                margin: 0;
+                width: 160px;
+                position: relative;
+                top: 30px;
+                left: 185px;
+                color: $mediumBlue;
+                p{
+                    margin: 0;
+                }
+            }
+            .btn-secondary--blue{
+                width: 100%;
+            }
+        }
+    }
+    .right-container{
+        width: 50%;
+        background-color: $mediumBlue;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .door-guy {
+            width: 70%;
+            object-fit: contain;
+        }
+    }
+}

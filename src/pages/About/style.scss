@@ -1,0 +1,101 @@
+@import "../../vars.scss";
+
+.about--container {
+   .about--container--one{
+       width: 100%;
+       height: 80vh;
+       display: flex;
+       align-items: center;
+       justify-content: space-around;
+       .left-container{
+           width: 50vw;
+           padding-left: 100px;
+           p {
+               width: 80%;
+               margin: 0;
+               color: $darkBlue;
+           }
+        }
+        .right-container{
+           width: 50vw;
+           padding-left: 100px;
+       }
+       .right-container img {
+           width: 80%;
+           object-fit: contain;
+       }
+      
+   } 
+   .about--container--two {
+       background-color: $mediumBlue;
+       .container-two-content{
+            width: 100%;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+
+            .left-container {
+                width: 50vw;
+                padding-left: 100px;
+                img {
+                    width: 80%;
+                    object-fit: contain;
+                }
+           }
+           .right-container{
+                width: 50vw;
+                padding-left: 100px;
+                p {
+                    color: $lightBlue;
+                    width: 80%;
+                    margin: 10px 0 0 0 0;
+                }
+           }
+       }
+        .custom-shape-divider-bottom-1624204232 {
+            position: absolute;
+            bottom: -110px;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+
+        .custom-shape-divider-bottom-1624204232 svg {
+            position: relative;
+            display: block;
+            width: calc(132% + 1.3px);
+            height: 117px;
+        }
+
+        .custom-shape-divider-bottom-1624204232 .shape-fill {
+            fill: $mediumBlue;
+        }
+   }
+   .about--container--three{
+        width: 100%;
+       height: 80vh;
+       display: flex;
+       align-items: center;
+       justify-content: space-around;
+       .left-container{
+           width: 50vw;
+           padding-left: 100px;
+           p {
+               width: 80%;
+               margin: 10px 0 0 0;
+               color: $darkBlue;
+           }
+        }
+        .right-container{
+           width: 50vw;
+           padding-left: 100px;
+       }
+       .right-container img {
+           width: 80%;
+           object-fit: contain;
+       }
+   }
+}

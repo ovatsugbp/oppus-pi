@@ -2,7 +2,6 @@
 
 .btn {
     color: $white;
-    background-color: $buttonPrimary;
     border: none;
     border-radius: 10px;
     text-align: center;
@@ -11,6 +10,7 @@
     font-size: 14px;
     font-weight: 500;
     &.btn-primary {
+        background-color: $buttonPrimary;
         padding: 15px 30px;
         margin: 10px 5px;
         img {
@@ -18,9 +18,20 @@
         }
     }
     &.btn-secondary {
+        background-color: $buttonPrimary;
         width: 450px;
         height: 50px;
         font-size: 18px;
+    }
+    &.btn-secondary--blue {
+        width: 450px;
+        height: 50px;
+        font-size: 18px;
+        background-color: $mediumBlue;
+    }
+    &.btn-secondary--blue:hover {
+        background-color: $darkBlue;
+        color: $lightBlue;
     }
     &:hover{
         background-color: $lightBlue;

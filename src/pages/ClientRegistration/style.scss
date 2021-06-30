@@ -1,0 +1,74 @@
+@import "../../vars.scss";
+
+.form-container {
+  position: relative;
+  top: -40px;
+}
+
+.client-registration-container {
+  height: 80vh;
+  width: 100%;
+  background-color: $lightBlue;
+
+  .form-container {
+    width: 40%;
+    height: 90%;
+    margin: 0 auto;
+    border: 1px solid $borderColor;
+    border-radius: 8px;
+    background-color: $white;
+    color: $darkBlue;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .form-top {
+      padding: 0.8rem 0 0;
+      border-bottom: 1px solid $borderColor;
+      margin: 0 2.2rem 0 1.5rem;
+      h2 {
+        font-family: $fontTittle;
+        font-size: 1.7rem;
+        font-weight: 500;
+        margin-bottom: 0;
+      }
+    }
+
+    .form-content {
+      margin: 5px 80px;
+      .input-label {
+        margin-top: 1.2rem;
+        font-size: 14px;
+      }
+      .type-of-user {
+        text-align: center;
+        margin: 15px 5px 5px;
+        label {
+          margin: 15px 40px 15px 5px;
+          font-size: 14px;
+        }
+      }
+    }
+
+    .form-bottom {
+      display: flex;
+      justify-content: space-between;
+      background-color: $lightGray;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+
+      padding: 20px;
+      .attention-container {
+        display: flex;
+        align-items: center;
+        .attention-icon {
+          color: $mediumBlue;
+          font-size: 35px;
+        }
+        p {
+          margin: 0 10px;
+        }
+      }
+    }
+  }
+}
