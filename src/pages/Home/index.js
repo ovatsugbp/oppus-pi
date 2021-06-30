@@ -5,8 +5,10 @@ import logo from "../../assets/img/OPPUS_logo.png";
 import Button from '../../components/Button';
 import './style.scss'
 import Menu from '../../components/Menu'
+import setPageTitle from "../../setPageTitle"
 
 export const Home = () => {
+    setPageTitle('Home')
     return (
         <section className="home-content">
             <section className="left-container">

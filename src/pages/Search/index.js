@@ -3,9 +3,11 @@ import { Card } from '../../components/Card';
 import { Footer } from '../../components/Footer';
 import { Header } from '../../components/Header';
 import Input from '../../components/Input/input.js';
+import setPageTitle from "../../setPageTitle"
 import './style.scss';
 
 export const Search = () => {
+    setPageTitle('Pesquisar')
     return (
         <>
             <Header subtitle="Estes são os profissionais disponíveis."/>
