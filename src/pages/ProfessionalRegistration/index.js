@@ -52,6 +52,7 @@ export const ProfessionalRegistration = () => {
                             <ReportOutlinedIcon className="attention-icon" />
                             <p>Importante!<br></br>Preencha todos os dados</p>
                         </div>
+                        <Button btnStyle="btn-delete">Excluir Cadastro</Button>
                         <Button btnStyle="btn-primary">Salvar cadastro</Button>
                     </section>
                 </section>
