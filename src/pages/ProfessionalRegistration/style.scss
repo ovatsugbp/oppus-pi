@@ -106,9 +106,12 @@
       .attention-container {
         display: flex;
         align-items: center;
+        font-size: 14px;
+        margin-left: -10px;
+        width: 250px;
         .attention-icon {
           color: $mediumBlue;
-          font-size: 35px;
+          font-size: 30px;
         }
         p {
           margin: 0 10px;
