@@ -13,9 +13,10 @@
 
     &.btn-primary {
         background-color: $buttonPrimary;
-        padding: 15px 30px;
         margin: 10px 5px;
-        img {
+        width: 150px;
+        height: 50px;
+                img {
             margin-right: 5px;
         }
     }
@@ -35,7 +36,17 @@
         background-color: $darkBlue;
         color: $lightBlue;
     }
-    &:hover{
+    &.btn-delete{
+        background-color: $lightBlue;
+        color: $mediumBlue;
+        margin: 10px 5px;
+        width: 150px;
+        height: 50px;
+    }
+   &.btn-delete:hover {
+        background-color: $mediumBlue;
+        color: $lightBlue;
+    }   &:hover{
         background-color: $lightBlue;
         color: $darkBlue;
     }
