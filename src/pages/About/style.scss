@@ -1,12 +1,14 @@
 @import "../../vars.scss";
 
 .about--container {
-   .about--container--one{
-       width: 100%;
-       height: 80vh;
-       display: flex;
-       align-items: center;
-       justify-content: space-around;
+    .about--container--one{
+        width: 100%;
+        height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        
        .left-container{
            width: 50vw;
            padding-left: 100px;
@@ -24,6 +26,22 @@
            width: 80%;
            object-fit: contain;
        }
+       @media screen and (max-width: 480px){
+            flex-wrap: wrap;
+            .left-container{
+                width: 90vw;
+                font-size: .8rem;
+                padding-left: 20px;
+                p {
+                    width: 100%;
+                }
+            }
+            .right-container{
+                width: 90vw;
+                padding-left: 20px;
+                padding-bottom: 50px;
+            }
+        }
       
    } 
    .about--container--two {
@@ -73,6 +91,28 @@
         .custom-shape-divider-bottom-1624204232 .shape-fill {
             fill: $mediumBlue;
         }
+        @media screen and (max-width: 480px){
+            .custom-shape-divider-bottom-1624204232{
+                bottom: -46px;
+                width: 115%;
+            }
+            .container-two-content{
+                flex-wrap: wrap;
+                flex-direction: column-reverse;
+                .left-container{
+                    width: 90vw;
+                    padding-left: 20px;
+                }
+                .right-container{
+                    width: 90vw;
+                    font-size: .8rem;
+                    padding-left: 20px;
+                    p {
+                        width: 100%;
+                    }
+                }
+            }
+        }
    }
    .about--container--three{
         width: 100%;
@@ -97,5 +137,20 @@
            width: 80%;
            object-fit: contain;
        }
+       @media screen and (max-width: 480px){
+            flex-wrap: wrap;
+            .left-container{
+                width: 90vw;
+                font-size: .8rem;
+                padding-left: 20px;
+                p {
+                    width: 100%;
+                }
+            }
+            .right-container{
+                width: 90vw;
+                padding-left: 20px;
+            }
+        }
    }
 }
