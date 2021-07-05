@@ -22,7 +22,8 @@ export const ProfessionalRegistration = () => {
                         <Input field="photo-link" pattern="url" subtitle="Link da sua foto  (comece com //http)" inputStyle="input-medium" />
                         <Input field="phone-number" pattern="tel" subtitle="Whatsapp  (somente números)" inputStyle="input-medium" />
                         <Input field="social-media" pattern="url" subtitle="Rede social  (Instagram, Facebook, Twitter...)" inputStyle="input-medium" />
-                        <Input field="biography" pattern="text" subtitle="Biografia" inputStyle="input-medium" />
+                        <p>Biografia</p>
+                        <textarea id="story" name="story" rows="5" cols="33">It was a dark and stormy night...</textarea>                    
                     </section>
                     <div className="form-mid">
                         <h2>Conte para a gente com o quê você trabalha</h2>
