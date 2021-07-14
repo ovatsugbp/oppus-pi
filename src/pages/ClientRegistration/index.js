@@ -20,6 +20,7 @@ export const ClientRegistration = () => {
                     <section className="form-content">
                         <Input field="name" pattern="text" subtitle="Nome completo" inputStyle="input-medium" />
                         <Input field="photo-link" pattern="url" subtitle="Link da sua foto  (comece com //http)" inputStyle="input-medium" />
+                        <Input field="cep" pattern="text" subtitle="Cep" inputStyle="input-medium" />
                         <Input field="location-district" pattern="text" subtitle="Bairro" inputStyle="input-medium" />
                         <Input field="location-city" pattern="text" subtitle="Cidade" inputStyle="input-medium" />
                     </section>
