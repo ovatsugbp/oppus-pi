@@ -1,44 +1,63 @@
-import Proptypes from 'prop-types';
-import cn from "classnames";
-
+import React, { useState, useRef, useEffect } from "react";
 import './style.scss';
 
+const SelectInput = ({ subtitle, field, data, prompt, value, onChange }) => {
+    const [open, setOpen] = useState(false);
+    const [query, setQuery] = useState("");
+    const ref = useRef(null);
 
-const SelectInput = ({ labelStyle, selectStyle, field, handleChange, subtitle, placeHolder, data }) => {
+    useEffect(() => {
+        document.addEventListener("click", toggle)
+        return () => document.removeEventListener("click", toggle)
+    }, []);
+
+    function toggle(e) {
+        setOpen(e && e.target === ref.current)
+    }
+
+    function filter(data) {
+        return data.filter(
+            option => option.label.toLowerCase().indexOf(query.toLowerCase()) > -1
+        );
+    }
+
+    function displayValue() {
+        if (query.length > 0) return query;
+        if (value) return value.label;
+        return "";
+    }
 
     return (
-        <>
-            <section className="select-input-area">
-                <label className={cn(`select-input-label ${labelStyle}`)} htmlFor={field}>{subtitle}</label>
-                <select
-                    className={cn(`select-input-field ${selectStyle}`)}
-                    name={field}
-                    id={field}
-                    onChange={handleChange}>
-                    <option selected disabled hidden>{placeHolder}</option>
-                    {data.map((item) => (
-                        <option value={item.id}>{item.label}</option>
+        <section className="dropdown">
+             <label className="input-label" htmlFor={field}>{subtitle}</label>
+            <div className="control">
+                <div className={`selected-value ${open ? "open" : null}`}>
+                    <input type="text"
+                        ref={ref}
+                        placeholder={value ? value.label : prompt}
+                        value={displayValue()}
+                        onChange={e => {
+                            setQuery(e.target.value)
+                            onChange(null)
+                        }}
+                        onClick={toggle} />
+                </div>
+                <div className={`arrow ${open ? "open" : null}`} />
+            </div>
+            <div className={`options ${open ? "open" : null}`}>
+                {filter(data).map((option) => (
+                    <div key={option.id} className={`option ${value === option ? "selected" : null}`}
+                        onClick={() => {
+                            setQuery("");
+                            onChange(option);
+                            setOpen(false);
+                        }}>{option.label}</div>)
+                )
+                }
 
-                    ))}
-                </select>
-            </section>
-        </>
+            </div>
+        </section>
     );
 }
-
-SelectInput.propTypes = {
-    field: Proptypes.string,
-    subtitle: Proptypes.string,
-    onChange: Proptypes.func,
-    selectedStyle: Proptypes.string,
-    data: Proptypes.array,
-};
-
-SelectInput.defaultProps = {
-    field: '',
-    subtitle: '',
-    selectedStyle: "select-input-small",
-    data: [],
-};
 
 export default SelectInput;
