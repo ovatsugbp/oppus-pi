@@ -141,10 +141,32 @@
                 display: none;
             }
         }
+        
 
         .door-guy {
             width: 70%;
             object-fit: contain;
         }
+        
     }
+    @media screen and (max-width: 769px){
+        .menu-container{
+            margin-right: 0;
+            margin-left: 50px;
+        }
+        .left-container{
+            .login-container{
+                width: 70%;
+                .forgot-password{
+                    left: 110px;
+                }
+            }
+        }
+            .right-container{
+                .door-guy {
+                    width: 90%;
+                }
+            }
+        }
+
 }

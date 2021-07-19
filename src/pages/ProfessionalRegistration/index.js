@@ -38,8 +38,8 @@ export const ProfessionalRegistration = () => {
                     <section className="form-content">
                         <div className="period">
                         <Input field="week-day" pattern="text" subtitle="Dia da semana" inputStyle="input-medium" />
-                        <Input field="start-hour" pattern="time" subtitle="Das" inputStyle="input-medium" />
-                        <Input field="finish-hour" pattern="time" subtitle="Até" inputStyle="input-medium" />
+                        <Input field="start-hour" pattern="time" subtitle="Das" inputStyle="input-medium input-hour" />
+                            <Input field="finish-hour" pattern="time" subtitle="Até" inputStyle="input-medium input-hour" />
                         </div>
                         <div className="location">
                         <Input field="location-city" pattern="text" subtitle="Cidade" inputStyle="input-medium" />
