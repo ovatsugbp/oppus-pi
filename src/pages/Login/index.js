@@ -1,12 +1,14 @@
-import React, {useState} from 'react'
-import "./style.scss"
-import { Link } from "react-router-dom"
-import Menu from '../../components/Menu'
+import React, {useState} from 'react';
+import "./style.scss";
+import { Link } from "react-router-dom";
+import Menu from '../../components/Menu';
 import Input from '../../components/Input/input';
 import Button from '../../components/Button';
-import RedefinePassword from '../../components/RedefinePassword'
-import setPageTitle from "../../setPageTitle"
+import RedefinePassword from '../../components/RedefinePassword';
+import setPageTitle from "../../setPageTitle";
 
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import image from "../../assets/img/Imagem-Login.png";
 import voltar from '../../assets/img/voltar-blue.png';
 import logo from '../../assets/img/OPPUS_small.png';
@@ -15,11 +17,12 @@ import logo from '../../assets/img/OPPUS_small.png';
 export const Login = () => {
     setPageTitle('Entrar')
     const [statusRedefinePassword, setStatusRedefinePassword] = useState('closed')
+    const [isPasswordShowing, setIsPasswordShowing] = useState(false);
     return (
         <div className="login-page">
             <div className="header">
                 <Link to="/">
-                    <img src={voltar} alt="voltar para a página anterior" />
+                    <img className="return-icon" src={voltar} alt="voltar para a página anterior" />
                 </Link>
 
                 <div className="header-menu-container">
@@ -43,8 +46,11 @@ export const Login = () => {
                         <div className="forgot-password" onClick={()=> setStatusRedefinePassword(statusRedefinePassword === 'closed' ? 'open' : 'closed')}>
                             <p>Esqueci minha senha</p>
                         </div>
-
-                        <Input field="password" pattern="password" subtitle="Senha"/>
+                        <div className="password-input">
+                            <Input field="password" pattern={isPasswordShowing ? "text" : "password"} subtitle="Senha"/>
+                                {!isPasswordShowing ? <VisibilityOffIcon className="password-icon" onClick={() => setIsPasswordShowing(true)} /> :
+                                <VisibilityIcon className="password-icon" onClick={() => setIsPasswordShowing(false)} /> }
+                        </div>
                         
                         <Link to="/usuario">
                             <Button btnStyle="btn-secondary--blue">Login</Button>

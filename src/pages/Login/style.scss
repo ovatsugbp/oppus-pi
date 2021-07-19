@@ -8,6 +8,10 @@
     .menu-container{
         margin-top: -30px; 
         margin-left: 120px;   
+        @media screen and (max-width: 480px){
+            margin: 0;
+            margin-top: -25px;
+        }
     }
 
     .header{
@@ -17,8 +21,19 @@
         top: 0;
         display: flex;
         justify-content: space-between;
+        
         .logo{
             object-fit: contain;
+        }
+        
+        @media screen and (max-width: 480px){
+            padding: .5rem;
+            .logo {
+                width: 50%;
+            }
+            .return-icon{
+                width: 60%;
+            }
         }
     }
 
@@ -31,14 +46,23 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        @media screen and (max-width: 480px){
+            width: 100%;
+        }
         .login-container{
             width: 50%;
+            @media screen and (max-width: 480px){
+                width: 70%;
+            }
         }
 
         h1{
             font-family: $fontTittle;
             text-align: center;
             margin-bottom: 1rem;
+            @media screen and (max-width: 480px){
+                font-size: 1.5rem;
+            }
         }
 
         .input-container{
@@ -50,6 +74,9 @@
             }
             .redirect {
                 text-align: center;
+                @media screen and (max-width: 480px){
+                    font-size: .8rem;
+                }
             }
             .forgot-password{
                 cursor: pointer;
@@ -62,9 +89,41 @@
                 p{
                     margin: 0;
                 }
+                @media screen and (max-width: 480px){
+                    font-size: .8rem;
+                    left: 95px;
+                    top: 51px;
+                }
+            }
+            .password-input{
+                position: relative;
+                .password-icon{
+                    position: absolute;
+                    right: 10px;
+                    top: 45px;
+                    color: $darkBlue;
+
+                    cursor: pointer;
+                    @media screen and (max-width: 480px){
+                        top: 70px;
+                    }
+                }
             }
             .btn-secondary--blue{
                 width: 100%;
+                @media screen and (max-width: 480px){
+                    position: relative;
+                    top: 30px;
+                }
+            }
+            .inputs-area{
+                @media screen and (max-width: 480px){
+                    position: relative;
+                    top: 30px;
+                    .input-label {
+                        font-size: .8rem;
+                    }
+                }
             }
         }
     }
@@ -76,9 +135,38 @@
         align-items: center;
         justify-content: center;
 
+        @media screen and (max-width: 480px){
+            width: 0%;
+            .door-guy{
+                display: none;
+            }
+        }
+        
+
         .door-guy {
             width: 70%;
             object-fit: contain;
         }
+        
     }
+    @media screen and (max-width: 769px){
+        .menu-container{
+            margin-right: 0;
+            margin-left: 50px;
+        }
+        .left-container{
+            .login-container{
+                width: 70%;
+                .forgot-password{
+                    left: 110px;
+                }
+            }
+        }
+            .right-container{
+                .door-guy {
+                    width: 90%;
+                }
+            }
+        }
+
 }
