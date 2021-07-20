@@ -1,31 +1,31 @@
-@import '../../vars.scss';
+@import "../../vars.scss";
 
 .search-content {
-    background-color: $lightBlue;
-    height: 100%;
-    width: 100%;
-    .search-results{
-        width: 75%;
-        margin: 0 auto;
+  background-color: $lightBlue;
+  height: 100%;
+  width: 100%;
+  .search-results {
+    width: 75%;
+    margin: 0 auto;
 
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .search-fields {
+    display: flex;
+    justify-content: center;
+
+    width: 55%;
+    margin: 0 auto;
+    section {
+      margin-right: 30px;
     }
-    .search-fields {
-        display: flex;
-        justify-content: center;
-        
-        width: 55%;
-        margin: 0 auto;
-        section {
-            margin-right: 30px;
-        }
-        .input-label{
-            color: $white;
-            margin-top: -50px;
-        }
+
+    .input-label {
+      color: $white;
+      margin-top: -50px;
     }
     padding-bottom: 3rem;
 
