@@ -4,18 +4,28 @@ import { Footer } from '../../components/Footer';
 import { Header } from '../../components/Header';
 import Input from '../../components/Input/input';
 import SelectInput from '../../components/SelectInput';
-import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+import Schedule from '../../components/Schedule';
 import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
 import professionalsList from '../../data/professionalsList.json';
-import daysOfTheWeek from '../../data/daysOfTheWeek.json';
 import setPageTitle from "../../setPageTitle"
 import './style.scss';
 
 export const ProfessionalRegistration = () => {
     setPageTitle('Dados do Profissional')
 
-    const [day, setDay] = useState(null);
-     const [option, setOption] = useState(null);
+    const [option, setOption] = useState(null);
+
+    const [count, setCount] = useState(1);
+
+    function addSchedule(count) {
+       return setCount(count++);
+        
+    }
+
+    function removeSchedule(count) {
+        return setCount(count--);
+    }
+
 
     return (
         <div>
@@ -46,24 +56,11 @@ export const ProfessionalRegistration = () => {
                             <p>+ Novo horário</p>
                         </div>
                     </div>
-                    <section className="form-content schedule">
-                        <div className="period">
-                        <SelectInput subtitle="Dia da semana" field="week-day" prompt="Selecione" data={daysOfTheWeek}  id="id" label="label" value={day} onChange={(val) => setDay(val)}></SelectInput>
-                        <Input field="start-hour" pattern="time" subtitle="Das" inputStyle="input-medium" />
-                        <Input field="finish-hour" pattern="time" subtitle="Até" inputStyle="input-medium" />
-                        </div>
-                        <div className="location-row1">
-                        <Input field="location-cep" pattern="text" subtitle="CEP" inputStyle="input-medium" />
-                        <Input field="location-UF" pattern="text" subtitle="UF" inputStyle="input-medium" />
-                        <button className="trash-bin-icon">
-                             <DeleteOutlineOutlinedIcon />
-                        </button>
-                        </div>
-                        <div className="location-row2">
-                        <Input field="location-district" pattern="text" subtitle="Bairro" inputStyle="input-medium" />
-                        <Input field="location-city" pattern="text" subtitle="Cidade" inputStyle="input-medium" />
-                        </div>
-                    </section>
+
+                     {[...Array(count)].map((el, i) => 
+                        <Schedule key={i} handleClick={removeSchedule} />
+                    ) }
+
                     <section className="form-bottom">
                         <div className="attention-container">
                             <ReportOutlinedIcon className="attention-icon" />
