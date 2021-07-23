@@ -10,7 +10,7 @@ const Schedule = ({ key, handleClick }) => {
     const [day, setDay] = useState(null);
 
     return (
-        <section key={id} className="form-content schedule">
+        <section key={key} className="form-content schedule">
             <div className="period">
                 <SelectInput subtitle="Dia da semana" field="week-day" prompt="Selecione" data={daysOfTheWeek}  id="id" label="label" value={day} onChange={(val) => setDay(val)}></SelectInput>
                 <Input field="start-hour" pattern="time" subtitle="Das" inputStyle="input-medium" />

@@ -23,7 +23,7 @@ export const ProfessionalRegistration = () => {
     }
 
     function removeSchedule() {
-        return setCount(count -1);
+        return setCount(count - 1);
     }
 
 
