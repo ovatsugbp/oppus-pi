@@ -17,13 +17,13 @@ export const ProfessionalRegistration = () => {
 
     const [count, setCount] = useState(1);
 
-    function addSchedule(count) {
-       return setCount(count++);
+    function addSchedule() {
+       return setCount(count + 1);
         
     }
 
-    function removeSchedule(count) {
-        return setCount(count--);
+    function removeSchedule() {
+        return setCount(count -1);
     }
 
 
@@ -52,12 +52,12 @@ export const ProfessionalRegistration = () => {
                     </section>
                     <div className="form-mid2">
                         <h2>Horários disponíveis</h2>
-                        <div className="btn-schedule" role="button" >
+                        <div className="btn-schedule" role="button" onClick={addSchedule}>
                             <p>+ Novo horário</p>
                         </div>
                     </div>
 
-                     {[...Array(count)].map((el, i) => 
+                     {[...Array(count)].map((i) => 
                         <Schedule key={i} handleClick={removeSchedule} />
                     ) }
 
