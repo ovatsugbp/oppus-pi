@@ -7,5 +7,5 @@ async function getAddress(cep){
        alert(error)
    }
 }
-odulo que faz requisição à api de endereços.
+
 export default getAddress 
