@@ -11,7 +11,7 @@
       margin: 5px;
     }
 
-    .dropdown {
+    .select-input {
       margin: 5px;
 
       .arrow {
@@ -23,12 +23,7 @@
       }
 
       .selected-value input {
-        background-color: $lightGray;
         width: 140px;
-      }
-
-      .selected-value.open input {
-        background-color: $white;
       }
     }
   }

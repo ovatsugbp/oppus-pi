@@ -68,7 +68,7 @@
     }
 
     .ocupation {
-      .dropdown {
+      .select-input {
         .arrow {
           top: 60px;
         }
@@ -78,13 +78,9 @@
         }
 
         .selected-value input {
-          background-color: $lightGray;
           width: 377.59px;
         }
 
-        .selected-value.open input {
-          background-color: $white;
-        }
 
         .options {
           max-height: 150px;
@@ -103,7 +99,7 @@
           margin: 5px;
         }
 
-        .dropdown {
+        .select-input {
           margin: 5px;
 
           .arrow {
@@ -115,12 +111,7 @@
           }
 
           input {
-            background-color: $lightGray;
             width: 134px;
-          }
-
-          .selected-value.open input {
-            background-color: $white;
           }
         }
       }
