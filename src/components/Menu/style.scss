@@ -4,6 +4,11 @@
    float: right;
    margin-right: 55px;
 
+   @media screen and(max-width: 480px) {
+      margin-right: 0;
+      margin-top: -20px;
+   }
+
    .menu-button{
       position: relative;
       // float: right;
@@ -20,6 +25,12 @@
       left: -10px;
       padding-top: 7px;
       padding-right: 10px;
+      
+      @media screen and (max-width: 480px){
+         width: 28px;
+         height: 25px;
+         padding-top: 3px;
+      }
 
       li{
          // position: relative;
@@ -34,6 +45,9 @@
          border-radius: 3px;
          list-style: none;
          transition: all ease 0.2s;
+         @media screen and (max-width: 480px){
+            width: 15px;
+         }
       }
    
       .open:nth-child(1){
@@ -93,6 +107,12 @@
          list-style:none;
          height: 50px;
          padding-left: 20px;
+         
+         @media screen and (max-width: 480px){
+            width: 140px;
+            height: 40px;
+            margin-left: 15px;
+         }
       }
 
       .menu-itens:hover{
@@ -115,16 +135,23 @@
       a{
          color: #03256C;
          text-decoration:none;
+         @media screen and (max-width: 480px){
+            font-size: .8rem;
+         }
       }
 
       .menu-item-top{
          color: #1768AC;
          // font-weight: bold;
-         font-size: 16px;
+         font-size: 1rem;
          cursor: default;
          border-top-color: white;
          border-top-left-radius: 8px;
          border-top-right-radius: 8px;
+
+         @media screen and (max-width: 480px){
+            font-size: .8rem;
+         }
       }
 
       .menu-item-top:hover{
