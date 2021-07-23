@@ -41,6 +41,7 @@ export const ProfessionalRegistration = () => {
                         <Input field="start-hour" pattern="time" subtitle="Das" inputStyle="input-medium" />
                         <Input field="finish-hour" pattern="time" subtitle="Até" inputStyle="input-medium" />
                         </div>
+                        <Input field="cep" pattern="text" subtitle="Cep" inputStyle="input-medium" />
                         <div className="location">
                         <Input field="location-city" pattern="text" subtitle="Cidade" inputStyle="input-medium" />
                         <Input field="location-UF" pattern="text" subtitle="UF" inputStyle="input-medium" />
