@@ -68,7 +68,7 @@
     }
 
     .ocupation {
-      .dropdown {
+      .select-input {
         .arrow {
           top: 60px;
         }
@@ -78,13 +78,9 @@
         }
 
         .selected-value input {
-          background-color: $lightGray;
           width: 377.59px;
         }
 
-        .selected-value.open input {
-          background-color: $white;
-        }
 
         .options {
           max-height: 150px;
@@ -103,7 +99,7 @@
           margin: 5px;
         }
 
-        .dropdown {
+        .select-input {
           margin: 5px;
 
           .arrow {
@@ -115,43 +111,8 @@
           }
 
           input {
-            background-color: $lightGray;
             width: 134px;
           }
-
-          .selected-value.open input {
-            background-color: $white;
-          }
-        }
-      }
-
-      .location-row1 {
-        display: flex;
-        justify-content: space-between;
-        .inputs-area {
-          margin: 5px;
-          width: 110px;
-        }
-
-        .trash-bin-icon {
-          background: transparent;
-          border-color: transparent;
-          cursor: pointer;
-
-          margin-top: 50px;
-          color: $darkBlue;
-        }
-
-        .trash-bin-icon:hover {
-          color: red;
-        }
-      }
-
-      .location-row2 {
-        display: flex;
-        justify-content: space-between;
-        .inputs-area {
-          margin: 5px;
         }
       }
 
@@ -199,89 +160,6 @@
           margin: 0 10px;
         }
       }
-    }
-  }
-  @media screen and (max-width: 480px) {
-    height: 100%;
-    .form-container {
-      width: 85%;
-      .form-top h2 {
-        font-size: 1.2rem;
-      }
-      .form-mid h2 {
-        font-size: 1.2rem;
-      }
-      .form-mid2 h2 {
-        font-size: 1.2rem;
-      }
-      .form-mid2 p {
-        font-size: .8rem;
-      }
-      .form-content{
-        margin: 5px 20px;
-          .input-label{
-            font-size: .7rem;
-            }
-            .period{
-              flex-wrap: wrap;
-              .input-hour {
-                width: 220px;
-              }
-            }     
-        }
-        .form-bottom {
-          .attention-container {
-              .attention-icon{
-                  font-size: 1.6rem;
-              }
-              font-size: .7rem;
-          }
-          .btn-delete, .btn-primary{
-            font-size: .6rem;
-          }
-        }
-    }
-  }
-  @media screen and (max-width: 768px) {
-    height: 100%;
-    .form-container {
-      width: 70%;
-      top: -20px;
-      .form-top h2 {
-        font-size: 1.2rem;
-      }
-      .form-mid h2 {
-        font-size: 1.2rem;
-      }
-      .form-mid2 h2 {
-        font-size: 1.2rem;
-      }
-      .form-mid2 p {
-        font-size: .8rem;
-      }
-      .form-content{
-        margin: 5px 20px;
-          .input-label{
-            font-size: .9rem;
-            }
-            .period{
-              flex-wrap: wrap;
-              .input-hour {
-                width: 220px;
-              }
-            }     
-        }
-        .form-bottom {
-          .attention-container {
-              .attention-icon{
-                  font-size: 1.6rem;
-              }
-              font-size: .8rem;
-          }
-          .btn-delete, .btn-primary{
-            font-size: .8rem;
-          }
-        }
     }
   }
 }

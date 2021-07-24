@@ -28,9 +28,9 @@ const SelectInput = ({ subtitle, field, data, prompt, value, onChange }) => {
     }
 
     return (
-        <section className="dropdown">
+        <section className="select-input">
              <label className="input-label" htmlFor={field}>{subtitle}</label>
-            <div className="control">
+            <div className="select-input-control">
                 <div className={`selected-value ${open ? "open" : null}`}>
                     <input type="text"
                         ref={ref}

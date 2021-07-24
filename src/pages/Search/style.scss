@@ -29,15 +29,15 @@
     }
     padding-bottom: 3rem;
 
-    @media screen and (max-width:480px) {
-        .search-fields {
-            display: none;
-        }
+    @media screen and (max-width: 480px) {
+      .search-fields {
+        display: none;
+      }
     }
-    @media screen and (max-width:769px) {
-        .search-fields {
-            display: none;
-        }
+    @media screen and (max-width: 769px) {
+      .search-fields {
+        display: none;
+      }
     }
   }
 }
