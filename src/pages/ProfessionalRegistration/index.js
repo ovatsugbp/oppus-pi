@@ -14,18 +14,18 @@ export const ProfessionalRegistration = () => {
     setPageTitle('Dados do Profissional')
 
     const [option, setOption] = useState(null);
-
     const [count, setCount] = useState(1);
+    const [list, setList] = useState([{id:0}])
 
     function addSchedule() {
-       return setCount(count + 1);
-        
+        setList([...list,{id:count}])
+        setCount(count+1)
     }
 
-    function removeSchedule() {
-        return setCount(count - 1);
+    function removeSchedule(id) {
+        let newList = list.filter(value => value.id !== id )
+        setList([...newList])
     }
-
 
     return (
         <div>
@@ -57,9 +57,11 @@ export const ProfessionalRegistration = () => {
                         </div>
                     </div>
 
-                     {[...Array(count)].map((i) => 
-                        <Schedule key={i} handleClick={removeSchedule} />
-                    ) }
+                    {
+                        list.map(({id}) =>
+                            <Schedule key={id} handleClick={()=> removeSchedule(id)} />
+                        )     
+                    }
 
                     <section className="form-bottom">
                         <div className="attention-container">
