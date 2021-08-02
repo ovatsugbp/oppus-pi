@@ -8,12 +8,15 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
 import setPageTitle from "../../setPageTitle";
+
 import './style.scss';
+import { Link } from 'react-router-dom';
 
 export const SignOut = () => {
     setPageTitle('Registrar');
     const [isInsertPasswordShown, setIsInsertPasswordShown] = useState(false);
     const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
+    let [userType, SetUserType] = useState()
 
     return (
         <>
@@ -40,9 +43,9 @@ export const SignOut = () => {
                                 }
                             </div>
                             <div className="type-of-user">
-                                <input type="radio" name="user" id="worker" />
+                                <input type="radio" name="user" id="worker" onClick={() => userType = SetUserType("/profissional")} />
                                 <label htmlFor="worker">Sou profissional</label>
-                                <input type="radio" name="user" id="non-worker" />
+                                <input type="radio" name="user" id="non-worker" onClick={() => userType = SetUserType("/usuario")}/>
                                 <label htmlFor="non-worker">Busco profissional</label>
                             </div>
                         </section>
@@ -51,7 +54,9 @@ export const SignOut = () => {
                                 <ReportOutlinedIcon className="attention-icon" />
                                 <p>Importante!<br></br>Preencha todos os seus dados</p>
                             </div>
-                            <Button btnStyle="btn-primary">Salvar Cadastro</Button>
+                            <Link to = {userType}>
+                                <Button btnStyle="btn-primary">Salvar Cadastro</Button>
+                            </Link>
                         </section>
                     </section>
                 </section>
