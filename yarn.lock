@@ -2149,6 +2149,8 @@
 "chokidar2@file:./chokidar2":
   "resolved" "file:node_modules/watchpack/chokidar2"
   "version" "2.0.0"
+  dependencies:
+    "chokidar" "^2.1.8"
 
 "chownr@^2.0.0":
   "integrity" "sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ=="
@@ -2311,6 +2313,14 @@
   "version" "0.3.0"
   dependencies:
     "color-name" "^1.0.0"
+
+"color-string@^1.5.5":
+  "integrity" "sha512-jgIoum0OfQfq9Whcfc2z/VhCNcmQjWbey6qBX0vqt7YICflUmBCh9E9CiQD5GSJ+Uehixm3NUwHVhqUAWRivZg=="
+  "resolved" "https://registry.npmjs.org/color-string/-/color-string-1.5.5.tgz"
+  "version" "1.5.5"
+  dependencies:
+    "color-name" "^1.0.0"
+    "simple-swizzle" "^0.2.2"
 
 "color@^0.11.0":
   "integrity" "sha1-bXtcdPtl6EHNSHkq0e1eB7kE12Q="
@@ -4808,6 +4818,11 @@
   "integrity" "sha1-d8mYQFJ6qOyxqLppe4BkWnqSap0="
   "resolved" "https://registry.npmjs.org/is-arrayish/-/is-arrayish-0.2.1.tgz"
   "version" "0.2.1"
+
+"is-arrayish@^0.3.1":
+  "integrity" "sha512-eVRqCvVlZbuw3GrM63ovNSNAeA1K16kaR/LRY/92w0zxQ5/1YzwblUX652i4Xs9RwAGjW9d9y6X88t8OaAJfWQ=="
+  "resolved" "https://registry.npmjs.org/is-arrayish/-/is-arrayish-0.3.2.tgz"
+  "version" "0.3.2"
 
 "is-bigint@^1.0.1":
   "integrity" "sha512-0JV5+SOCQkIdzjBK9buARcV804Ddu7A0Qet6sHi3FimE9ne6m4BGQZfRn+NZiXbBk4F4XmHfDZIipLj9pX8dSA=="
@@ -8593,6 +8608,13 @@
   "resolved" "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.3.tgz"
   "version" "3.0.3"
 
+"simple-swizzle@^0.2.2":
+  "integrity" "sha1-pNprY1/8zMoz9w0Xy5JZLeleVXo="
+  "resolved" "https://registry.npmjs.org/simple-swizzle/-/simple-swizzle-0.2.2.tgz"
+  "version" "0.2.2"
+  dependencies:
+    "is-arrayish" "^0.3.1"
+
 "slash@^1.0.0":
   "integrity" "sha1-xB8vbDn8FtHNF61LXYlhFK5HDVU="
   "resolved" "https://registry.npmjs.org/slash/-/slash-1.0.0.tgz"
@@ -9275,7 +9297,7 @@
   "resolved" "https://registry.npmjs.org/trim-newlines/-/trim-newlines-1.0.0.tgz"
   "version" "1.0.0"
 
-"trim-newlines@^3.0.0":
+"trim-newlines@^3.0.0", "trim-newlines@^3.0.1":
   "integrity" "sha512-c1PTsA3tYrIsLGkJkzHF+w9F2EyxfXGo4UyJc4pFL++FMjnq0HJS69T3M7d//gKrFKwy429bouPescbjecU+Zw=="
   "resolved" "https://registry.npmjs.org/trim-newlines/-/trim-newlines-3.0.1.tgz"
   "version" "3.0.1"
