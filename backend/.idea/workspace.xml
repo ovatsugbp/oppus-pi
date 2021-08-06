@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1af7ea6d-76e9-43a7-801b-6544f9ab98f8" name="Default Changelist" comment="adicionando método de busca de profissionais, refatoração do método de listagem">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/backend-oppus-pi/br/com/oppus/back/ApplicationOppus.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/backend-oppus-pi/br/com/oppus/back/ApplicationOppus.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/backend-oppus-pi/br/com/oppus/back/database/Database.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/backend-oppus-pi/br/com/oppus/back/database/Database.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/backend-oppus-pi/br/com/oppus/back/modelo/Service.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/backend-oppus-pi/br/com/oppus/back/modelo/Service.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/br/com/oppus/back/ApplicationOppus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/com/oppus/back/ApplicationOppus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/br/com/oppus/back/database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/com/oppus/back/database/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/br/com/oppus/back/modelo/Professional.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/com/oppus/back/modelo/Professional.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/br/com/oppus/back/modelo/Schedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/com/oppus/back/modelo/Schedule.java" afterDir="false" />
-    </list>
+    <list default="true" id="1af7ea6d-76e9-43a7-801b-6544f9ab98f8" name="Default Changelist" comment="adicionando método de busca de profissionais, refatoração do método de listagem" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -97,7 +88,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627608176370</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="adicionando método de busca de profissionais, refatoração do método de listagem">
+      <created>1628217709145</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1628217709145</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
