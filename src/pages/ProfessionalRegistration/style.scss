@@ -1,0 +1,165 @@
+@import "../../vars.scss";
+
+.form-container {
+  position: relative;
+  top: -40px;
+}
+
+.professional-registration-container {
+  height: auto;
+  width: 100%;
+  background-color: $lightBlue;
+
+  .form-container {
+    width: 40%;
+    height: 90%;
+    margin: 0 auto;
+    border: 1px solid $borderColor;
+    border-radius: 8px;
+    background-color: $white;
+    color: $darkBlue;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .form-top {
+      padding: 0.8rem 0 0;
+      border-bottom: 1px solid $borderColor;
+      margin: 0 2.2rem 0 1.5rem;
+      h2 {
+        font-family: $fontTittle;
+        font-size: 1.7rem;
+        font-weight: 500;
+        margin-bottom: 0;
+      }
+    }
+
+    .form-mid {
+      padding: 0.8rem 0 0;
+      border-bottom: 1px solid $borderColor;
+      margin: 0 2.2rem 0 1.5rem;
+      h2 {
+        font-family: $fontTittle;
+        font-size: 1.7rem;
+        font-weight: 500;
+        margin-bottom: 0;
+      }
+    }
+
+    .form-mid2 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 0 0;
+      border-bottom: 1px solid $borderColor;
+      margin: 0 2.2rem 0 1.5rem;
+      h2 {
+        font-family: $fontTittle;
+        font-size: 1.7rem;
+        font-weight: 500;
+        margin-bottom: 0;
+      }
+      p {
+        color: $mediumBlue;
+        font-family: $fontTittle;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+    }
+
+    .ocupation {
+      .select-input {
+        .arrow {
+          top: 60px;
+        }
+
+        .arrow.open {
+          top: -12px;
+        }
+
+        .selected-value input {
+          width: 377.59px;
+        }
+
+
+        .options {
+          max-height: 150px;
+        }
+      }
+    }
+
+    .form-content {
+      margin: 5px 80px;
+
+      .period {
+        display: flex;
+        justify-content: space-between;
+
+        .inputs-area {
+          margin: 5px;
+        }
+
+        .select-input {
+          margin: 5px;
+
+          .arrow {
+            top: 60px;
+          }
+
+          .arrow.open {
+            top: -12px;
+          }
+
+          input {
+            width: 134px;
+          }
+        }
+      }
+
+      .input-label {
+        margin-top: 1.2rem;
+        font-size: 14px;
+      }
+      .type-of-user {
+        text-align: center;
+        margin: 15px 5px 5px;
+        label {
+          margin: 15px 40px 15px 5px;
+          font-size: 14px;
+        }
+      }
+
+      textarea {
+        border: 1px solid $borderColor;
+        border-radius: 8px;
+        background-color: $lightGray;
+        color: $mediumBlue;
+        outline: none;
+      }
+    }
+
+    .form-bottom {
+      display: flex;
+      justify-content: space-between;
+      background-color: $lightGray;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+
+      padding: 20px;
+      .attention-container {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        margin-left: -10px;
+        width: 250px;
+        .attention-icon {
+          color: $mediumBlue;
+          font-size: 30px;
+        }
+        p {
+          margin: 0 10px;
+        }
+      }
+    }
+  }
+}

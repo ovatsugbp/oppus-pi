@@ -1,0 +1,16 @@
+@import '../../vars.scss';
+
+footer  {
+    background-color: $mediumBlue;
+    color: $white;
+    height: 4rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media screen and (max-width: 480px) {
+        font-size: .7rem;
+        height: 3rem;
+    }
+}

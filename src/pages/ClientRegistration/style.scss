@@ -1,0 +1,132 @@
+@import "../../vars.scss";
+
+.form-container {
+  position: relative;
+  top: -40px;
+}
+
+.client-registration-container {
+  height: 80vh;
+  width: 100%;
+  background-color: $lightBlue;
+
+  .form-container {
+    width: 40%;
+    height: 90%;
+    margin: 0 auto;
+    border: 1px solid $borderColor;
+    border-radius: 8px;
+    background-color: $white;
+    color: $darkBlue;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .form-top {
+      padding: 0.8rem 0 0;
+      border-bottom: 1px solid $borderColor;
+      margin: 0 2.2rem 0 1.5rem;
+      h2 {
+        font-family: $fontTittle;
+        font-size: 1.7rem;
+        font-weight: 500;
+        margin-bottom: 0;
+      }
+    }
+
+    .form-content {
+      margin: 5px 80px;
+      .input-label {
+        margin-top: 1.2rem;
+        font-size: 14px;
+      }
+      .type-of-user {
+        text-align: center;
+        margin: 15px 5px 5px;
+        label {
+          margin: 15px 40px 15px 5px;
+          font-size: 14px;
+        }
+      }
+    }
+
+    .form-bottom {
+      display: flex;
+      justify-content: space-between;
+      background-color: $lightGray;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+
+      padding: 20px;
+      .attention-container {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        margin-left: -10px;
+        width: 250px;
+        .attention-icon {
+          color: $mediumBlue;
+          font-size: 30px;
+        }
+        p {
+          margin: 0 10px;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    height: 90vh;
+    .form-container {
+      width: 85%;
+      .form-top h2 {
+        font-size: 1.2rem;
+      }
+      .form-content{
+        margin: 5px 20px;
+          .input-label{
+            font-size: .7rem;
+            }     
+        }
+        .form-bottom {
+          .attention-container {
+              .attention-icon{
+                  font-size: 1.6rem;
+              }
+              font-size: .7rem;
+          }
+          .btn-delete, .btn-primary{
+            font-size: .6rem;
+          }
+        }
+    }
+  }
+  @media screen and (max-width: 769px) {
+    height: 78vh;
+    .form-container {
+      width: 70%;
+      height: 80%;
+      top: -20px;
+      .form-top h2 {
+        font-size: 1.2rem;
+      }
+      .form-content{
+        margin: 5px 70px;
+          .input-label{
+            font-size: .9rem;
+            }     
+        }
+        .form-bottom {
+          .attention-container {
+              .attention-icon{
+                  font-size: 1.6rem;
+              }
+              font-size: .9rem;
+          }
+          .btn-delete, .btn-primary{
+            font-size: .9rem;
+          }
+        }
+    }
+  }
+}

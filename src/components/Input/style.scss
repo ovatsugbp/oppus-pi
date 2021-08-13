@@ -1,0 +1,25 @@
+@import '../../vars.scss';
+
+.inputs-area {
+    display: flex;
+    flex-direction: column;
+    
+    .input-field{
+        background-color: $lightGray;
+        border: 1px solid $borderColor;
+        height: 50px;
+        outline: none;
+        border-radius: 8px;
+        margin-top: 5px;
+        
+        padding-left: 10px;
+        padding-right: 20px;
+        color: $mediumBlue;
+        &.input-small{
+            width: 250px;
+        }
+        &.input-medium{
+            width: 100%
+        }
+    }
+}

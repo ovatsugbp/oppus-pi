@@ -1,0 +1,96 @@
+@import "../../vars.scss";
+
+* {
+  box-sizing: content-box;
+
+  .select-input {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    cursor: default;
+
+    .arrow {
+      content: "";
+      background: url("../../assets/img/arrow-down.svg");
+      color: $darkBlue;
+      background-size: contain;
+      background-repeat: no-repeat;
+      position: absolute;
+      height: 100%;
+      width: 24px;
+      right: 10px;
+      top: -6px;
+      transition: all 0.2s;
+    }
+
+    .arrow.open {
+      transform: rotateX(180deg);
+      top: -12px;
+    }
+
+    .selected-value input {
+      color: $mediumBlue;
+      background-color: $lightGray;
+      border: 1px solid $borderColor;
+      border-radius: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+      cursor: default;
+      outline: none;
+      padding-left: 10px;
+      padding-right: 20px;
+      height: 50px;
+      width: 250px;
+    }
+
+    input::placeholder {
+      color: $mediumBlue;
+    }
+
+    .selected-value.open input {
+      border-radius: 8px 8px 0 0;
+      border-bottom: 0px;
+    }
+
+    .options {
+      display: none;
+      color: $mediumBlue;
+      background-color: $lightGray;
+      border: solid $borderColor;
+      border-width: 1px 0 1px 0;
+      border-radius: 0 0 8px 8px;
+      max-height: 201px;
+      overflow-y: auto;
+      position: absolute;
+      top: 100%;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .options::-webkit-scrollbar {
+      display: none;
+    }
+
+    .options.open {
+      display: block;
+    }
+
+    .option {
+      box-sizing: border-box;
+      border: 1px solid $borderColor;
+      border-top: 0px;
+      height: 50px;
+      color: $darkBlue;
+      cursor: pointer;
+      display: block;
+      padding: 8px 10px;
+    }
+  }
+
+  .select-input .option.selected,
+  .select-input .option:hover {
+    background-color: $lightBlue;
+    border-left: 2px solid $darkBlue;
+    font-weight: 500;
+  }
+}

@@ -1,0 +1,53 @@
+@import '../../vars.scss';
+
+.btn {
+    color: $white;
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+    font-family: $fontBody;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: none !important;
+
+    &.btn-primary {
+        background-color: $buttonPrimary;
+        margin: 10px 5px;
+        width: 150px;
+        height: 50px;
+                img {
+            margin-right: 5px;
+        }
+    }
+    &.btn-secondary {
+        background-color: $buttonPrimary;
+        width: 450px;
+        height: 50px;
+        font-size: 18px;
+    }
+    &.btn-secondary--blue {
+        width: 450px;
+        height: 50px;
+        font-size: 18px;
+        background-color: $mediumBlue;        
+    }
+    &.btn-secondary--blue:hover {
+        background-color: $darkBlue;
+        color: $lightBlue;
+    }
+    &.btn-delete{
+        background-color: $lightBlue;
+        color: $mediumBlue;
+        margin: 10px 5px;
+        width: 150px;
+        height: 50px;
+    }
+   &.btn-delete:hover {
+        background-color: $mediumBlue;
+        color: $lightBlue;
+    }   &:hover{
+        background-color: $lightBlue;
+        color: $darkBlue;
+    }
+}
