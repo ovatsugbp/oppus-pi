@@ -10,14 +10,13 @@
    }
 
    .menu-button{
+      cursor: pointer;
       position: relative;
-      // float: right;
       display: flex;  
       align-items: center;
       justify-content: left;
       flex-direction: column;
       margin-top: 30px;
-      // padding-top: 6px;
       background-color: white;
       border-radius: 5px;
       width: 38px;
@@ -33,7 +32,6 @@
       }
 
       li{
-         // position: relative;
          display: flex;
          background-color: #03256C;
          width: 15.5px;
@@ -41,7 +39,7 @@
          justify-content: center;
          height: 2.5px;
          margin-top: 2.5px;
-         margin-left: -19px;
+         margin-left: 8px;
          border-radius: 3px;
          list-style: none;
          transition: all ease 0.2s;
@@ -87,13 +85,12 @@
       z-index: -1;
       margin-top: -37px;
       display: flex;
-      margin-left: -164px;
+      margin-left: -130px;
 
       .menu-itens{
          border-top-color: #D5DFE5;
          border-style: solid none none none;
          border-width: 0.2px;
-         // border: 1px  #D5DFE5;
          cursor: pointer;
          line-height: 10px;
          transition: all ease 0.3s;
@@ -142,7 +139,6 @@
 
       .menu-item-top{
          color: #1768AC;
-         // font-weight: bold;
          font-size: 1rem;
          cursor: default;
          border-top-color: white;
