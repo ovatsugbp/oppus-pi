@@ -59,7 +59,7 @@ export const ProfessionalRegistration = () => {
 
                     {
                         list.map(({id}) =>
-                            <Schedule key={id} handleClick={()=> removeSchedule(id)} />
+                            <Schedule key={id} id={id} handleClick={()=> removeSchedule(id)} />
                         )     
                     }
 

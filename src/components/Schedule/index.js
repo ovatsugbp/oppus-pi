@@ -6,14 +6,14 @@ import daysOfTheWeek from '../../data/daysOfTheWeek.json';
 import './style.scss';
 import getAddress from './get-address'
 
-const Schedule = ({ key, handleClick }) => {
+const Schedule = ({ id, handleClick }) => {
     const [day, setDay] = useState(null);
     const [state, setState] = useState()
     const [city, setCity] = useState()
     const [neighborhood, setNeighborhood] = useState()
 
     return (
-        <section key={key} className="form-content schedule">
+        <section key={id} className="form-content schedule">
             <div className="period">
                 <SelectInput subtitle="Dia da semana" field="week-day" prompt="Selecione" data={daysOfTheWeek}  id="id" label="label" value={day} onChange={(val) => setDay(val)}></SelectInput>
                 <Input field="start-hour" pattern="time" subtitle="Das" inputStyle="input-medium" />
