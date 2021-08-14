@@ -8,15 +8,47 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
 import setPageTitle from "../../setPageTitle";
+import {saveInDataBase} from "../../services/consumeApi"
 
 import './style.scss';
 import { Link } from 'react-router-dom';
 
 export const SignOut = () => {
     setPageTitle('Registrar');
+    const [password, setPassword] = useState()
+    const [confirmPassword, setConfirmPassword] = useState()
+    const [name, setName] = useState()
     const [isInsertPasswordShown, setIsInsertPasswordShown] = useState(false);
     const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
-    let [userType, SetUserType] = useState()
+    const [userType, SetUserType] = useState()
+
+    function validatePassword(){
+        if(password && confirmPassword && password === confirmPassword ){
+            return true
+        }else{
+            console.log("Senha não confere")
+            return false 
+        }
+    }
+
+    function submitRegistration(event = undefined){
+        const data = {
+            name:name,
+            password: password,
+            userType: userType
+        }
+
+        const config = {
+
+        }
+
+        if(validatePassword()){
+            saveInDataBase('http://localhost:8080/api/user',data,config)
+        }else{
+            console.log("Senha inválida")
+            // event.preventDefault
+        }
+    }
 
     return (
         <>
@@ -27,16 +59,16 @@ export const SignOut = () => {
                                 <h2>Seus dados</h2>
                             </div>
                         <section className="form-content">
-                            <Input field="name" pattern="text" subtitle="Nome" inputStyle="input-medium"/>
+                            <Input field="name" pattern="text" subtitle="Nome" inputStyle="input-medium" onInput={(event)=> setName(event.target.value)}/>
                             <div className="form-insert-password">
-                            <Input field="password" pattern={ isInsertPasswordShown ? "text" : "password" } subtitle="Senha" inputStyle="input-medium"/>
+                            <Input field="password" pattern={ isInsertPasswordShown ? "text" : "password" } subtitle="Senha" inputStyle="input-medium" onInput={(event) => setPassword(event.target.value)}/>
                                 {   !isInsertPasswordShown ?
                                     <VisibilityOffIcon className="password-icon" onClick={() => setIsInsertPasswordShown(true)} /> :
                                     <VisibilityIcon className="password-icon" onClick={() => setIsInsertPasswordShown(false)} />
                                 }
                             </div>
                             <div className="form-confirm-password">
-                                <Input field="password" pattern={ isConfirmPasswordShown ? "text" : "password" } subtitle="Confirme sua senha" inputStyle="input-medium"/>
+                                <Input field="password" pattern={ isConfirmPasswordShown ? "text" : "password" } subtitle="Confirme sua senha" inputStyle="input-medium" onInput={(event)=> setConfirmPassword(event.target.value)}/>
                                 {   !isConfirmPasswordShown ? 
                                     <VisibilityOffIcon className="password-icon" onClick={() => setIsConfirmPasswordShown(true)}/> :
                                     <VisibilityIcon className="password-icon" onClick={() => setIsConfirmPasswordShown(false)}/> 
@@ -55,7 +87,7 @@ export const SignOut = () => {
                                 <p>Importante!<br></br>Preencha todos os seus dados</p>
                             </div>
                             <Link to = {userType}>
-                                <Button btnStyle="btn-primary">Salvar Cadastro</Button>
+                                <Button btnStyle="btn-primary" onClick={submitRegistration} >Salvar Cadastro</Button>
                             </Link>
                         </section>
                     </section>
