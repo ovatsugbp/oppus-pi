@@ -20,10 +20,10 @@ export const SignOut = () => {
     const [name, setName] = useState()
     const [isInsertPasswordShown, setIsInsertPasswordShown] = useState(false);
     const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
-    const [userType, SetUserType] = useState({isProfessional: undefined, router:""})
+    const [userType, SetUserType] = useState({isProfessional: undefined, router:"/registro"})
 
     function validatePassword(){
-        if(password && confirmPassword && password === confirmPassword ){
+        if(password && confirmPassword && password === confirmPassword && userType.isProfessional !== undefined ){
             return true
         }else{
             console.log("Senha não confere")
@@ -45,7 +45,7 @@ export const SignOut = () => {
         if(validatePassword()){
             saveInDataBase('http://localhost:8080/api/user/register',data,config)
         }else{
-            console.log("Senha inválida")
+            console.log("Dados Inválidos")
             // event.preventDefault
         }
     }
