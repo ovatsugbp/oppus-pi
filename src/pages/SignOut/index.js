@@ -43,7 +43,7 @@ export const SignOut = () => {
         }
 
         if(validatePassword()){
-            saveInDataBase('http://localhost:8080/api/user',data,config)
+            saveInDataBase('http://localhost:8080/api/user/register',data,config)
         }else{
             console.log("Senha inválida")
             // event.preventDefault
