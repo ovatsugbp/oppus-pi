@@ -20,10 +20,10 @@ export const SignOut = () => {
     const [name, setName] = useState()
     const [isInsertPasswordShown, setIsInsertPasswordShown] = useState(false);
     const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
-    const [userType, SetUserType] = useState()
+    const [userType, SetUserType] = useState({isProfessional: undefined, router:"/registro"})
 
     function validatePassword(){
-        if(password && confirmPassword && password === confirmPassword ){
+        if(password && confirmPassword && password === confirmPassword && userType.isProfessional !== undefined ){
             return true
         }else{
             console.log("Senha não confere")
@@ -35,7 +35,7 @@ export const SignOut = () => {
         const data = {
             name:name,
             password: password,
-            userType: userType
+            isProfessional: userType.isProfessional
         }
 
         const config = {
@@ -43,9 +43,9 @@ export const SignOut = () => {
         }
 
         if(validatePassword()){
-            saveInDataBase('http://localhost:8080/api/user',data,config)
+            saveInDataBase('http://localhost:8080/api/user/register',data,config)
         }else{
-            console.log("Senha inválida")
+            console.log("Dados Inválidos")
             // event.preventDefault
         }
     }
@@ -75,9 +75,10 @@ export const SignOut = () => {
                                 }
                             </div>
                             <div className="type-of-user">
-                                <input type="radio" name="user" id="worker" onClick={() => userType = SetUserType("/profissional")} />
+                                <input type="radio" name="user" id="worker" 
+                                onClick={() => SetUserType({router:"/profissional", isProfessional: true}) }/>
                                 <label htmlFor="worker">Sou profissional</label>
-                                <input type="radio" name="user" id="non-worker" onClick={() => userType = SetUserType("/usuario")}/>
+                                <input type="radio" name="user" id="non-worker" onClick={() => SetUserType({isProfessional:false, router:"/usuario"}) }/>
                                 <label htmlFor="non-worker">Busco profissional</label>
                             </div>
                         </section>
@@ -86,7 +87,7 @@ export const SignOut = () => {
                                 <ReportOutlinedIcon className="attention-icon" />
                                 <p>Importante!<br></br>Preencha todos os seus dados</p>
                             </div>
-                            <Link to = {userType}>
+                            <Link to = {userType.router}>
                                 <Button btnStyle="btn-primary" onClick={submitRegistration} >Salvar Cadastro</Button>
                             </Link>
                         </section>
