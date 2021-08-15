@@ -35,7 +35,7 @@ export const SignOut = () => {
         const data = {
             name:name,
             password: password,
-            userType: userType
+            professional: userType
         }
 
         const config = {
