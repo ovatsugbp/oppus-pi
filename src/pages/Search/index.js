@@ -16,7 +16,7 @@ export const Search = () => {
     const [professionalList, setProfessionalData] = useState()
 
     useEffect(()=>{
-        fetchApi("https://run.mocky.io/v3/1ff4494d-d033-4c87-b5f0-a41801b2f42d").then(data => {
+        fetchApi("url").then(data => {
         setProfessionalData(data?.all_professional)
     
     })
