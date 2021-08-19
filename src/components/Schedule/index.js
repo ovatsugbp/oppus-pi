@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Input from '../../components/Input/input';
 import SelectInput from '../../components/SelectInput';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+import SaveIcon from '@material-ui/icons/Save';
 import daysOfTheWeek from '../../data/daysOfTheWeek.json';
 import './style.scss';
 import getAddress from './get-address'
 
 const Schedule = ({id, weekDay, startHour, finishHour, zipCodeSchedule,
-     state, city, neighborhood, handleClick }) => {
+     state, city, neighborhood, handleClick, onClickSave }) => {
     const [day, setDay] = useState(null);
     const [address, SetAddress] = useState()
 
@@ -35,6 +36,7 @@ const Schedule = ({id, weekDay, startHour, finishHour, zipCodeSchedule,
                 onInput={(e)=> updateAddress(e)}/>
                 <Input field="location-UF" pattern="text" subtitle="UF" inputStyle="input-medium" inputValue={address?.state || state}/>
                 <button className="trash-bin-icon">
+                    <SaveIcon className="save-schedule-button" key={`save-schedule-${id}`} id={`save-schedule-${id}`} onClick={onClickSave}/>
                     <DeleteOutlineOutlinedIcon onClick={handleClick} />
                 </button>
             </div>
@@ -42,6 +44,7 @@ const Schedule = ({id, weekDay, startHour, finishHour, zipCodeSchedule,
                 <Input field="location-district" pattern="text" subtitle="Bairro" inputStyle="input-medium" inputValue={address?.neighborhood || neighborhood}/>
                 <Input field="location-city" pattern="text" subtitle="Cidade" inputStyle="input-medium" inputValue={address?.city || city}/>
                 </div>
+                <div className="form-mid2"></div>
         </section>
     );
 }
