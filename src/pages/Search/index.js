@@ -6,11 +6,17 @@ import Input from '../../components/Input/input.js';
 import SelectInput from '../../components/SelectInput';
 import setPageTitle from "../../setPageTitle"
 import professionalsList from '../../data/professionalsList.json';
+import Modal from '../../components/Modal';
+import {Link} from 'react-router-dom';
+import image from "../../assets/img/Imagem-Login.png";
 import './style.scss';
 
 export const Search = () => {
     setPageTitle('Pesquisar')
     const [value, setValue] = useState(null);
+    const[isOpen, setIsOpen] = useState(false);
+    const [isLoggedIn, setIsLoggedin] = useState(true);
+
     return (
         <>
             <Header subtitle="Estes são os profissionais disponíveis."/>
@@ -27,6 +33,14 @@ export const Search = () => {
                 </section>
             </section>
             <Footer/>
+            {isOpen && !isLoggedIn && (
+            <Modal onClick={() => {setIsOpen(false)}} >
+                <p className="modal-message">Você deve estar logado para ter acesso ao contanto do profissional</p>
+                <img className="door-guy" src={image} alt="garoto entrando por uma porta" />
+                <Link to='/entrar'>
+                        <Button btnStyle="btn-primary">Login</Button>
+                </Link>
+            </Modal>)}
         </>
     )
 }
