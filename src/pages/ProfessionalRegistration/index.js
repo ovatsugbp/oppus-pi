@@ -15,22 +15,27 @@ export const ProfessionalRegistration = () => {
     setPageTitle('Dados do Profissional')
 
     const [option, setOption] = useState(null);
-    const [count, setCount] = useState(1);
-    const [list, setList] = useState([{id:0}])
+    const [count, setCount] = useState(0);
+    const [schedule, setSchedule] = useState([{id:""}])
     const [professionalData, setProfessionalData] = useState({})
+    console.log(schedule)
 
     useEffect(()=>{
-        fetchApi("http://localhost:8080/api/user").then(data => setProfessionalData(data))
+        fetchApi("https://run.mocky.io/v3/0e7b7d71-de3f-4b23-b183-9f20f935605e").then(data => {
+            setProfessionalData(data)
+            setSchedule(data.professionalSchedule)
+            setCount(data.professionalSchedule.length + 1)
+        })
     },[])
 
     function addSchedule() {
-        setList([...list,{id:count}])
-        setCount(count+1)
+        setSchedule([...schedule,{id:count}])
+        setCount(count + 1)
     }
 
     function removeSchedule(id) {
-        let newList = list.filter(value => value.id !== id )
-        setList([...newList])
+        let newList = schedule.filter(value => value.id !== id )
+        setSchedule([...newList])
     }
 
     return (
@@ -64,8 +69,9 @@ export const ProfessionalRegistration = () => {
                     </div>
 
                     {
-                        list.map(({id}) =>
-                            <Schedule key={id} id={id} handleClick={()=> removeSchedule(id)} />
+                        schedule.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) =>  // neighborhoodSchedule,
+                            <Schedule key={id} id={id} weekDay={availableDay} startHour={startHour} finishHour={finishHour}
+                             zipCodeSchedule={cep} neighborhood={district} state={uf} city={city} handleClick={()=> removeSchedule(id)} />
                         )     
                     }
 
