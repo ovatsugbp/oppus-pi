@@ -7,7 +7,7 @@ import Button from '../Button';
 
 
 
-export const Card = ({name, profession, price}) => {
+export const Card = ({name, profession, price, onClick, isLoggedIn, link}) => {
     return (
         <section className="card">
             <div className="card-top">
@@ -37,7 +37,10 @@ export const Card = ({name, profession, price}) => {
                     <p>R$ {price}</p>
                 </div>   
                 <div className="professional-contact">
-                    <Button btnStyle="btn-primary" icon={Icon}>Entrar em contato</Button>
+                    <Button btnStyle="btn-primary" icon={Icon} onClick={onClick}>
+                        {isLoggedIn && <a className="link-wpp" href={link}>Entrar em contato</a>}
+                        {!isLoggedIn && "Entrar em contato"}
+                    </Button>
                 </div>
             </div>            
         </section>

@@ -9,6 +9,7 @@ import professionalsList from '../../data/professionalsList.json';
 import Modal from '../../components/Modal';
 import {Link} from 'react-router-dom';
 import image from "../../assets/img/Imagem-Login.png";
+import Button from "../../components/Button";
 import './style.scss';
 
 export const Search = () => {
@@ -27,9 +28,9 @@ export const Search = () => {
                     <Input inputStyle="input-small" pattern="datetime-local" field="when" subtitle="Quando você precisa?"></Input>
                 </section>
                 <section className="search-results">
-                    <Card name="Britney Spears" profession="Cantora" price="300,00"/>
-                    <Card name="Britney Spears" profession="Cantora" price="300,00"/>
-                    <Card name="Britney Spears" profession="Cantora" price="300,00"/>
+                    <Card link="https://api.whatsapp.com/send?phone={telefoneProfissional}&text=Ol%C3%A1%2C%20{nomeProfissional}!%20Vi%20seu%20perfil%20na%20plataforma%20Oppus%20e%20gostaria%20de%20solicitar%20um%20servi%C3%A7o." onClick={() => {setIsOpen(true)}} isLoggedIn={isLoggedIn} name="Britney Spears" profession="Cantora" price="300,00"/>
+                    <Card link="https://api.whatsapp.com/send?phone={telefoneProfissional}&text=Ol%C3%A1%2C%20{nomeProfissional}!%20Vi%20seu%20perfil%20na%20plataforma%20Oppus%20e%20gostaria%20de%20solicitar%20um%20servi%C3%A7o." onClick={() => {setIsOpen(true)}} isLoggedIn={isLoggedIn} name="Britney Spears" profession="Cantora" price="300,00"/>
+                    <Card link="https://api.whatsapp.com/send?phone={telefoneProfissional}&text=Ol%C3%A1%2C%20{nomeProfissional}!%20Vi%20seu%20perfil%20na%20plataforma%20Oppus%20e%20gostaria%20de%20solicitar%20um%20servi%C3%A7o." onClick={() => {setIsOpen(true)}} isLoggedIn={isLoggedIn} name="Britney Spears" profession="Cantora" price="300,00"/>
                 </section>
             </section>
             <Footer/>
