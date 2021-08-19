@@ -37,7 +37,7 @@ const Schedule = ({id, weekDay, startHour, finishHour, zipCodeSchedule,
                 <Input field="location-UF" pattern="text" subtitle="UF" inputStyle="input-medium" inputValue={address?.state || state}/>
                 <button className="trash-bin-icon">
                     <SaveIcon className="save-schedule-button" key={`save-schedule-${id}`} id={`save-schedule-${id}`} onClick={onClickSave}/>
-                    <DeleteOutlineOutlinedIcon onClick={handleClick} />
+                    <DeleteOutlineOutlinedIcon className="delete-schedule-button" key={`delete-schedule-${id}`} id={`delete-schedule-${id}`} onClick={handleClick} />
                 </button>
             </div>
             <div className="location-row2">
