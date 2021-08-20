@@ -8,61 +8,171 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
 import setPageTitle from "../../setPageTitle";
+import {saveInDataBase} from "../../services/consumeApi"
+
+import api from "../../services/consumeApi"
 
 import './style.scss';
 import { Link } from 'react-router-dom';
 
 export const SignOut = () => {
     setPageTitle('Registrar');
+    const [password, setPassword] = useState()
+    const [confirmPassword, setConfirmPassword] = useState();
+    const [email, setEmail] = useState();
+    const [userId, setUserId] = useState();
+
     const [isInsertPasswordShown, setIsInsertPasswordShown] = useState(false);
     const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
-    let [userType, SetUserType] = useState()
+    const [userType, SetUserType] = useState({isProfessional: null, router:"/registro"})
+
+    const validatePassword = password && password === confirmPassword && userType.isProfessional !== null;
+    console.log('validation', validatePassword);
+
+    const registerUser = async () => {
+        const data = {
+            email,
+            password,
+            isProfessional: userType.isProfessional,
+        };
+        if(validatePassword && data.isProfessional === true){
+            let res = await saveInDataBase(
+                'http://localhost:8080/api/professionals/register',
+                data
+            );
+            
+            setUserId(res.id);
+            } else if (validatePassword && data.isProfessional === false) {
+                let res = await saveInDataBase(
+                    "http://localhost:8080/api/user/register",
+                    data
+                );
+                setUserId(res.id);
+            }
+        }
 
     return (
         <>
-            <Header subtitle="Seja bem-vindo à nossa plataforma (:"/>
-                <section className="sign-out-container">
-                    <section className="form-container">
-                            <div className="form-top">
-                                <h2>Seus dados</h2>
-                            </div>
-                        <section className="form-content">
-                            <Input field="name" pattern="text" subtitle="Nome" inputStyle="input-medium"/>
-                            <div className="form-insert-password">
-                            <Input field="password" pattern={ isInsertPasswordShown ? "text" : "password" } subtitle="Senha" inputStyle="input-medium"/>
-                                {   !isInsertPasswordShown ?
-                                    <VisibilityOffIcon className="password-icon" onClick={() => setIsInsertPasswordShown(true)} /> :
-                                    <VisibilityIcon className="password-icon" onClick={() => setIsInsertPasswordShown(false)} />
+            <Header subtitle="Seja bem-vindo à nossa plataforma (:" />
+            <section className="sign-out-container">
+                <section className="form-container">
+                    <div className="form-top">
+                        <h2>Seus dados</h2>
+                    </div>
+                    <section className="form-content">
+                        <Input
+                            field="email"
+                            pattern="email"
+                            subtitle="Email"
+                            inputStyle="input-medium"
+                            onInput={(event) => setEmail(event.target.value)}
+                        />
+                        <div className="form-insert-password">
+                            <Input
+                                field="password"
+                                pattern={
+                                    isInsertPasswordShown ? "text" : "password"
                                 }
-                            </div>
-                            <div className="form-confirm-password">
-                                <Input field="password" pattern={ isConfirmPasswordShown ? "text" : "password" } subtitle="Confirme sua senha" inputStyle="input-medium"/>
-                                {   !isConfirmPasswordShown ? 
-                                    <VisibilityOffIcon className="password-icon" onClick={() => setIsConfirmPasswordShown(true)}/> :
-                                    <VisibilityIcon className="password-icon" onClick={() => setIsConfirmPasswordShown(false)}/> 
+                                subtitle="Senha"
+                                inputStyle="input-medium"
+                                onInput={(event) =>
+                                    setPassword(event.target.value)
                                 }
-                            </div>
-                            <div className="type-of-user">
-                                <input type="radio" name="user" id="worker" onClick={() => userType = SetUserType("/profissional")} />
-                                <label htmlFor="worker">Sou profissional</label>
-                                <input type="radio" name="user" id="non-worker" onClick={() => userType = SetUserType("/usuario")}/>
-                                <label htmlFor="non-worker">Busco profissional</label>
-                            </div>
-                        </section>
-                        <section className="form-bottom">
-                            <div className="attention-container">
-                                <ReportOutlinedIcon className="attention-icon" />
-                                <p>Importante!<br></br>Preencha todos os seus dados</p>
-                            </div>
-                            <Link to = {userType}>
-                                <Button btnStyle="btn-primary">Salvar Cadastro</Button>
-                            </Link>
-                        </section>
+                            />
+                            {!isInsertPasswordShown ? (
+                                <VisibilityOffIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsInsertPasswordShown(true)
+                                    }
+                                />
+                            ) : (
+                                <VisibilityIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsInsertPasswordShown(false)
+                                    }
+                                />
+                            )}
+                        </div>
+                        <div className="form-confirm-password">
+                            <Input
+                                field="password"
+                                pattern={
+                                    isConfirmPasswordShown ? "text" : "password"
+                                }
+                                subtitle="Confirme sua senha"
+                                inputStyle="input-medium"
+                                onInput={(event) =>
+                                    setConfirmPassword(event.target.value)
+                                }
+                            />
+                            {!isConfirmPasswordShown ? (
+                                <VisibilityOffIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsConfirmPasswordShown(true)
+                                    }
+                                />
+                            ) : (
+                                <VisibilityIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsConfirmPasswordShown(false)
+                                    }
+                                />
+                            )}
+                        </div>
+                        <div className="type-of-user">
+                            <input
+                                type="radio"
+                                name="user"
+                                id="worker"
+                                onClick={() =>
+                                    SetUserType({
+                                        router: "/profissional",
+                                        isProfessional: true,
+                                    })
+                                }
+                            />
+                            <label htmlFor="worker">Sou profissional</label>
+                            <input
+                                type="radio"
+                                name="user"
+                                id="non-worker"
+                                onClick={() =>
+                                    SetUserType({
+                                        isProfessional: false,
+                                        router: "/usuario",
+                                    })
+                                }
+                            />
+                            <label htmlFor="non-worker">
+                                Busco profissional
+                            </label>
+                        </div>
+                    </section>
+                    <section className="form-bottom">
+                        <div className="attention-container">
+                            <ReportOutlinedIcon className="attention-icon" />
+                            <p>
+                                Importante!<br></br>Preencha todos os seus dados
+                            </p>
+                        </div>
+                        <Link to = {userType.router}>
+                            <Button
+                                btnStyle="btn-primary"
+                                onClick={registerUser}
+                            >
+                                Salvar Cadastro
+                            </Button>
+                        </Link>
                     </section>
                 </section>
-            <Footer/>
+            </section>
+            <Footer />
         </>
-    )
+    );
 }
 
 
