@@ -21,12 +21,16 @@ export const ProfessionalRegistration = () => {
     console.log(schedule)
 
     useEffect(()=>{
-        fetchApi("https://run.mocky.io/v3/0e7b7d71-de3f-4b23-b183-9f20f935605e").then(data => {
-            setProfessionalData(data)
-            setSchedule(data.professionalSchedule)
-            setCount(data.professionalSchedule.length + 1)
-        })
+        fetchApi(
+            "https://run.mocky.io/v3/0e7b7d71-de3f-4b23-b183-9f20f935605e"
+        ).then((data) => {
+            setProfessionalData(data);
+            setSchedule(data.professionalSchedule);
+            setCount(data.professionalSchedule.length + 1);
+        });
     },[])
+
+    console.log(professionalData);
 
     function addSchedule() {
         setSchedule([...schedule,{id:count}])
@@ -37,6 +41,7 @@ export const ProfessionalRegistration = () => {
         let newList = schedule.filter(value => value.id !== id )
         setSchedule([...newList])
     }
+    
 
     return (
         <div>
@@ -47,29 +52,83 @@ export const ProfessionalRegistration = () => {
                         <h2>Seus dados</h2>
                     </div>
                     <section className="form-content">
-                        <Input field="name" pattern="text" subtitle="Nome completo" inputStyle="input-medium" inputValue={professionalData.name}/>
-                        <Input field="photo-link" pattern="url" subtitle="Link da sua foto  (comece com //http)" inputStyle="input-medium" inputValue={professionalData.photoURL}/>
-                        <Input field="phone-number" pattern="tel" subtitle="Whatsapp  (somente números)" inputStyle="input-medium" inputValue={professionalData.phone}/>
-                        <Input field="social-media" pattern="url" subtitle="Rede social  (Instagram, Facebook, Twitter...)" inputStyle="input-medium" inputValue={professionalData.socialMedia}/>
-                        <label className="input-label" htmlFor="biography" >Biografia</label>
-                        <textarea id="biography" name="biography" rows='5' cols='45' value={professionalData.bio}></textarea>
+                        <Input
+                            field="name"
+                            pattern="text"
+                            subtitle="Nome completo"
+                            inputStyle="input-medium"
+                            inputValue={professionalData.name}
+                            onInput={(e) => professionalData.name = setProfessionalData(e.target.value)}
+                        />
+                        <Input
+                            field="photo-link"
+                            pattern="url"
+                            subtitle="Link da sua foto  (comece com //http)"
+                            inputStyle="input-medium"
+                            inputValue={professionalData.photoURL}
+                        />
+                        <Input
+                            field="phone-number"
+                            pattern="tel"
+                            subtitle="Whatsapp  (somente números)"
+                            inputStyle="input-medium"
+                            inputValue={professionalData.phone}
+                        />
+                        <Input
+                            field="social-media"
+                            pattern="url"
+                            subtitle="Rede social  (Instagram, Facebook, Twitter...)"
+                            inputStyle="input-medium"
+                            inputValue={professionalData.socialMedia}
+                        />
+                        <div className="textarea-container">
+                            <label className="input-label" htmlFor="biography">
+                                Biografia
+                            </label>
+                            <textarea
+                                id="biography"
+                                name="biography"
+                                rows="5"
+                                cols="45"
+                                value={professionalData.bio}
+                            ></textarea>
+                        </div>
                     </section>
                     <div className="form-mid">
                         <h2>Conte para a gente com o que você trabalha</h2>
                     </div>
                     <section className="form-content ocupation">
-                        <SelectInput field="ocupation-area" subtitle="Área de atuação" prompt={professionalData.nameActivity || "Selecione a sua profissão"} data={professionalsList}  id="id" label="label" value={option}  onChange={(val) => setOption(val)}></SelectInput>
-                        <Input field="price" pattern="number" subtitle="Custo da sua hora por serviço (em R$)" inputStyle="input-medium" inputValue={professionalData.priceActivity}/>
+                        <SelectInput
+                            field="ocupation-area"
+                            subtitle="Área de atuação"
+                            prompt={professionalData.nameActivity || "Selecione a sua profissão"}
+                            data={professionalsList}
+                            id="id"
+                            label="label"
+                            value={option}
+                            onChange={(val) => setOption(val)}
+                        ></SelectInput>
+                        <Input
+                            field="price"
+                            pattern="number"
+                            subtitle="Custo da sua hora por serviço (em R$)"
+                            inputStyle="input-medium"
+                            inputValue={professionalData.priceActivity}
+                        />
                     </section>
                     <div className="form-mid2">
                         <h2>Horários disponíveis</h2>
-                        <div className="btn-schedule" role="button" onClick={addSchedule}>
+                        <div
+                            className="btn-schedule"
+                            role="button"
+                            onClick={addSchedule}
+                        >
                             <p>+ Novo horário</p>
                         </div>
                     </div>
 
                     {
-                        schedule.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
+                        schedule?.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
                             <Schedule key={id} id={id} weekDay={availableDay} startHour={startHour} finishHour={finishHour}
                              zipCodeSchedule={cep} neighborhood={district} state={uf} city={city} handleClick={()=> removeSchedule(id)} isDisable={!!city}/>
                         )     
@@ -78,7 +137,9 @@ export const ProfessionalRegistration = () => {
                     <section className="form-bottom">
                         <div className="attention-container">
                             <ReportOutlinedIcon className="attention-icon" />
-                            <p>Importante!<br></br>Preencha todos os dados</p>
+                            <p>
+                                Importante!<br></br>Preencha todos os dados
+                            </p>
                         </div>
                         <Button btnStyle="btn-delete">Excluir Cadastro</Button>
                         <Button btnStyle="btn-primary">Salvar cadastro</Button>
