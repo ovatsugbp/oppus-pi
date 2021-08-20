@@ -176,12 +176,3 @@ export const SignOut = () => {
         </>
     )
 }
-
-
-<div className="type-of-user" onChange={handleUser}>
-                                <input type="radio" name="user" id="worker" value="professional"
-                                onClick={() => SetUserType({router:"/profissional", isProfessional: true}) }/>
-                                <label htmlFor="worker">Sou profissional</label>
-                                <input type="radio" name="user" id="non-worker" value="user" onClick={() => SetUserType({isProfessional:false, router:"/usuario"}) }/>
-                                <label htmlFor="non-worker">Busco profissional</label>
-                            </div>

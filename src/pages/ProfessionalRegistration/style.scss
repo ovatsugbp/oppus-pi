@@ -65,6 +65,9 @@
         font-weight: bold;
         margin-top: 20px;
       }
+      .btn-schedule {
+        cursor: pointer;
+      }
     }
 
     .ocupation {
@@ -80,7 +83,6 @@
         .selected-value input {
           width: 377.59px;
         }
-
 
         .options {
           max-height: 150px;
@@ -130,6 +132,7 @@
       }
 
       textarea {
+        max-width: 100%;
         border: 1px solid $borderColor;
         border-radius: 8px;
         background-color: $lightGray;
@@ -160,6 +163,10 @@
           margin: 0 10px;
         }
       }
+    }
+    .error-message {
+      color: red;
+      font-size: 14px;
     }
   }
 }
