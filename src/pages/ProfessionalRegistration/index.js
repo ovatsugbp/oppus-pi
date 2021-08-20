@@ -69,9 +69,9 @@ export const ProfessionalRegistration = () => {
                     </div>
 
                     {
-                        schedule.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) =>  // neighborhoodSchedule,
+                        schedule.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
                             <Schedule key={id} id={id} weekDay={availableDay} startHour={startHour} finishHour={finishHour}
-                             zipCodeSchedule={cep} neighborhood={district} state={uf} city={city} handleClick={()=> removeSchedule(id)} />
+                             zipCodeSchedule={cep} neighborhood={district} state={uf} city={city} handleClick={()=> removeSchedule(id)} isDisable={!!city}/>
                         )     
                     }
 
