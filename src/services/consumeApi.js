@@ -23,7 +23,7 @@ async function fetchData(url,config = {}){
 }
 
 const api = axios.create({
-    baseURL: "https://run.mocky.io/v3/a5fdded9-da72-4f54-be6b-033ccce5d9d5",
+    baseURL: "http://localhost:8080/api/",
 });
 
 export default api;

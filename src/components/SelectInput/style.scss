@@ -23,6 +23,10 @@
       transition: all 0.2s;
     }
 
+    .arrow.disable-true{
+      display: none;
+    }
+
     .arrow.open {
       transform: rotateX(180deg);
       top: -12px;
@@ -41,7 +45,12 @@
       padding-right: 20px;
       height: 50px;
       width: 250px;
+
+      &.disable-true::placeholder{
+        color: #9b9b9b;
+      }
     }
+
 
     input::placeholder {
       color: $mediumBlue;
