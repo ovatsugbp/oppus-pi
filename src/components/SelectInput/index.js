@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import './style.scss';
 
-const SelectInput = ({ subtitle, field, data, prompt, value, onChange }) => {
+const SelectInput = ({ subtitle, field, data, prompt, value, onChange, isDisable }) => {
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState("");
     const ref = useRef(null);
@@ -32,7 +32,7 @@ const SelectInput = ({ subtitle, field, data, prompt, value, onChange }) => {
              <label className="input-label" htmlFor={field}>{subtitle}</label>
             <div className="select-input-control">
                 <div className={`selected-value ${open ? "open" : null}`}>
-                    <input type="text"
+                    <input type="text" className={`disable-${isDisable}`}
                         ref={ref}
                         placeholder={value ? value.label : prompt}
                         value={displayValue()}
@@ -42,7 +42,7 @@ const SelectInput = ({ subtitle, field, data, prompt, value, onChange }) => {
                         }}
                         onClick={toggle} />
                 </div>
-                <div className={`arrow ${open ? "open" : null}`} />
+                <div className={`arrow ${open ? "open" : null} disable-${isDisable}`}  />
             </div>
             <div className={`options ${open ? "open" : null}`}>
                 {filter(data).map((option) => (
