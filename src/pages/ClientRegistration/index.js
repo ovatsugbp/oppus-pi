@@ -11,13 +11,7 @@ import './style.scss';
 export const ClientRegistration = () => {
     setPageTitle('Dados do Cliente')
 
-    const [values, setValues] = useState({
-    name: '',
-    photoLink: '',
-    locationCity: '',
-    locationDistrict: ''
-});
-
+    const [userData, setUserData] = useState({});
     const [errors, setErrors] = useState({});
 
     let isValid;
@@ -25,25 +19,43 @@ export const ClientRegistration = () => {
     function validateInfo() {
     let errors = {};
 
-    if(!values.name){
+    if(!userData.name){
         errors.name = "Campo obrigatório";
         isValid = false;
     }
 
-    if(!values.photoLink){
-        errors.photoLink = "Campo obrigatório";
+    if(!userData.email){
+        errors.email = "Campo obrigatório";
         isValid = false;
-    } else if(!/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(values.photoLink)){
-        errors.photoLink = "Link inválido";
+    } else if(!/^[a-zA-Z0-9.!_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(userData.email)){
+        errors.email = "E-mail inválido";
         isValid = false;
     }
 
-    if(!values.locationDistrict){
+    if(!userData.password){
+        errors.password = "Campo obrigatório";
+        isValid = false;
+    }
+
+    if(!userData.confirmPassword){
+        errors.confirmPassword = "Campo obrigatório";
+        isValid = false;
+    } else if(!(userData.confirmPassword === userData.password)) {
+        errors.confirmPassword = "A senha deve ser a mesma do campo anterior";
+        isValid = false;
+    }
+
+    if(userData.photoUrl && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(userData.photoUrl)){
+        errors.photoUrl = "URL inválida";
+        isValid = false;
+    }
+
+    if(!userData.locationDistrict){
         errors.locationDistrict = "Campo obrigatório";
         isValid = false;
     }
 
-    if(!values.locationCity){
+    if(!userData.locationCity){
         errors.locationCity = "Campo obrigatório";
         isValid = false;
     } else {
@@ -53,10 +65,9 @@ export const ClientRegistration = () => {
     }
 
     const handleChange = e => {
-        setValues(
-            {...values, [e.target.name]: e.target.value}
-    );
-        console.log(values);
+        setUserData(
+            {...userData, [e.target.name]: e.target.value}
+        );
     }
 
     const handleSubmit = e => {
@@ -65,7 +76,7 @@ export const ClientRegistration = () => {
 
         if(isValid){
             console.log("submitted");
-            console.log(values);
+            console.log(userData);
         } else if(!isValid) {
             console.log(errors);
         }
@@ -86,26 +97,53 @@ export const ClientRegistration = () => {
                             pattern="text"
                             subtitle="Nome completo"
                             inputStyle="input-medium"
-                            inputValue={values.name}
-                            onChange={handleChange}
+                            inputValue={userData.name}
+                            onChange={(e) => handleChange(e)}
                         />
                         <p className="error-message">{errors.name}</p>
                         <Input
-                            field="photoLink"
+                            field="email"
+                            pattern="text"
+                            subtitle="E-mail"
+                            inputStyle="input-medium"
+                            inputValue={userData.email}
+                            onChange={(e) => handleChange(e)}
+                        />
+                        <p className="error-message">{errors.email}</p>
+                        <Input
+                            field="password"
+                            pattern="password"
+                            subtitle="Senha"
+                            inputStyle="input-medium"
+                            inputValue={userData.password}
+                            onChange={(e) => handleChange(e)}
+                        />
+                        <p className="error-message">{errors.password}</p>
+                        <Input
+                            field="confirmPassword"
+                            pattern="password"
+                            subtitle="Confirme sua senha"
+                            inputStyle="input-medium"
+                            inputValue={userData.confirmPassword}
+                            onChange={(e) => handleChange(e)}
+                        />
+                        <p className="error-message">{errors.confirmPassword}</p>
+                        <Input
+                            field="photoUrl"
                             pattern="url"
                             subtitle="Link da sua foto  (comece com //http)"
                             inputStyle="input-medium"
-                            inputValue={values.photoLink}
-                            onChange={handleChange}
+                            inputValue={userData.photoUrl}
+                            onChange={(e) => handleChange(e)}
                         />
-                        <p className="error-message">{errors.photoLink}</p>
+                        <p className="error-message">{errors.photoUrl}</p>
                         <Input
                             field="locationDistrict"
                             pattern="text"
                             subtitle="Bairro"
                             inputStyle="input-medium"
-                            inputValue={values.locationDistrict}
-                            onChange={handleChange}
+                            inputValue={userData.locationDistrict}
+                            onChange={(e) => handleChange(e)}
 
                         />
                         <p className="error-message">{errors.locationDistrict}</p>
@@ -114,8 +152,8 @@ export const ClientRegistration = () => {
                             pattern="text"
                             subtitle="Cidade"
                             inputStyle="input-medium"
-                            inputValue={values.locationCity}
-                            onChange={handleChange}
+                            inputValue={userData.locationCity}
+                            onChange={(e) => handleChange(e)}
                         />
                         <p className="error-message">{errors.locationCity}</p>
                     </section>
@@ -127,8 +165,11 @@ export const ClientRegistration = () => {
                             </p>
                         </div>
                         <Button btnStyle="btn-delete">Excluir Cadastro</Button>
-                        <Button btnStyle="btn-primary" onClick={(e) => handleSubmit(e)}>
+                        {/* <Button btnStyle="btn-primary" onClick={(e) => handleSubmit(e)}>
                             <Link to="/pesquisa">Salvar cadastro</Link>
+                        </Button> */}
+                        <Button btnStyle="btn-primary" onClick={(e) => handleSubmit(e)}>
+                            Salvar cadastro
                         </Button>
                     </section>
                 </section>
