@@ -56,7 +56,7 @@ export const Search = () => {
                 </section>
                 <section className="search-results">
                     <Card
-                        link={`https://api.whatsapp.com/send?phone=${telefoneProfissional}&text=Ol%C3%A1%2C%20${nomeProfissional}!%20Vi%20seu%20perfil%20na%20plataforma%20Oppus%20e%20gostaria%20de%20solicitar%20um%20servi%C3%A7o.`}
+                        link={`https://api.whatsapp.com/send?phone=${"telefoneProfissional"}&text=Ol%C3%A1%2C%20${"nomeProfissional"}!%20Vi%20seu%20perfil%20na%20plataforma%20Oppus%20e%20gostaria%20de%20solicitar%20um%20servi%C3%A7o.`}
                         onClick={() => {
                             setIsOpen(true);
                         }}

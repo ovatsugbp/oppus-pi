@@ -8,7 +8,7 @@ import Schedule from '../../components/Schedule';
 import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
 import professionalsList from '../../data/professionalsList.json';
 import setPageTitle from "../../setPageTitle"
-import fetchApi, {saveInDataBase} from '../../services/consumeApi'
+import fetchApi from '../../services/consumeApi'
 import './style.scss';
 
 export const ProfessionalRegistration = () => {
@@ -19,18 +19,15 @@ export const ProfessionalRegistration = () => {
     const [newId, setNewId] = useState(0);
     const [scheduleList, setScheduleList] = useState([{id:0}])
     const [professionalData, setProfessionalData] = useState({})
-    console.log(scheduleList)
 
     useEffect(()=>{
         fetchApi("https://run.mocky.io/v3/0e7b7d71-de3f-4b23-b183-9f20f935605e").then(data => {
-            let {professionalSchedule} = data
-            setProfessionalData(data)
+            let {professionalSchedule} = data.data
+            setProfessionalData(data.data)
             setScheduleList(professionalSchedule)
             setNewId(professionalSchedule[professionalSchedule?.length - 1]?.id + 1 )
         })
     },[])
-
-    console.log(professionalData);
 
     function addSchedule() {
         setScheduleList([...scheduleList,{id:newId}])
@@ -40,16 +37,7 @@ export const ProfessionalRegistration = () => {
     function removeSchedule(id) {
         let newList = scheduleList.filter(value => value.id !== id )
         setScheduleList([...newList])
-    }
-
-    function saveSchedule(id, availableDay, cep, city, district, finishHour, startHour, street, uf){
-        let newSchedule = {id , availableDay, cep, city, district, finishHour, startHour, street, uf}
-
-        
-        // saveInDataBase("", newSchedule)
-        console.log(newSchedule)
-    }
-    
+    }    
 
     let isValid;
 
@@ -98,7 +86,6 @@ export const ProfessionalRegistration = () => {
         setProfessionalData(
             {...professionalData, [e.target.name]: e.target.value}
     );
-    console.log("teste", professionalData);
     }
 
     const handleSubmit = e => {
@@ -106,7 +93,6 @@ export const ProfessionalRegistration = () => {
         e.preventDefault();
 
         if(isValid){
-            console.log("submitted");
             setProfessionalData(initialprofessionalData);
         } else if(!isValid) {
             console.log(errors);
@@ -210,9 +196,9 @@ export const ProfessionalRegistration = () => {
                     </div>
 
                     {
-                        scheduleList.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
+                        scheduleList?.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
                             <Schedule key={id} id={id} weekDay={availableDay} startHour={startHour} finishHour={finishHour}
-                             zipCodeSchedule={cep} neighborhood={district} state={uf} city={city} handleClick={()=> removeSchedule(id)} onClickSave={(scheduleData)=> saveSchedule(id)} isDisable={!!city}/>
+                             zipCodeSchedule={cep} district={district} state={uf} city={city} professionalId={professionalData?.id} handleClick={()=> removeSchedule(id)} onClickSave={()=> saveSchedule(id)} isDisable={!!city}/>
                         )     
                     }
 
