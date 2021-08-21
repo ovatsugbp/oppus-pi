@@ -8,34 +8,43 @@ import Schedule from '../../components/Schedule';
 import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
 import professionalsList from '../../data/professionalsList.json';
 import setPageTitle from "../../setPageTitle"
-import fetchApi from '../../services/consumeApi'
+import fetchApi, {saveInDataBase} from '../../services/consumeApi'
 import './style.scss';
 
 export const ProfessionalRegistration = () => {
     setPageTitle('Dados do Profissional')
 
     const [option, setOption] = useState(null);
-    const [count, setCount] = useState(0);
-    const [schedule, setSchedule] = useState([{id:""}])
+    const [newId, setNewId] = useState(0);
+    const [scheduleList, setScheduleList] = useState([{id:0}])
     const [professionalData, setProfessionalData] = useState({})
-    console.log(schedule)
+    console.log(scheduleList)
 
     useEffect(()=>{
         fetchApi("https://run.mocky.io/v3/0e7b7d71-de3f-4b23-b183-9f20f935605e").then(data => {
+            let {professionalSchedule} = data
             setProfessionalData(data)
-            setSchedule(data.professionalSchedule)
-            setCount(data.professionalSchedule.length + 1)
+            setScheduleList(professionalSchedule)
+            setNewId(professionalSchedule[professionalSchedule?.length - 1]?.id + 1 )
         })
     },[])
 
     function addSchedule() {
-        setSchedule([...schedule,{id:count}])
-        setCount(count + 1)
+        setScheduleList([...scheduleList,{id:newId}])
+        setNewId(newId + 1)
     }
 
     function removeSchedule(id) {
-        let newList = schedule.filter(value => value.id !== id )
-        setSchedule([...newList])
+        let newList = scheduleList.filter(value => value.id !== id )
+        setScheduleList([...newList])
+    }
+
+    function saveSchedule(id, availableDay, cep, city, district, finishHour, startHour, street, uf){
+        let newSchedule = {id , availableDay, cep, city, district, finishHour, startHour, street, uf}
+
+        
+        // saveInDataBase("", newSchedule)
+        console.log(newSchedule)
     }
 
     return (
@@ -47,19 +56,19 @@ export const ProfessionalRegistration = () => {
                         <h2>Seus dados</h2>
                     </div>
                     <section className="form-content">
-                        <Input field="name" pattern="text" subtitle="Nome completo" inputStyle="input-medium" inputValue={professionalData.name}/>
-                        <Input field="photo-link" pattern="url" subtitle="Link da sua foto  (comece com //http)" inputStyle="input-medium" inputValue={professionalData.photoURL}/>
-                        <Input field="phone-number" pattern="tel" subtitle="Whatsapp  (somente números)" inputStyle="input-medium" inputValue={professionalData.phone}/>
-                        <Input field="social-media" pattern="url" subtitle="Rede social  (Instagram, Facebook, Twitter...)" inputStyle="input-medium" inputValue={professionalData.socialMedia}/>
+                        <Input field="name" pattern="text" subtitle="Nome completo" inputStyle="input-medium" inputValue={professionalData?.name}/>
+                        <Input field="photo-link" pattern="url" subtitle="Link da sua foto  (comece com //http)" inputStyle="input-medium" inputValue={professionalData?.photoURL}/>
+                        <Input field="phone-number" pattern="tel" subtitle="Whatsapp  (somente números)" inputStyle="input-medium" inputValue={professionalData?.phone}/>
+                        <Input field="social-media" pattern="url" subtitle="Rede social  (Instagram, Facebook, Twitter...)" inputStyle="input-medium" inputValue={professionalData?.socialMedia}/>
                         <label className="input-label" htmlFor="biography" >Biografia</label>
-                        <textarea id="biography" name="biography" rows='5' cols='45' value={professionalData.bio}></textarea>
+                        <textarea id="biography" name="biography" rows='5' cols='45' value={professionalData?.bio}></textarea>
                     </section>
                     <div className="form-mid">
                         <h2>Conte para a gente com o que você trabalha</h2>
                     </div>
                     <section className="form-content ocupation">
-                        <SelectInput field="ocupation-area" subtitle="Área de atuação" prompt={professionalData.nameActivity || "Selecione a sua profissão"} data={professionalsList}  id="id" label="label" value={option}  onChange={(val) => setOption(val)}></SelectInput>
-                        <Input field="price" pattern="number" subtitle="Custo da sua hora por serviço (em R$)" inputStyle="input-medium" inputValue={professionalData.priceActivity}/>
+                        <SelectInput field="ocupation-area" subtitle="Área de atuação" prompt={professionalData?.nameActivity || "Selecione a sua profissão"} data={professionalsList}  id="id" label="label" value={option}  onChange={(val) => setOption(val)}></SelectInput>
+                        <Input field="price" pattern="number" subtitle="Custo da sua hora por serviço (em R$)" inputStyle="input-medium" inputValue={professionalData?.priceActivity}/>
                     </section>
                     <div className="form-mid2">
                         <h2>Horários disponíveis</h2>
@@ -69,9 +78,9 @@ export const ProfessionalRegistration = () => {
                     </div>
 
                     {
-                        schedule.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
+                        scheduleList.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
                             <Schedule key={id} id={id} weekDay={availableDay} startHour={startHour} finishHour={finishHour}
-                             zipCodeSchedule={cep} neighborhood={district} state={uf} city={city} handleClick={()=> removeSchedule(id)} isDisable={!!city}/>
+                             zipCodeSchedule={cep} neighborhood={district} state={uf} city={city} handleClick={()=> removeSchedule(id)} onClickSave={(scheduleData)=> saveSchedule(id)} isDisable={!!city}/>
                         )     
                     }
 
