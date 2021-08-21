@@ -77,7 +77,7 @@ export const SignOut = () => {
                 'http://localhost:8080/api/professionals/register',
                 data
             );
-            
+            console.log(data)            
             setUserId(res.id);
             } else if (validateForm() && data.isProfessional === false) {
                 let res = await saveInDataBase(

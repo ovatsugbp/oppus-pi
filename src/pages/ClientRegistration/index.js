@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import { Footer } from '../../components/Footer';
@@ -8,15 +8,22 @@ import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import setPageTitle from "../../setPageTitle"
+import fetchApi, {updateInDataBase} from '../../services/consumeApi'
 import './style.scss';
 
-export const ClientRegistration = () => {
+export const ClientRegistration = ({userId}) => {
     setPageTitle('Dados do Cliente')
 
     const [isInsertPasswordShown, setIsInsertPasswordShown] = useState(false);
     const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
     const [userData, setUserData] = useState({});
     const [errors, setErrors] = useState({});
+    userId = 3
+    console.log(userData);
+    useEffect(()=>{
+        fetchApi(`http://localhost:8080/api/user/me/${userId}`)
+        .then(({data}) => setUserData(data))
+    },[])
 
     let isValid;
 
@@ -80,7 +87,7 @@ export const ClientRegistration = () => {
 
         if(isValid){
             console.log("submitted");
-            console.log(userData);
+            updateInDataBase(`http://localhost:8080/api/user/update/${userId}`,userData).then(response => console.log(response))
         } else if(!isValid) {
             console.log(errors);
         }
@@ -178,7 +185,7 @@ export const ClientRegistration = () => {
                             pattern="url"
                             subtitle="Link da sua foto  (comece com //http)"
                             inputStyle="input-medium"
-                            inputValue={userData.photoUrl}
+                            inputValue={userData.photoURL}
                             onChange={(e) => handleChange(e)}
                         />
                         <p className="error-message">{errors.photoUrl}</p>

@@ -12,6 +12,18 @@ async function saveInDataBase(url,data, config = {}){
    }
 }
 
+async function updateInDataBase(url,data, config = {}){
+   try {
+      let response = await axios.put(url,data, config);
+      // console.log(response.data);
+      return response.data;
+   
+   } catch (error) {
+      console.error(error);
+      return error      
+   }
+}
+
 async function fetchData(url,config = {}){
    try {
       let response = await axios.get(url,config)
@@ -30,4 +42,4 @@ export default api;
 
 export {fetchData}
 
-export {saveInDataBase}
+export {saveInDataBase, updateInDataBase}
