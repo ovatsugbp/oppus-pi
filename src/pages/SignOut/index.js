@@ -21,7 +21,7 @@ export const SignOut = () => {
     const [isInsertPasswordShown, setIsInsertPasswordShown] = useState(false);
     const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
     const [userType, SetUserType] = useState({isProfessional: null, router:"/registro"})
-    const [userData, setUserData] = useState({});
+    const [registrationData, setregistrationData] = useState({});
     const [errors, setErrors] = useState({});
 
     let isValid;
@@ -29,23 +29,23 @@ export const SignOut = () => {
     function validateForm() {
     let errors = {};
 
-    if(!userData.email){
+    if(!registrationData.email){
         errors.email = "Campo obrigatório";
         isValid = false;
-    } else if(!/^[a-zA-Z0-9.!_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(userData.email)){
+    } else if(!/^[a-zA-Z0-9.!_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(registrationData.email)){
         errors.email = "E-mail inválido";
         isValid = false;
     }
 
-    if(!userData.password){
+    if(!registrationData.password){
         errors.password = "Campo obrigatório";
         isValid = false;
     }
 
-    if(!userData.confirmPassword){
+    if(!registrationData.confirmPassword){
         errors.confirmPassword = "Campo obrigatório";
         isValid = false;
-    } else if(!(userData.confirmPassword === userData.password)) {
+    } else if(!(registrationData.confirmPassword === registrationData.password)) {
         errors.confirmPassword = "A senha deve ser a mesma do campo anterior";
         isValid = false;
     }
@@ -60,18 +60,16 @@ export const SignOut = () => {
     }
 
     const handleChange = e => {
-        setUserData(
-            {...userData, [e.target.name]: e.target.value}
+        setregistrationData(
+            {...registrationData, [e.target.name]: e.target.value}
         );
     }
 
     const registerUser = async () => {
         validateForm();
-        console.log(isValid);
-        console.log(userType.router);
         const data = {
-            email: userData.email,
-            password: userData.password,
+            email: registrationData.email,
+            password: registrationData.password,
             isProfessional: userType.isProfessional,
         };
         if(validateForm() && data.isProfessional === true){
@@ -104,7 +102,7 @@ export const SignOut = () => {
                             pattern="email"
                             subtitle="E-mail"
                             inputStyle="input-medium"
-                            inputValue={userData.email}
+                            inputValue={registrationData.email}
                             onChange={handleChange}
                         />
                         <p className="error-message">{errors.email}</p>
@@ -116,7 +114,7 @@ export const SignOut = () => {
                                 }
                                 subtitle="Senha"
                                 inputStyle="input-medium"
-                                inputValue={userData.password}
+                                inputValue={registrationData.password}
                                 onChange={handleChange}
         
                             />
@@ -146,7 +144,7 @@ export const SignOut = () => {
                                 }
                                 subtitle="Confirme sua senha"
                                 inputStyle="input-medium"
-                                inputValue={userData.confirmPassword}
+                                inputValue={registrationData.confirmPassword}
                                 onChange={handleChange}
                             />
                             
