@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import { Footer } from '../../components/Footer';
 import { Header } from '../../components/Header';
@@ -79,23 +80,56 @@ export const ClientRegistration = () => {
                     <div className="form-top">
                         <h2>Seus dados</h2>
                     </div>
-                    <form className="form-content">
-                        <Input field="name" pattern="text" inputValue={values.name} onChange={handleChange} subtitle="Nome completo" inputStyle="input-medium" />
+                    <section className="form-content">
+                        <Input
+                            field="name"
+                            pattern="text"
+                            subtitle="Nome completo"
+                            inputStyle="input-medium"
+                            inputValue={values.name}
+                            onChange={handleChange}
+                        />
                         <p className="error-message">{errors.name}</p>
-                        <Input field="photoLink" pattern="url" inputValue={values.photoLink} onChange={handleChange} subtitle="Link da sua foto  (comece com //http)" inputStyle="input-medium" />
+                        <Input
+                            field="photoLink"
+                            pattern="url"
+                            subtitle="Link da sua foto  (comece com //http)"
+                            inputStyle="input-medium"
+                            inputValue={values.photoLink}
+                            onChange={handleChange}
+                        />
                         <p className="error-message">{errors.photoLink}</p>
-                        <Input field="locationDistrict" pattern="text" inputValue={values.locationDistrict} onChange={handleChange} subtitle="Bairro" inputStyle="input-medium" />
+                        <Input
+                            field="locationDistrict"
+                            pattern="text"
+                            subtitle="Bairro"
+                            inputStyle="input-medium"
+                            inputValue={values.locationDistrict}
+                            onChange={handleChange}
+
+                        />
                         <p className="error-message">{errors.locationDistrict}</p>
-                        <Input field="locationCity" pattern="text" inputValue={values.locationCity} onChange={handleChange} subtitle="Cidade" inputStyle="input-medium" />
+                        <Input
+                            field="locationCity"
+                            pattern="text"
+                            subtitle="Cidade"
+                            inputStyle="input-medium"
+                            inputValue={values.locationCity}
+                            onChange={handleChange}
+                        />
                         <p className="error-message">{errors.locationCity}</p>
-                    </form>
+                    </section>
                     <section className="form-bottom">
                         <div className="attention-container">
                             <ReportOutlinedIcon className="attention-icon" />
-                            <p>Importante!<br></br>Preencha todos os dados</p>
+                            <p>
+                                Importante!<br></br>Preencha todos os dados
+                            </p>
                         </div>
                         <Button btnStyle="btn-delete">Excluir Cadastro</Button>
-                        <Button type="submit" onClick={handleSubmit} btnStyle="btn-primary">Salvar cadastro</Button>
+                        <Button btnStyle="btn-primary" onClick={(e) => handleSubmit(e)}>
+                            <Link to="/pesquisa">Salvar cadastro</Link>
+                        </Button>
                     </section>
                 </section>
             </section>
