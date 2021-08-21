@@ -20,11 +20,12 @@ export const Search = () => {
     const [isLoggedIn, setIsLoggedin] = useState(true);
     const [professionalList, setProfessionalData] = useState();
 
-    useEffect(() => {
-        fetchApi("url").then((data) => {
-            setProfessionalData(data?.all_professional);
-        });
-    }, []);
+    useEffect(()=>{
+        fetchApi("https://run.mocky.io/v3/1ff4494d-d033-4c87-b5f0-a41801b2f42d").then(data => {
+        setProfessionalData(data?.all_professional)
+    
+    })
+    },[])
 
     return (
         <>

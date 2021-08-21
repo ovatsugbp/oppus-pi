@@ -11,7 +11,7 @@ const Schedule = ({id, weekDay, startHour, finishHour, zipCodeSchedule,
      state, city, neighborhood, handleClick, onClickSave, isDisable}) => {
     const [day, setDay] = useState(null);
     const [address, SetAddress] = useState()
-
+    
     async function updateAddress(e){
         let zipCode = e.target.value
         if(zipCode.length === 8){
@@ -40,7 +40,7 @@ const Schedule = ({id, weekDay, startHour, finishHour, zipCodeSchedule,
                 onChange={(e)=> updateAddress(e)} isDisable={isDisable}/>
                 <Input field="locationUF" pattern="text" subtitle="UF" inputStyle="input-medium" inputValue={address?.state || state} isDisable={isDisable}/>
                 <button className="trash-bin-icon">
-                    <SaveIcon className={`save-schedule-button hidden-${isDisable}`} key={`save-schedule-${id}`} id={`save-schedule-${id}`} onClick={onClickSave}/>
+                    <SaveIcon className={`save-schedule-button hidden-${isDisable}`} key={`save-schedule-${id}`} id={`save-schedule-${id}`} onClick={()=> onClickSave()}/>
                     <DeleteOutlineOutlinedIcon className="delete-schedule-button" key={`delete-schedule-${id}`} id={`delete-schedule-${id}`} onClick={handleClick} />
                 </button>
             </div>

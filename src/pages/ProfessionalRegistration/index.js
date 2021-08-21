@@ -8,40 +8,46 @@ import Schedule from '../../components/Schedule';
 import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
 import professionalsList from '../../data/professionalsList.json';
 import setPageTitle from "../../setPageTitle"
-import fetchApi from '../../services/consumeApi'
+import fetchApi, {saveInDataBase} from '../../services/consumeApi'
 import './style.scss';
 
 export const ProfessionalRegistration = () => {
     setPageTitle('Dados do Profissional')
 
     const [professionalOption, setProfessionalOption] = useState(null);
-    const [professionalData, setProfessionalData] = useState({});
-
     const [errors, setErrors] = useState({});
-    const [count, setCount] = useState(0);
-    const [schedule, setSchedule] = useState([{id:""}])
-    console.log(schedule)
+    const [newId, setNewId] = useState(0);
+    const [scheduleList, setScheduleList] = useState([{id:0}])
+    const [professionalData, setProfessionalData] = useState({})
+    console.log(scheduleList)
 
     useEffect(()=>{
-        fetchApi(
-            "https://run.mocky.io/v3/0e7b7d71-de3f-4b23-b183-9f20f935605e"
-        ).then((data) => {
-            setProfessionalData(data.data);
-            setSchedule(data.professionalSchedule);
-            setCount(data.professionalSchedule.length + 1);
-        });
+        fetchApi("https://run.mocky.io/v3/0e7b7d71-de3f-4b23-b183-9f20f935605e").then(data => {
+            let {professionalSchedule} = data
+            setProfessionalData(data)
+            setScheduleList(professionalSchedule)
+            setNewId(professionalSchedule[professionalSchedule?.length - 1]?.id + 1 )
+        })
     },[])
 
     console.log(professionalData);
 
     function addSchedule() {
-        setSchedule([...schedule,{id:count}])
-        setCount(count + 1)
+        setScheduleList([...scheduleList,{id:newId}])
+        setNewId(newId + 1)
     }
 
     function removeSchedule(id) {
-        let newList = schedule.filter(value => value.id !== id )
-        setSchedule([...newList])
+        let newList = scheduleList.filter(value => value.id !== id )
+        setScheduleList([...newList])
+    }
+
+    function saveSchedule(id, availableDay, cep, city, district, finishHour, startHour, street, uf){
+        let newSchedule = {id , availableDay, cep, city, district, finishHour, startHour, street, uf}
+
+        
+        // saveInDataBase("", newSchedule)
+        console.log(newSchedule)
     }
     
 
@@ -123,7 +129,7 @@ export const ProfessionalRegistration = () => {
                             pattern="text"
                             subtitle="Nome completo"
                             inputStyle="input-medium"
-                            inputValue={professionalData.name}
+                            inputValue={professionalData?.name}
                             onChange={(e) => handleChange(e)}
                         />
                         <p className="error-message">{errors.name}</p>
@@ -132,7 +138,7 @@ export const ProfessionalRegistration = () => {
                             pattern="url"
                             subtitle="Link da sua foto  (comece com //http)"
                             inputStyle="input-medium"
-                            inputValue={professionalData.photoURL}
+                            inputValue={professionalData?.photoURL}
                             onChange={handleChange}
                         />
                          <p className="error-message">{errors.photoUrl}</p>
@@ -141,7 +147,7 @@ export const ProfessionalRegistration = () => {
                             pattern="tel"
                             subtitle="Whatsapp  (somente números)"
                             inputStyle="input-medium"
-                            inputValue={professionalData.phone}
+                            inputValue={professionalData?.phone}
                             onChange={handleChange}
                         />
                          <p className="error-message">{errors.phoneNumber}</p>
@@ -150,7 +156,7 @@ export const ProfessionalRegistration = () => {
                             pattern="url"
                             subtitle="Rede social  (Instagram, Facebook, Twitter...)"
                             inputStyle="input-medium"
-                            inputValue={professionalData.socialMedia}
+                            inputValue={professionalData?.socialMedia}
                             onChange={handleChange}
                         />
                         <p className="error-message">{errors.socialMediaUrl}</p>
@@ -163,7 +169,7 @@ export const ProfessionalRegistration = () => {
                                 name="biography"
                                 rows="5"
                                 cols="45"
-                                value={professionalData.bio}
+                                value={professionalData?.bio}
                             ></textarea>
                         </div>
                     </section>
@@ -174,7 +180,7 @@ export const ProfessionalRegistration = () => {
                         <SelectInput
                             field="ocupation-area"
                             subtitle="Área de atuação"
-                            prompt={professionalData.nameActivity || "Selecione a sua profissão"}
+                            prompt={professionalData?.nameActivity || "Selecione a sua profissão"}
                             data={professionalsList}
                             id="id"
                             label="label"
@@ -187,7 +193,7 @@ export const ProfessionalRegistration = () => {
                             pattern="number"
                             subtitle="Custo da sua hora por serviço (em R$)"
                             inputStyle="input-medium"
-                            inputValue={professionalData.priceActivity}
+                            inputValue={professionalData?.priceActivity}
                             onChange={handleChange}
                         />
                         <p className="error-message">{errors.priceActivity}</p>
@@ -204,9 +210,9 @@ export const ProfessionalRegistration = () => {
                     </div>
 
                     {
-                        schedule?.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
+                        scheduleList.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
                             <Schedule key={id} id={id} weekDay={availableDay} startHour={startHour} finishHour={finishHour}
-                             zipCodeSchedule={cep} neighborhood={district} state={uf} city={city} handleClick={()=> removeSchedule(id)} isDisable={!!city}/>
+                             zipCodeSchedule={cep} neighborhood={district} state={uf} city={city} handleClick={()=> removeSchedule(id)} onClickSave={(scheduleData)=> saveSchedule(id)} isDisable={!!city}/>
                         )     
                     }
 
