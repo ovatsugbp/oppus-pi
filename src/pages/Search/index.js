@@ -55,7 +55,6 @@ export const Search = () => {
                     ></Input>
                 </section>
                 <section className="search-results">
-                   
                     {professionalList?.map((professionalData) => {
                         return (
                             <Card
