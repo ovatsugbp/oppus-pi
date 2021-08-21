@@ -7,7 +7,7 @@ import Button from '../Button';
 
 
 
-export const Card = ({name, profession, price, urlImage, biography, score}) => {
+export const Card = ({name, profession, price, onClick, isLoggedIn, link, urlImage, biography, score}) => {
 
     return (
         <section className="card">
@@ -38,7 +38,10 @@ export const Card = ({name, profession, price, urlImage, biography, score}) => {
                     <p>R$ {price}</p>
                 </div>   
                 <div className="professional-contact">
-                    <Button btnStyle="btn-primary" icon={Icon}>Entrar em contato</Button>
+                    <Button btnStyle="btn-primary" icon={Icon} onClick={onClick}>
+                        {isLoggedIn && <a className="link-wpp" href={link}>Entrar em contato</a>}
+                        {!isLoggedIn && "Entrar em contato"}
+                    </Button>
                 </div>
             </div>            
         </section>

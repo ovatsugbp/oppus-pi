@@ -14,7 +14,8 @@ import './style.scss';
 export const ProfessionalRegistration = () => {
     setPageTitle('Dados do Profissional')
 
-    const [option, setOption] = useState(null);
+    const [professionalOption, setProfessionalOption] = useState(null);
+    const [errors, setErrors] = useState({});
     const [newId, setNewId] = useState(0);
     const [scheduleList, setScheduleList] = useState([{id:0}])
     const [professionalData, setProfessionalData] = useState({})
@@ -28,6 +29,8 @@ export const ProfessionalRegistration = () => {
             setNewId(professionalSchedule[professionalSchedule?.length - 1]?.id + 1 )
         })
     },[])
+
+    console.log(professionalData);
 
     function addSchedule() {
         setScheduleList([...scheduleList,{id:newId}])
@@ -46,6 +49,71 @@ export const ProfessionalRegistration = () => {
         // saveInDataBase("", newSchedule)
         console.log(newSchedule)
     }
+    
+
+    let isValid;
+
+    function validateInfo() {
+    let errors = {};
+
+    if(!professionalData.name){
+        errors.name = "Campo obrigatório";
+        isValid = false;
+    }
+
+     if(!professionalData.photoUrl){
+        errors.photoUrl = "Campo obrigatório";
+        isValid = false;
+    } else if(professionalData.photoUrl && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.photoUrl)){
+        errors.photoUrl = "URL inválida";
+        isValid = false;
+    }
+
+    if(!professionalData.phoneNumber){
+        errors.phoneNumber = "Campo obrigatório";
+        isValid = false;
+    } else if(!/\d{11,13}/.test(professionalData.phoneNumber)){
+        errors.phoneNumber = "Número de telefone inválido"
+        isValid = false;
+    }
+
+     if(professionalData.socialMediaUrl && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.socialMediaUrl)){
+        errors.socialMediaUrl = "URL inválida";
+        isValid = false;
+    }
+
+    if(!professionalData.ocupationArea){
+        errors.ocupationArea = "Campo obrigatório";
+        isValid = false;
+    }
+
+    if(professionalData.price && !/[0-9.,]/.test(professionalData.price)){
+        errors.price = "Formato de preço inválido";
+        isValid = false;
+    }
+    setErrors({...errors});
+    }
+
+    const handleChange = e => {
+        setProfessionalData(
+            {...professionalData, [e.target.name]: e.target.value}
+    );
+    console.log("teste", professionalData);
+    }
+
+    const handleSubmit = e => {
+        validateInfo();
+        e.preventDefault();
+
+        if(isValid){
+            console.log("submitted");
+            setProfessionalData(initialprofessionalData);
+        } else if(!isValid) {
+            console.log(errors);
+        } 
+    }
+
+
 
     return (
         <div>
@@ -56,23 +124,87 @@ export const ProfessionalRegistration = () => {
                         <h2>Seus dados</h2>
                     </div>
                     <section className="form-content">
-                        <Input field="name" pattern="text" subtitle="Nome completo" inputStyle="input-medium" inputValue={professionalData?.name}/>
-                        <Input field="photo-link" pattern="url" subtitle="Link da sua foto  (comece com //http)" inputStyle="input-medium" inputValue={professionalData?.photoURL}/>
-                        <Input field="phone-number" pattern="tel" subtitle="Whatsapp  (somente números)" inputStyle="input-medium" inputValue={professionalData?.phone}/>
-                        <Input field="social-media" pattern="url" subtitle="Rede social  (Instagram, Facebook, Twitter...)" inputStyle="input-medium" inputValue={professionalData?.socialMedia}/>
-                        <label className="input-label" htmlFor="biography" >Biografia</label>
-                        <textarea id="biography" name="biography" rows='5' cols='45' value={professionalData?.bio}></textarea>
+                        <Input
+                            field="name"
+                            pattern="text"
+                            subtitle="Nome completo"
+                            inputStyle="input-medium"
+                            inputValue={professionalData?.name}
+                            onChange={(e) => handleChange(e)}
+                        />
+                        <p className="error-message">{errors.name}</p>
+                        <Input
+                            field="photoUrl"
+                            pattern="url"
+                            subtitle="Link da sua foto  (comece com //http)"
+                            inputStyle="input-medium"
+                            inputValue={professionalData?.photoURL}
+                            onChange={handleChange}
+                        />
+                         <p className="error-message">{errors.photoUrl}</p>
+                        <Input
+                            field="phoneNumber"
+                            pattern="tel"
+                            subtitle="Whatsapp  (somente números)"
+                            inputStyle="input-medium"
+                            inputValue={professionalData?.phone}
+                            onChange={handleChange}
+                        />
+                         <p className="error-message">{errors.phoneNumber}</p>
+                        <Input
+                            field="socialMediaUrl"
+                            pattern="url"
+                            subtitle="Rede social  (Instagram, Facebook, Twitter...)"
+                            inputStyle="input-medium"
+                            inputValue={professionalData?.socialMedia}
+                            onChange={handleChange}
+                        />
+                        <p className="error-message">{errors.socialMediaUrl}</p>
+                        <div className="textarea-container">
+                            <label className="input-label" htmlFor="biography">
+                                Biografia
+                            </label>
+                            <textarea
+                                id="biography"
+                                name="biography"
+                                rows="5"
+                                cols="45"
+                                value={professionalData?.bio}
+                            ></textarea>
+                        </div>
                     </section>
                     <div className="form-mid">
                         <h2>Conte para a gente com o que você trabalha</h2>
                     </div>
                     <section className="form-content ocupation">
-                        <SelectInput field="ocupation-area" subtitle="Área de atuação" prompt={professionalData?.nameActivity || "Selecione a sua profissão"} data={professionalsList}  id="id" label="label" value={option}  onChange={(val) => setOption(val)}></SelectInput>
-                        <Input field="price" pattern="number" subtitle="Custo da sua hora por serviço (em R$)" inputStyle="input-medium" inputValue={professionalData?.priceActivity}/>
+                        <SelectInput
+                            field="ocupation-area"
+                            subtitle="Área de atuação"
+                            prompt={professionalData?.nameActivity || "Selecione a sua profissão"}
+                            data={professionalsList}
+                            id="id"
+                            label="label"
+                            value={professionalOption}
+                            onChange={(val) => setProfessionalOption(val)}
+                        ></SelectInput>
+                        <p className="error-message">{errors.ocupationArea}</p>
+                        <Input
+                            field="price"
+                            pattern="number"
+                            subtitle="Custo da sua hora por serviço (em R$)"
+                            inputStyle="input-medium"
+                            inputValue={professionalData?.priceActivity}
+                            onChange={handleChange}
+                        />
+                        <p className="error-message">{errors.priceActivity}</p>
                     </section>
                     <div className="form-mid2">
                         <h2>Horários disponíveis</h2>
-                        <div className="btn-schedule" role="button" onClick={addSchedule}>
+                        <div
+                            className="btn-schedule"
+                            role="button"
+                            onClick={addSchedule}
+                        >
                             <p>+ Novo horário</p>
                         </div>
                     </div>
@@ -87,10 +219,12 @@ export const ProfessionalRegistration = () => {
                     <section className="form-bottom">
                         <div className="attention-container">
                             <ReportOutlinedIcon className="attention-icon" />
-                            <p>Importante!<br></br>Preencha todos os dados</p>
+                            <p>
+                                Importante!<br></br>Preencha todos os dados
+                            </p>
                         </div>
                         <Button btnStyle="btn-delete">Excluir Cadastro</Button>
-                        <Button btnStyle="btn-primary">Salvar cadastro</Button>
+                        <Button btnStyle="btn-primary" onClick={handleSubmit}>Salvar cadastro</Button>
                     </section>
                 </section>
             </section>
