@@ -14,17 +14,19 @@ import './style.scss';
 export const ProfessionalRegistration = () => {
     setPageTitle('Dados do Profissional')
 
-    const [option, setOption] = useState(null);
+    const [professionalOption, setProfessionalOption] = useState(null);
+    const [professionalData, setProfessionalData] = useState({});
+
+    const [errors, setErrors] = useState({});
     const [count, setCount] = useState(0);
     const [schedule, setSchedule] = useState([{id:""}])
-    const [professionalData, setProfessionalData] = useState({})
     console.log(schedule)
 
     useEffect(()=>{
         fetchApi(
             "https://run.mocky.io/v3/0e7b7d71-de3f-4b23-b183-9f20f935605e"
         ).then((data) => {
-            setProfessionalData(data);
+            setProfessionalData(data.data);
             setSchedule(data.professionalSchedule);
             setCount(data.professionalSchedule.length + 1);
         });
@@ -43,6 +45,70 @@ export const ProfessionalRegistration = () => {
     }
     
 
+    let isValid;
+
+    function validateInfo() {
+    let errors = {};
+
+    if(!professionalData.name){
+        errors.name = "Campo obrigatório";
+        isValid = false;
+    }
+
+     if(!professionalData.photoUrl){
+        errors.photoUrl = "Campo obrigatório";
+        isValid = false;
+    } else if(professionalData.photoUrl && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.photoUrl)){
+        errors.photoUrl = "URL inválida";
+        isValid = false;
+    }
+
+    if(!professionalData.phoneNumber){
+        errors.phoneNumber = "Campo obrigatório";
+        isValid = false;
+    } else if(!/\d{11,13}/.test(professionalData.phoneNumber)){
+        errors.phoneNumber = "Número de telefone inválido"
+        isValid = false;
+    }
+
+     if(professionalData.socialMediaUrl && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.socialMediaUrl)){
+        errors.socialMediaUrl = "URL inválida";
+        isValid = false;
+    }
+
+    if(!professionalData.ocupationArea){
+        errors.ocupationArea = "Campo obrigatório";
+        isValid = false;
+    }
+
+    if(professionalData.price && !/[0-9.,]/.test(professionalData.price)){
+        errors.price = "Formato de preço inválido";
+        isValid = false;
+    }
+    setErrors({...errors});
+    }
+
+    const handleChange = e => {
+        setProfessionalData(
+            {...professionalData, [e.target.name]: e.target.value}
+    );
+    console.log("teste", professionalData);
+    }
+
+    const handleSubmit = e => {
+        validateInfo();
+        e.preventDefault();
+
+        if(isValid){
+            console.log("submitted");
+            setProfessionalData(initialprofessionalData);
+        } else if(!isValid) {
+            console.log(errors);
+        } 
+    }
+
+
+
     return (
         <div>
             <Header subtitle="Seja bem-vindo à nossa plataforma (:" />
@@ -58,29 +124,36 @@ export const ProfessionalRegistration = () => {
                             subtitle="Nome completo"
                             inputStyle="input-medium"
                             inputValue={professionalData.name}
-                            onInput={(e) => professionalData.name = setProfessionalData(e.target.value)}
+                            onChange={(e) => handleChange(e)}
                         />
+                        <p className="error-message">{errors.name}</p>
                         <Input
-                            field="photo-link"
+                            field="photoUrl"
                             pattern="url"
                             subtitle="Link da sua foto  (comece com //http)"
                             inputStyle="input-medium"
                             inputValue={professionalData.photoURL}
+                            onChange={handleChange}
                         />
+                         <p className="error-message">{errors.photoUrl}</p>
                         <Input
-                            field="phone-number"
+                            field="phoneNumber"
                             pattern="tel"
                             subtitle="Whatsapp  (somente números)"
                             inputStyle="input-medium"
                             inputValue={professionalData.phone}
+                            onChange={handleChange}
                         />
+                         <p className="error-message">{errors.phoneNumber}</p>
                         <Input
-                            field="social-media"
+                            field="socialMediaUrl"
                             pattern="url"
                             subtitle="Rede social  (Instagram, Facebook, Twitter...)"
                             inputStyle="input-medium"
                             inputValue={professionalData.socialMedia}
+                            onChange={handleChange}
                         />
+                        <p className="error-message">{errors.socialMediaUrl}</p>
                         <div className="textarea-container">
                             <label className="input-label" htmlFor="biography">
                                 Biografia
@@ -105,16 +178,19 @@ export const ProfessionalRegistration = () => {
                             data={professionalsList}
                             id="id"
                             label="label"
-                            value={option}
-                            onChange={(val) => setOption(val)}
+                            value={professionalOption}
+                            onChange={(val) => setProfessionalOption(val)}
                         ></SelectInput>
+                        <p className="error-message">{errors.ocupationArea}</p>
                         <Input
                             field="price"
                             pattern="number"
                             subtitle="Custo da sua hora por serviço (em R$)"
                             inputStyle="input-medium"
                             inputValue={professionalData.priceActivity}
+                            onChange={handleChange}
                         />
+                        <p className="error-message">{errors.priceActivity}</p>
                     </section>
                     <div className="form-mid2">
                         <h2>Horários disponíveis</h2>
@@ -142,7 +218,7 @@ export const ProfessionalRegistration = () => {
                             </p>
                         </div>
                         <Button btnStyle="btn-delete">Excluir Cadastro</Button>
-                        <Button btnStyle="btn-primary">Salvar cadastro</Button>
+                        <Button btnStyle="btn-primary" onClick={handleSubmit}>Salvar cadastro</Button>
                     </section>
                 </section>
             </section>

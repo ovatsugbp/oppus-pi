@@ -48,6 +48,10 @@
           font-size: 14px;
         }
       }
+      .error-message {
+        color: red;
+        font-size: 14px;
+      }
     }
 
     .form-bottom {
@@ -82,23 +86,28 @@
       .form-top h2 {
         font-size: 1.2rem;
       }
-      .form-content{
+      .form-content {
         margin: 5px 20px;
-          .input-label{
-            font-size: .7rem;
-            }     
+        .input-label {
+          font-size: 0.7rem;
         }
-        .form-bottom {
-          .attention-container {
-              .attention-icon{
-                  font-size: 1.6rem;
-              }
-              font-size: .7rem;
-          }
-          .btn-delete, .btn-primary{
-            font-size: .6rem;
-          }
+        .error-message {
+          color: red;
+          font-size: 14px;
         }
+      }
+      .form-bottom {
+        .attention-container {
+          .attention-icon {
+            font-size: 1.6rem;
+          }
+          font-size: 0.7rem;
+        }
+        .btn-delete,
+        .btn-primary {
+          font-size: 0.6rem;
+        }
+      }
     }
   }
   @media screen and (max-width: 769px) {
@@ -110,23 +119,28 @@
       .form-top h2 {
         font-size: 1.2rem;
       }
-      .form-content{
+      .form-content {
         margin: 5px 70px;
-          .input-label{
-            font-size: .9rem;
-            }     
+        .input-label {
+          font-size: 0.9rem;
         }
-        .form-bottom {
-          .attention-container {
-              .attention-icon{
-                  font-size: 1.6rem;
-              }
-              font-size: .9rem;
-          }
-          .btn-delete, .btn-primary{
-            font-size: .9rem;
-          }
+        .error-message {
+          color: red;
+          font-size: 14px;
         }
+      }
+      .form-bottom {
+        .attention-container {
+          .attention-icon {
+            font-size: 1.6rem;
+          }
+          font-size: 0.9rem;
+        }
+        .btn-delete,
+        .btn-primary {
+          font-size: 0.9rem;
+        }
+      }
     }
   }
 }

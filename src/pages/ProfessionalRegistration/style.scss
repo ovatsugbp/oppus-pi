@@ -65,6 +65,9 @@
         font-weight: bold;
         margin-top: 20px;
       }
+      .btn-schedule {
+        cursor: pointer;
+      }
     }
 
     .ocupation {
@@ -80,7 +83,6 @@
         .selected-value input {
           width: 100%;
         }
-
 
         .options {
           max-height: 150px;
@@ -128,7 +130,7 @@
           font-size: 14px;
         }
       }
-      .textarea-container{
+      .textarea-container {
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -165,6 +167,10 @@
           margin: 0 10px;
         }
       }
+    }
+    .error-message {
+      color: red;
+      font-size: 14px;
     }
   }
 }

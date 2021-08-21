@@ -26,9 +26,64 @@ export const SignOut = () => {
     const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
     const [userType, SetUserType] = useState({isProfessional: null, router:"/registro"})
 
-    const validatePassword = password && password === confirmPassword && userType.isProfessional !== null;
+    
+    
+
+    const [values, setValues] = useState({
+        name: '',
+        password: '',
+        confirmPassword: ''
+    });
+    const [user, setUser] = useState();
+    const [errors, setErrors] = useState({});
+
+    let isValid;
+    const validatePassword = values.password && values.password === values.confirmPassword && userType.isProfessional !== null;
     console.log('validation', validatePassword);
 
+    function validateInfo() {
+    let errors = {};
+
+    if(!values.name){
+        errors.name = "Campo obrigatório";
+        isValid = false;
+    }
+
+    if(!values.password){
+        errors.password = "Campo obrigatório";
+        isValid = false;
+    }
+
+    if(!values.confirmPassword){
+        errors.confirmPassword = "Campo obrigatório";
+        isValid = false;
+    } else if(!(values.confirmPassword === values.password)) {
+        errors.confirmPassword = "A senha deve ser a mesma do campo anterior";
+        isValid = false;
+    }
+
+    if(!user){
+        errors.user = "Escolha uma das opções";
+    } else {
+        isValid = true;
+    }
+    setErrors({...errors});
+    }
+
+    const handleChange = e => {
+        console.log("entrou", isValid);
+        setValues(
+            {...values, [e.target.name]: e.target.value}
+    );
+        console.log(values);
+    }
+
+    const handleUser = e => {
+        console.log("entrou", isValid);
+        setUser(e.target.value);
+        console.log(user);
+
+    }
     const registerUser = async () => {
         const data = {
             email,
@@ -65,8 +120,10 @@ export const SignOut = () => {
                             pattern="email"
                             subtitle="Email"
                             inputStyle="input-medium"
-                            onInput={(event) => setEmail(event.target.value)}
+                            inputValue={values.name}
+                            onChange={handleChange}
                         />
+                        <p className="error-message">{errors.name}</p>
                         <div className="form-insert-password">
                             <Input
                                 field="password"
@@ -75,10 +132,11 @@ export const SignOut = () => {
                                 }
                                 subtitle="Senha"
                                 inputStyle="input-medium"
-                                onInput={(event) =>
-                                    setPassword(event.target.value)
-                                }
+                                inputValue={values.password}
+                                onChange={handleChange}
+        
                             />
+                           
                             {!isInsertPasswordShown ? (
                                 <VisibilityOffIcon
                                     className="password-icon"
@@ -95,18 +153,19 @@ export const SignOut = () => {
                                 />
                             )}
                         </div>
+                         <p className="error-message">{errors.password}</p>
                         <div className="form-confirm-password">
                             <Input
-                                field="password"
+                                field="confirmPassword"
                                 pattern={
                                     isConfirmPasswordShown ? "text" : "password"
                                 }
                                 subtitle="Confirme sua senha"
                                 inputStyle="input-medium"
-                                onInput={(event) =>
-                                    setConfirmPassword(event.target.value)
-                                }
+                                inputValue={values.confirmPassword}
+                                onChange={handleChange}
                             />
+                            
                             {!isConfirmPasswordShown ? (
                                 <VisibilityOffIcon
                                     className="password-icon"
@@ -123,6 +182,7 @@ export const SignOut = () => {
                                 />
                             )}
                         </div>
+                        <p className="error-message">{errors.confirmPassword}</p>
                         <div className="type-of-user">
                             <input
                                 type="radio"
