@@ -17,7 +17,7 @@ export const Search = () => {
     setPageTitle("Pesquisar");
     const [value, setValue] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
-    const [isLoggedIn, setIsLoggedin] = useState(true);
+    const [isLoggedIn, setIsLoggedin] = useState(false);
     const [professionalList, setProfessionalData] = useState();
 
     useEffect(()=>{
@@ -55,16 +55,7 @@ export const Search = () => {
                     ></Input>
                 </section>
                 <section className="search-results">
-                    <Card
-                        link={`https://api.whatsapp.com/send?phone=${"telefoneProfissional"}&text=Ol%C3%A1%2C%20${"nomeProfissional"}!%20Vi%20seu%20perfil%20na%20plataforma%20Oppus%20e%20gostaria%20de%20solicitar%20um%20servi%C3%A7o.`}
-                        onClick={() => {
-                            setIsOpen(true);
-                        }}
-                        isLoggedIn={isLoggedIn}
-                        name="Britney Spears"
-                        profession="Cantora"
-                        price="300,00"
-                    />
+                   
                     {professionalList?.map((professionalData) => {
                         return (
                             <Card
@@ -75,6 +66,11 @@ export const Search = () => {
                                 urlImage={professionalData?.photoURL}
                                 price={professionalData?.priceActivity}
                                 key={professionalData?.id}
+                                link={`https://api.whatsapp.com/send?phone=${professionalData.phone}&text=Ol%C3%A1%2C%20${professionalData.name}!%20Vi%20seu%20perfil%20na%20plataforma%20Oppus%20e%20gostaria%20de%20solicitar%20um%20servi%C3%A7o.`}
+                                onClick={() => {
+                                    setIsOpen(true);
+                                }}
+                                isLoggedIn={isLoggedIn}
                             />
                         );
                     })}

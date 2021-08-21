@@ -6,7 +6,7 @@
 }
 
 .client-registration-container {
-  height: 80vh;
+  height: auto;
   width: 100%;
   background-color: $lightBlue;
 
@@ -36,8 +36,19 @@
 
     .form-content {
       margin: 5px 80px;
+      .form-insert-password,
+      .form-confirm-password {
+        position: relative;
+        .password-icon {
+          position: absolute;
+          right: 10px;
+          top: 55px;
+          color: $darkBlue;
+
+          cursor: pointer;
+        }
+      }
       .input-label {
-        margin-top: 1.2rem;
         font-size: 14px;
       }
       .type-of-user {
