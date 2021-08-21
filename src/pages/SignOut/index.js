@@ -17,94 +17,76 @@ import { Link } from 'react-router-dom';
 
 export const SignOut = () => {
     setPageTitle('Registrar');
-    const [password, setPassword] = useState()
-    const [confirmPassword, setConfirmPassword] = useState();
-    const [email, setEmail] = useState();
     const [userId, setUserId] = useState();
-
     const [isInsertPasswordShown, setIsInsertPasswordShown] = useState(false);
     const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
     const [userType, SetUserType] = useState({isProfessional: null, router:"/registro"})
-
-    
-    
-
-    const [values, setValues] = useState({
-        name: '',
-        password: '',
-        confirmPassword: ''
-    });
-    const [user, setUser] = useState();
+    const [registrationData, setregistrationData] = useState({});
     const [errors, setErrors] = useState({});
 
     let isValid;
-    const validatePassword = values.password && values.password === values.confirmPassword && userType.isProfessional !== null;
-    console.log('validation', validatePassword);
 
-    function validateInfo() {
+    function validateForm() {
     let errors = {};
 
-    if(!values.name){
-        errors.name = "Campo obrigatório";
+    if(!registrationData.email){
+        errors.email = "Campo obrigatório";
+        isValid = false;
+    } else if(!/^[a-zA-Z0-9.!_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(registrationData.email)){
+        errors.email = "E-mail inválido";
         isValid = false;
     }
 
-    if(!values.password){
+    if(!registrationData.password){
         errors.password = "Campo obrigatório";
         isValid = false;
     }
 
-    if(!values.confirmPassword){
+    if(!registrationData.confirmPassword){
         errors.confirmPassword = "Campo obrigatório";
         isValid = false;
-    } else if(!(values.confirmPassword === values.password)) {
+    } else if(!(registrationData.confirmPassword === registrationData.password)) {
         errors.confirmPassword = "A senha deve ser a mesma do campo anterior";
         isValid = false;
     }
 
-    if(!user){
-        errors.user = "Escolha uma das opções";
+    if(!userType.isProfessional){
+        errors.userType = "Escolha uma das opções";
     } else {
         isValid = true;
     }
     setErrors({...errors});
+    return isValid;
     }
 
     const handleChange = e => {
-        console.log("entrou", isValid);
-        setValues(
-            {...values, [e.target.name]: e.target.value}
-    );
-        console.log(values);
+        setregistrationData(
+            {...registrationData, [e.target.name]: e.target.value}
+        );
     }
 
-    const handleUser = e => {
-        console.log("entrou", isValid);
-        setUser(e.target.value);
-        console.log(user);
-
-    }
     const registerUser = async () => {
+        validateForm();
         const data = {
-            email,
-            password,
+            email: registrationData.email,
+            password: registrationData.password,
             isProfessional: userType.isProfessional,
         };
-        if(validatePassword && data.isProfessional === true){
+        if(validateForm() && data.isProfessional === true){
             let res = await saveInDataBase(
                 'http://localhost:8080/api/professionals/register',
                 data
             );
             
             setUserId(res.id);
-            } else if (validatePassword && data.isProfessional === false) {
+            } else if (validateForm() && data.isProfessional === false) {
                 let res = await saveInDataBase(
                     "http://localhost:8080/api/user/register",
                     data
                 );
                 setUserId(res.id);
-            }
         }
+    }
 
     return (
         <>
@@ -118,12 +100,12 @@ export const SignOut = () => {
                         <Input
                             field="email"
                             pattern="email"
-                            subtitle="Email"
+                            subtitle="E-mail"
                             inputStyle="input-medium"
-                            inputValue={values.name}
+                            inputValue={registrationData.email}
                             onChange={handleChange}
                         />
-                        <p className="error-message">{errors.name}</p>
+                        <p className="error-message">{errors.email}</p>
                         <div className="form-insert-password">
                             <Input
                                 field="password"
@@ -132,7 +114,7 @@ export const SignOut = () => {
                                 }
                                 subtitle="Senha"
                                 inputStyle="input-medium"
-                                inputValue={values.password}
+                                inputValue={registrationData.password}
                                 onChange={handleChange}
         
                             />
@@ -162,7 +144,7 @@ export const SignOut = () => {
                                 }
                                 subtitle="Confirme sua senha"
                                 inputStyle="input-medium"
-                                inputValue={values.confirmPassword}
+                                inputValue={registrationData.confirmPassword}
                                 onChange={handleChange}
                             />
                             
@@ -211,6 +193,7 @@ export const SignOut = () => {
                                 Busco profissional
                             </label>
                         </div>
+                        <p className="error-message">{errors.userType}</p>
                     </section>
                     <section className="form-bottom">
                         <div className="attention-container">
@@ -219,7 +202,8 @@ export const SignOut = () => {
                                 Importante!<br></br>Preencha todos os seus dados
                             </p>
                         </div>
-                        <Link to = {userType.router}>
+                        <Link to = {userType.router} replace={isValid}>
+                            
                             <Button
                                 btnStyle="btn-primary"
                                 onClick={registerUser}
