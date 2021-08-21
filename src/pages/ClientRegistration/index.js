@@ -5,12 +5,16 @@ import { Footer } from '../../components/Footer';
 import { Header } from '../../components/Header';
 import Input from '../../components/Input/input';
 import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import setPageTitle from "../../setPageTitle"
 import './style.scss';
 
 export const ClientRegistration = () => {
     setPageTitle('Dados do Cliente')
 
+    const [isInsertPasswordShown, setIsInsertPasswordShown] = useState(false);
+    const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
     const [userData, setUserData] = useState({});
     const [errors, setErrors] = useState({});
 
@@ -110,23 +114,64 @@ export const ClientRegistration = () => {
                             onChange={(e) => handleChange(e)}
                         />
                         <p className="error-message">{errors.email}</p>
-                        <Input
-                            field="password"
-                            pattern="password"
-                            subtitle="Senha"
-                            inputStyle="input-medium"
-                            inputValue={userData.password}
-                            onChange={(e) => handleChange(e)}
-                        />
-                        <p className="error-message">{errors.password}</p>
-                        <Input
-                            field="confirmPassword"
-                            pattern="password"
-                            subtitle="Confirme sua senha"
-                            inputStyle="input-medium"
-                            inputValue={userData.confirmPassword}
-                            onChange={(e) => handleChange(e)}
-                        />
+                         <div className="form-insert-password">
+                            <Input
+                                field="password"
+                                pattern={
+                                    isInsertPasswordShown ? "text" : "password"
+                                }
+                                subtitle="Senha"
+                                inputStyle="input-medium"
+                                inputValue={userData.password}
+                                onChange={(e) => handleChange(e)}
+        
+                            />
+                           
+                            {!isInsertPasswordShown ? (
+                                <VisibilityOffIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsInsertPasswordShown(true)
+                                    }
+                                />
+                            ) : (
+                                <VisibilityIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsInsertPasswordShown(false)
+                                    }
+                                />
+                            )}
+                        </div>
+                         <p className="error-message">{errors.password}</p>
+                        <div className="form-confirm-password">
+                            <Input
+                                field="confirmPassword"
+                                pattern={
+                                    isConfirmPasswordShown ? "text" : "password"
+                                }
+                                subtitle="Confirme sua senha"
+                                inputStyle="input-medium"
+                                inputValue={userData.confirmPassword}
+                                onChange={(e) => handleChange(e)}
+                            />
+                            
+                            {!isConfirmPasswordShown ? (
+                                <VisibilityOffIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsConfirmPasswordShown(true)
+                                    }
+                                />
+                            ) : (
+                                <VisibilityIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsConfirmPasswordShown(false)
+                                    }
+                                />
+                            )}
+                        </div>
                         <p className="error-message">{errors.confirmPassword}</p>
                         <Input
                             field="photoUrl"
