@@ -8,12 +8,12 @@ import Schedule from '../../components/Schedule';
 import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
 import professionalsList from '../../data/professionalsList.json';
 import setPageTitle from "../../setPageTitle"
-import fetchApi from '../../services/consumeApi'
+import fetchApi, { updateInDataBase } from '../../services/consumeApi'
 import './style.scss';
 
-export const ProfessionalRegistration = () => {
+export const ProfessionalRegistration = ({userId}) => {
     setPageTitle('Dados do Profissional')
-
+    userId = 4
     const [professionalOption, setProfessionalOption] = useState(null);
     const [errors, setErrors] = useState({});
     const [newId, setNewId] = useState(0);
@@ -21,7 +21,7 @@ export const ProfessionalRegistration = () => {
     const [professionalData, setProfessionalData] = useState({})
 
     useEffect(()=>{
-        fetchApi("https://run.mocky.io/v3/0e7b7d71-de3f-4b23-b183-9f20f935605e").then(data => {
+        fetchApi(`http://localhost:8080/api/professionals/me/${userId}`).then(data => {
             let {professionalSchedule} = data.data
             setProfessionalData(data.data)
             setScheduleList(professionalSchedule)
@@ -39,7 +39,7 @@ export const ProfessionalRegistration = () => {
         setScheduleList([...newList])
     }    
 
-    let isValid;
+    let isValid = true;
 
     function validateInfo() {
     let errors = {};
@@ -49,29 +49,29 @@ export const ProfessionalRegistration = () => {
         isValid = false;
     }
 
-     if(!professionalData.photoUrl){
-        errors.photoUrl = "Campo obrigatório";
+     if(!professionalData.photoURL){
+        errors.photoURL = "Campo obrigatório";
         isValid = false;
-    } else if(professionalData.photoUrl && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.photoUrl)){
-        errors.photoUrl = "URL inválida";
-        isValid = false;
-    }
-
-    if(!professionalData.phoneNumber){
-        errors.phoneNumber = "Campo obrigatório";
-        isValid = false;
-    } else if(!/\d{11,13}/.test(professionalData.phoneNumber)){
-        errors.phoneNumber = "Número de telefone inválido"
+    } else if(professionalData.photoURL && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.photoURL)){
+        errors.photoURL = "URL inválida";
         isValid = false;
     }
 
-     if(professionalData.socialMediaUrl && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.socialMediaUrl)){
-        errors.socialMediaUrl = "URL inválida";
+    if(!professionalData.phone){
+        errors.phone = "Campo obrigatório";
+        isValid = false;
+    } else if(!/\d{11,13}/.test(professionalData.phone)){
+        errors.phone = "Número de telefone inválido"
         isValid = false;
     }
 
-    if(!professionalData.ocupationArea){
-        errors.ocupationArea = "Campo obrigatório";
+     if(professionalData.socialMedia && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.socialMedia)){
+        errors.socialMedia = "URL inválida";
+        isValid = false;
+    }
+
+    if(!professionalData.nameActivity){
+        errors.nameActivity = "Campo obrigatório";
         isValid = false;
     }
 
@@ -93,8 +93,8 @@ export const ProfessionalRegistration = () => {
         e.preventDefault();
 
         if(isValid){
-            setProfessionalData(initialprofessionalData);
-        } else if(!isValid) {
+            updateInDataBase(`http://localhost:8080/api/professionals/update/${userId}`,professionalData).then(data => console.log(data))
+        } else {
             console.log(errors);
         } 
     }
@@ -120,42 +120,43 @@ export const ProfessionalRegistration = () => {
                         />
                         <p className="error-message">{errors.name}</p>
                         <Input
-                            field="photoUrl"
+                            field="photoURL"
                             pattern="url"
                             subtitle="Link da sua foto  (comece com //http)"
                             inputStyle="input-medium"
                             inputValue={professionalData?.photoURL}
                             onChange={handleChange}
                         />
-                         <p className="error-message">{errors.photoUrl}</p>
+                         <p className="error-message">{errors.photoURL}</p>
                         <Input
-                            field="phoneNumber"
+                            field="phone"
                             pattern="tel"
                             subtitle="Whatsapp  (somente números)"
                             inputStyle="input-medium"
                             inputValue={professionalData?.phone}
                             onChange={handleChange}
                         />
-                         <p className="error-message">{errors.phoneNumber}</p>
+                         <p className="error-message">{errors.phone}</p>
                         <Input
-                            field="socialMediaUrl"
+                            field="socialMedia"
                             pattern="url"
                             subtitle="Rede social  (Instagram, Facebook, Twitter...)"
                             inputStyle="input-medium"
                             inputValue={professionalData?.socialMedia}
                             onChange={handleChange}
                         />
-                        <p className="error-message">{errors.socialMediaUrl}</p>
+                        <p className="error-message">{errors.socialMedia}</p>
                         <div className="textarea-container">
                             <label className="input-label" htmlFor="biography">
                                 Biografia
                             </label>
                             <textarea
                                 id="biography"
-                                name="biography"
+                                name="bio"
                                 rows="5"
                                 cols="45"
-                                value={professionalData?.bio}
+                                defaultValue={professionalData?.bio}
+                                onChange={handleChange}
                             ></textarea>
                         </div>
                     </section>
@@ -171,11 +172,14 @@ export const ProfessionalRegistration = () => {
                             id="id"
                             label="label"
                             value={professionalOption}
-                            onChange={(val) => setProfessionalOption(val)}
+                            onChange={(val) => {
+                                setProfessionalOption(val)
+                                setProfessionalData({...professionalData, nameActivity:val.label})
+                            }}
                         ></SelectInput>
-                        <p className="error-message">{errors.ocupationArea}</p>
+                        <p className="error-message">{errors.nameActivity}</p>
                         <Input
-                            field="price"
+                            field="priceActivity"
                             pattern="number"
                             subtitle="Custo da sua hora por serviço (em R$)"
                             inputStyle="input-medium"
@@ -198,7 +202,8 @@ export const ProfessionalRegistration = () => {
                     {
                         scheduleList?.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
                             <Schedule key={id} id={id} weekDay={availableDay} startHour={startHour} finishHour={finishHour}
-                             zipCodeSchedule={cep} district={district} state={uf} city={city} professionalId={professionalData?.id} handleClick={()=> removeSchedule(id)} onClickSave={()=> saveSchedule(id)} isDisable={!!city}/>
+                             zipCodeSchedule={cep} district={district} state={uf} city={city} professionalId={professionalData?.id} 
+                             handleClick={()=> removeSchedule(id)} onClickSave={()=> saveSchedule(id)} isDisable={!!city}/>
                         )     
                     }
 
