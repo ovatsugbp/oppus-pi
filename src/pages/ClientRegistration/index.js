@@ -8,7 +8,7 @@ import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import setPageTitle from "../../setPageTitle"
-import fetchApi, {updateInDataBase} from '../../services/consumeApi'
+import fetchApi, {updateInDataBase, deleteInDataBase} from '../../services/consumeApi'
 import './style.scss';
 
 export const ClientRegistration = ({userId}) => {
@@ -19,13 +19,17 @@ export const ClientRegistration = ({userId}) => {
     const [userData, setUserData] = useState({});
     const [errors, setErrors] = useState({});
     userId = 14
-    console.log(userData);
+    
     useEffect(()=>{
         fetchApi(`http://localhost:8080/api/user/me/${userId}`)
         .then(data => setUserData(data))
     },[])
 
     let isValid = true
+
+    function deleteUserAccount(userId){
+        deleteInDataBase(`http://localhost:8080/api/user/me/${userId}`).then(response => console.log(response))
+    }
 
     function validateInfo() {
     let errors = {};
@@ -81,7 +85,7 @@ export const ClientRegistration = ({userId}) => {
         }
         
     }
-    console.log(isValid);
+
     return (
         <div>
             <Header subtitle="Seja bem-vindo à nossa plataforma (:" />
@@ -185,7 +189,7 @@ export const ClientRegistration = ({userId}) => {
                                 Importante!<br></br>Preencha todos os dados
                             </p>
                         </div>
-                        <Button btnStyle="btn-delete">Excluir Cadastro</Button>
+                        <Button btnStyle="btn-delete" onClick={()=> deleteUserAccount(userId)}>Excluir Cadastro</Button>
                         {/* <Button btnStyle="btn-primary" onClick={(e) => handleSubmit(e)}>
                             <Link to="/pesquisa">Salvar cadastro</Link>
                         </Button> */}
