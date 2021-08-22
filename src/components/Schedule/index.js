@@ -29,21 +29,21 @@ const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, z
         let errors={};
         
         if(!newSchedule.availableDay){
-        errors.availableDay = "Campo obrigatório";
+        errors.availableDay = "Dia obrigatório";
         isValid = false;
         }
         if(!newSchedule.startHour) {
-            errors.startHour = "Campo obrigatório";
+            errors.startHour = "Horário de início obrigatório";
             isValid = false;
         }
         
         if(!newSchedule.finishHour) {
-            errors.finishHour = "Campo obrigatório";
+            errors.finishHour = "Horário de fim obrigatório";
             isValid = false;
         }
             
         if(!newSchedule.cep) {
-            errors.cep = "Campo obrigatório";
+            errors.cep = "CEP obrigatório";
             isValid = false;
         } else if(!/\d{8}/.test(newSchedule.cep)){
             errors.cep = "CEP inválido";
@@ -51,17 +51,17 @@ const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, z
         }
         
         if(!newSchedule.uf) {
-            errors.uf = "Campo obrigatório";
+            errors.uf = "UF obrigatória";
             isValid = false;
         }
         
         if(!newSchedule.city) {
-            errors.city = "Campo obrigatório";
+            errors.city = "Cidade obrigatória";
             isValid = false;
         }
         
         if(!newSchedule.district) {
-            errors.district = "Campo obrigatório";
+            errors.district = "Bairro obrigatório";
             isValid = false;
         }
         else {

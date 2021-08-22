@@ -25,14 +25,14 @@ export const ProfessionalRegistration = ({userId}) => {
     const [professionalData, setProfessionalData] = useState({})
     const [errors, setErrors] = useState({});
 
-    // useEffect(()=>{
-    //     fetchApi(`http://localhost:8080/api/professionals/me/${userId}`).then(data => {
-    //         let {professionalSchedule} = data.data
-    //         setProfessionalData(data.data)
-    //         setScheduleList(professionalSchedule)
-    //         setNewId(professionalSchedule[professionalSchedule?.length - 1]?.id + 1 )
-    //     })
-    // },[])
+    useEffect(()=>{
+        fetchApi(`http://localhost:8080/api/professionals/me/${userId}`).then(data => {
+            let {professionalSchedule} = data.data
+            setProfessionalData(data.data)
+            setScheduleList(professionalSchedule)
+            setNewId(professionalSchedule[professionalSchedule?.length - 1]?.id + 1 )
+        })
+    },[])
 
     function addSchedule() {
         setScheduleList([...scheduleList,{id:newId}])
