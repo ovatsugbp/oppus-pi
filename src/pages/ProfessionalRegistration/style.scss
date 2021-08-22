@@ -93,6 +93,19 @@
     .form-content {
       margin: 5px 80px;
 
+      .form-insert-password,
+      .form-confirm-password {
+        position: relative;
+        .password-icon {
+          position: absolute;
+          right: 10px;
+          top: 55px;
+          color: $darkBlue;
+
+          cursor: pointer;
+        }
+      }
+
       .period {
         display: flex;
         justify-content: space-between;

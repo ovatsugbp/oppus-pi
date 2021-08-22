@@ -5,6 +5,8 @@ import { Header } from '../../components/Header';
 import Input from '../../components/Input/input';
 import SelectInput from '../../components/SelectInput';
 import Schedule from '../../components/Schedule';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
 import professionalsList from '../../data/professionalsList.json';
 import setPageTitle from "../../setPageTitle"
@@ -13,11 +15,14 @@ import './style.scss';
 
 export const ProfessionalRegistration = ({professionalId}) => {
     setPageTitle('Dados do Profissional')
+
     professionalId = 4
+    const [isInsertPasswordShown, setIsInsertPasswordShown] = useState(false);
+    const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
     const [professionalOption, setProfessionalOption] = useState(null);
-    const [errors, setErrors] = useState({});
     const [scheduleList, setScheduleList] = useState([{id:1}])
     const [professionalData, setProfessionalData] = useState({})
+    const [errors, setErrors] = useState({});
 
     useEffect(()=>{
         fetchApi(`http://localhost:8080/api/professionals/me/${professionalId}`).then(data => {
@@ -33,22 +38,37 @@ export const ProfessionalRegistration = ({professionalId}) => {
         })
     }
 
-    
-
-    let isValid = true;
+    let isValid=true;
 
     function validateInfo() {
-    let errors = {};
-
+    let errors={};
     if(!professionalData.name){
         errors.name = "Campo obrigatório";
         isValid = false;
     }
 
-     if(!professionalData.photoURL){
-        errors.photoURL = "Campo obrigatório";
+    if(!professionalData.email){
+        errors.email = "Campo obrigatório";
         isValid = false;
-    } else if(professionalData.photoURL && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.photoURL)){
+    } else if(!/^[a-zA-Z0-9.!_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(professionalData.email)){
+        errors.email = "E-mail inválido";
+        isValid = false;
+    }
+
+    if(!professionalData.password){
+        errors.password = "Campo obrigatório";
+        isValid = false;
+    }
+
+    if(!professionalData.confirmPassword){
+        errors.confirmPassword = "Campo obrigatório";
+        isValid = false;
+    } else if(!(professionalData.confirmPassword === professionalData.password)) {
+        errors.confirmPassword = "A senha deve ser a mesma do campo anterior";
+        isValid = false;
+    }
+
+    if(professionalData.photoURL && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.photoURL)){
         errors.photoURL = "URL inválida";
         isValid = false;
     }
@@ -61,7 +81,7 @@ export const ProfessionalRegistration = ({professionalId}) => {
         isValid = false;
     }
 
-     if(professionalData.socialMedia && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.socialMedia)){
+    if(professionalData.socialMedia && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.socialMedia)){
         errors.socialMedia = "URL inválida";
         isValid = false;
     }
@@ -75,6 +95,7 @@ export const ProfessionalRegistration = ({professionalId}) => {
         errors.price = "Formato de preço inválido";
         isValid = false;
     }
+    
     setErrors({...errors});
     }
 
@@ -87,15 +108,12 @@ export const ProfessionalRegistration = ({professionalId}) => {
     const handleSubmit = e => {
         validateInfo();
         e.preventDefault();
-
         if(isValid){
             updateInDataBase(`http://localhost:8080/api/professionals/update/${professionalId}`,professionalData).then(data => console.log(data))
         } else {
             console.log(errors);
         } 
     }
-
-
 
     return (
         <div>
@@ -116,12 +134,79 @@ export const ProfessionalRegistration = ({professionalId}) => {
                         />
                         <p className="error-message">{errors.name}</p>
                         <Input
+                            field="email"
+                            pattern="text"
+                            subtitle="E-mail"
+                            inputStyle="input-medium"
+                            inputValue={professionalData?.email}
+                            onChange={(e) => handleChange(e)}
+                        />
+                        <p className="error-message">{errors.email}</p>
+                         <div className="form-insert-password">
+                            <Input
+                                field="password"
+                                pattern={
+                                    isInsertPasswordShown ? "text" : "password"
+                                }
+                                subtitle="Senha"
+                                inputStyle="input-medium"
+                                inputValue={professionalData?.password}
+                                onChange={(e) => handleChange(e)}
+                            />
+                           
+                            {!isInsertPasswordShown ? (
+                                <VisibilityOffIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsInsertPasswordShown(true)
+                                    }
+                                />
+                            ) : (
+                                <VisibilityIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsInsertPasswordShown(false)
+                                    }
+                                />
+                            )}
+                        </div>
+                         <p className="error-message">{errors.password}</p>
+                        <div className="form-confirm-password">
+                            <Input
+                                field="confirmPassword"
+                                pattern={
+                                    isConfirmPasswordShown ? "text" : "password"
+                                }
+                                subtitle="Confirme sua senha"
+                                inputStyle="input-medium"
+                                inputValue={professionalData?.confirmPassword}
+                                onChange={(e) => handleChange(e)}
+                            />
+                            
+                            {!isConfirmPasswordShown ? (
+                                <VisibilityOffIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsConfirmPasswordShown(true)
+                                    }
+                                />
+                            ) : (
+                                <VisibilityIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsConfirmPasswordShown(false)
+                                    }
+                                />
+                            )}
+                        </div>
+                        <p className="error-message">{errors.confirmPassword}</p>
+                        <Input
                             field="photoURL"
                             pattern="url"
                             subtitle="Link da sua foto  (comece com //http)"
                             inputStyle="input-medium"
                             inputValue={professionalData?.photoURL}
-                            onChange={handleChange}
+                            onChange={(e) => handleChange(e)}
                         />
                          <p className="error-message">{errors.photoURL}</p>
                         <Input
@@ -130,7 +215,7 @@ export const ProfessionalRegistration = ({professionalId}) => {
                             subtitle="Whatsapp  (somente números)"
                             inputStyle="input-medium"
                             inputValue={professionalData?.phone}
-                            onChange={handleChange}
+                            onChange={(e) => handleChange(e)}
                         />
                          <p className="error-message">{errors.phone}</p>
                         <Input
@@ -139,7 +224,7 @@ export const ProfessionalRegistration = ({professionalId}) => {
                             subtitle="Rede social  (Instagram, Facebook, Twitter...)"
                             inputStyle="input-medium"
                             inputValue={professionalData?.socialMedia}
-                            onChange={handleChange}
+                            onChange={(e) => handleChange(e)}
                         />
                         <p className="error-message">{errors.socialMedia}</p>
                         <div className="textarea-container">
@@ -152,7 +237,7 @@ export const ProfessionalRegistration = ({professionalId}) => {
                                 rows="5"
                                 cols="45"
                                 defaultValue={professionalData?.bio}
-                                onChange={handleChange}
+                                onChange={(e) => handleChange(e)}
                             ></textarea>
                         </div>
                     </section>
@@ -180,7 +265,7 @@ export const ProfessionalRegistration = ({professionalId}) => {
                             subtitle="Custo da sua hora por serviço (em R$)"
                             inputStyle="input-medium"
                             inputValue={professionalData?.priceActivity}
-                            onChange={handleChange}
+                            onChange={(e) => handleChange(e)}
                         />
                         <p className="error-message">{errors.priceActivity}</p>
                     </section>
@@ -211,7 +296,7 @@ export const ProfessionalRegistration = ({professionalId}) => {
                             </p>
                         </div>
                         <Button btnStyle="btn-delete">Excluir Cadastro</Button>
-                        <Button btnStyle="btn-primary" onClick={handleSubmit}>Salvar cadastro</Button>
+                        <Button btnStyle="btn-primary" onClick={(e) => handleSubmit(e)}>Salvar cadastro</Button>
                     </section>
                 </section>
             </section>
