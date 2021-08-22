@@ -20,19 +20,19 @@ export const ProfessionalRegistration = ({userId}) => {
     const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
     userId = 4
     const [professionalOption, setProfessionalOption] = useState(null);
-    const [errors, setErrors] = useState({});
     const [newId, setNewId] = useState(0);
     const [scheduleList, setScheduleList] = useState([{id:0}])
     const [professionalData, setProfessionalData] = useState({})
+    const [errors, setErrors] = useState({});
 
-    useEffect(()=>{
-        fetchApi(`http://localhost:8080/api/professionals/me/${userId}`).then(data => {
-            let {professionalSchedule} = data.data
-            setProfessionalData(data.data)
-            setScheduleList(professionalSchedule)
-            setNewId(professionalSchedule[professionalSchedule?.length - 1]?.id + 1 )
-        })
-    },[])
+    // useEffect(()=>{
+    //     fetchApi(`http://localhost:8080/api/professionals/me/${userId}`).then(data => {
+    //         let {professionalSchedule} = data.data
+    //         setProfessionalData(data.data)
+    //         setScheduleList(professionalSchedule)
+    //         setNewId(professionalSchedule[professionalSchedule?.length - 1]?.id + 1 )
+    //     })
+    // },[])
 
     function addSchedule() {
         setScheduleList([...scheduleList,{id:newId}])
@@ -44,11 +44,10 @@ export const ProfessionalRegistration = ({userId}) => {
         setScheduleList([...newList])
     }    
 
-    let isValid;
+    let isValid=true;
 
     function validateInfo() {
-    let errors = {};
-
+    let errors={};
     if(!professionalData.name){
         errors.name = "Campo obrigatório";
         isValid = false;
@@ -75,10 +74,7 @@ export const ProfessionalRegistration = ({userId}) => {
         isValid = false;
     }
 
-     if(!professionalData.photoURL){
-        errors.photoURL = "Campo obrigatório";
-        isValid = false;
-    } else if(professionalData.photoURL && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.photoURL)){
+    if(professionalData.photoURL && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.photoURL)){
         errors.photoURL = "URL inválida";
         isValid = false;
     }
@@ -91,7 +87,7 @@ export const ProfessionalRegistration = ({userId}) => {
         isValid = false;
     }
 
-     if(professionalData.socialMedia && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.socialMedia)){
+    if(professionalData.socialMedia && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.socialMedia)){
         errors.socialMedia = "URL inválida";
         isValid = false;
     }
@@ -105,46 +101,7 @@ export const ProfessionalRegistration = ({userId}) => {
         errors.price = "Formato de preço inválido";
         isValid = false;
     }
-
-    if(!scheduleList.availableDay){
-        errors.availableDay = "Campo obrigatório";
-        isValid = false;
-    }
-    if(!scheduleList.startHour) {
-        errors.startHour = "Campo obrigatório";
-        isValid = false;
-    }
     
-    if(!scheduleList.finishHour) {
-        errors.finishHour = "Campo obrigatório";
-        isValid = false;
-    }
-        
-    if(!scheduleList.cep) {
-        errors.cep = "Campo obrigatório";
-        isValid = false;
-    } else if(!/\d{8}/.test(cep)){
-        errors.cep = "Formato de CEP inválido (digite somente números)";
-        isValid = false;
-    }
-    
-    if(!scheduleList.uf) {
-        errors.uf = "Campo obrigatório";
-        isValid = false;
-    }
-    
-    if(!scheduleList.city) {
-        errors.city = "Campo obrigatório";
-        isValid = false;
-    }
-    
-    if(!scheduleList.district) {
-        errors.district = "Campo obrigatório";
-        isValid = false;
-    }
-    else {
-        isValid = true;
-    }
     setErrors({...errors});
     }
 
@@ -152,20 +109,21 @@ export const ProfessionalRegistration = ({userId}) => {
         setProfessionalData(
             {...professionalData, [e.target.name]: e.target.value}
     );
+    console.log(professionalData, isValid)
     }
 
     const handleSubmit = e => {
         validateInfo();
+        console.log(isValid);
+        console.log(professionalData);
         e.preventDefault();
-
         if(isValid){
+            console.log("entrou")
             updateInDataBase(`http://localhost:8080/api/professionals/update/${userId}`,professionalData).then(data => console.log(data))
         } else {
             console.log(errors);
         } 
     }
-
-
 
     return (
         <div>
@@ -258,7 +216,7 @@ export const ProfessionalRegistration = ({userId}) => {
                             subtitle="Link da sua foto  (comece com //http)"
                             inputStyle="input-medium"
                             inputValue={professionalData?.photoURL}
-                            onChange={handleChange}
+                            onChange={(e) => handleChange(e)}
                         />
                          <p className="error-message">{errors.photoURL}</p>
                         <Input
@@ -267,7 +225,7 @@ export const ProfessionalRegistration = ({userId}) => {
                             subtitle="Whatsapp  (somente números)"
                             inputStyle="input-medium"
                             inputValue={professionalData?.phone}
-                            onChange={handleChange}
+                            onChange={(e) => handleChange(e)}
                         />
                          <p className="error-message">{errors.phone}</p>
                         <Input
@@ -276,7 +234,7 @@ export const ProfessionalRegistration = ({userId}) => {
                             subtitle="Rede social  (Instagram, Facebook, Twitter...)"
                             inputStyle="input-medium"
                             inputValue={professionalData?.socialMedia}
-                            onChange={handleChange}
+                            onChange={(e) => handleChange(e)}
                         />
                         <p className="error-message">{errors.socialMedia}</p>
                         <div className="textarea-container">
@@ -289,7 +247,7 @@ export const ProfessionalRegistration = ({userId}) => {
                                 rows="5"
                                 cols="45"
                                 defaultValue={professionalData?.bio}
-                                onChange={handleChange}
+                                onChange={(e) => handleChange(e)}
                             ></textarea>
                         </div>
                     </section>
@@ -317,7 +275,7 @@ export const ProfessionalRegistration = ({userId}) => {
                             subtitle="Custo da sua hora por serviço (em R$)"
                             inputStyle="input-medium"
                             inputValue={professionalData?.priceActivity}
-                            onChange={handleChange}
+                            onChange={(e) => handleChange(e)}
                         />
                         <p className="error-message">{errors.priceActivity}</p>
                     </section>
@@ -337,8 +295,7 @@ export const ProfessionalRegistration = ({userId}) => {
                             <Schedule key={id} id={id} weekDay={availableDay} startHour={startHour} finishHour={finishHour}
                              zipCodeSchedule={cep} district={district} state={uf} city={city} professionalId={professionalData?.id}
                              handleClick={()=> removeSchedule(id)} onClickSave={()=> saveSchedule(id)} isDisable={!!city}
-                             availableDayError={errors.availableDay} startHourError={errors.startHour} finishHourError={errors.finishHour}
-                             cepError={errors.cep} ufError={errors.uf} cityError={errors.city} districtError={errors.district}
+                             
                             />
                         )     
                     }
@@ -351,7 +308,7 @@ export const ProfessionalRegistration = ({userId}) => {
                             </p>
                         </div>
                         <Button btnStyle="btn-delete">Excluir Cadastro</Button>
-                        <Button btnStyle="btn-primary" onClick={handleSubmit}>Salvar cadastro</Button>
+                        <Button btnStyle="btn-primary" onClick={(e) => handleSubmit(e)}>Salvar cadastro</Button>
                     </section>
                 </section>
             </section>

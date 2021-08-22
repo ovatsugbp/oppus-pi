@@ -7,10 +7,10 @@ import daysOfTheWeek from '../../data/daysOfTheWeek.json';
 import './style.scss';
 import getAddress from './get-address'
 import {saveInDataBase} from "../../services/consumeApi"
-const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, zipCodeSchedule,
-     state, city, district, handleClick, isDisable, availableDayError, startHourError, finishHourError, cepError, ufError, cityError, districtError}) => {
+const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, zipCodeSchedule, state, city, district, handleClick, isDisable}) => {
     const [day, setDay] = useState(null);
     const [address, SetAddress] = useState()
+    const [errors, setErrors] = useState({})
     const [newSchedule, setNewSchedule] = useState({
         id: scheduleId,
         cep: "",
@@ -23,8 +23,69 @@ const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, z
         startHour: 0
     })
 
+    let isValid;
+
+    function validateSchedule(){
+        let errors={};
+        
+        if(!newSchedule.availableDay){
+        errors.availableDay = "Campo obrigatório";
+        isValid = false;
+        }
+        if(!newSchedule.startHour) {
+            errors.startHour = "Campo obrigatório";
+            isValid = false;
+        }
+        
+        if(!newSchedule.finishHour) {
+            errors.finishHour = "Campo obrigatório";
+            isValid = false;
+        }
+            
+        if(!newSchedule.cep) {
+            errors.cep = "Campo obrigatório";
+            isValid = false;
+        } else if(!/\d{8}/.test(newSchedule.cep)){
+            errors.cep = "CEP inválido";
+            isValid = false;
+        }
+        
+        if(!newSchedule.uf) {
+            errors.uf = "Campo obrigatório";
+            isValid = false;
+        }
+        
+        if(!newSchedule.city) {
+            errors.city = "Campo obrigatório";
+            isValid = false;
+        }
+        
+        if(!newSchedule.district) {
+            errors.district = "Campo obrigatório";
+            isValid = false;
+        }
+        else {
+            isValid = true;
+        }
+        setErrors({...errors});
+    }
+
+
     function saveSchedule(newSchedule){        
         saveInDataBase(`http://localhost:8080/api/schedule/register/${professionalId}`, newSchedule).then(response => console.log(response))
+    }
+
+    const handleSubmit = e => {
+            validateSchedule();
+            e.preventDefault();
+            console.log(newSchedule.uf)
+            console.log(isValid)
+            if(isValid) {
+                console.log("validado")
+                saveSchedule(newSchedule);
+            } else {
+                console.log("não passou", errors);
+            }
     }
         
     async function updateAddress(e){
@@ -50,7 +111,7 @@ const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, z
                 isDisable={isDisable}
                 onChange={(val) => {
                                 setDay(val)
-                                setNewSchedule({...newSchedule, nameActivity:val.label})
+                                setNewSchedule({...newSchedule, availableDay:val.label})
                             }}
                 />
                 <Input field="start-hour" 
@@ -69,11 +130,10 @@ const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, z
                 isDisable={isDisable}
                 onChange={(e)=>setNewSchedule({...newSchedule,finishHour:e.target.value})}/>
             </div>
-             <div className="error-messages-container">
-                <p className="error-message">{availableDayError}</p>
-                <p className="error-message">{startHourError}</p>
-                <p className="error-message">{finishHourError}</p>
-             </div>
+                <p className="error-message">{errors.availableDay}</p>
+                <p className="error-message">{errors.startHour}</p>
+                <p className="error-message">{errors.finishHour}</p>
+            
             <div className="location-row1">
 
                 <Input field="location-zipCode" 
@@ -81,7 +141,9 @@ const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, z
                 subtitle="CEP" 
                 inputStyle="input-medium" 
                 inputValue={zipCodeSchedule}
-                onChange={(e)=> {updateAddress(e)}}
+                onChange={(e)=> {
+                    setNewSchedule({...newSchedule,cep: e.target.value});
+                    updateAddress(e);}}
                 isDisable={isDisable}/>
 
                 <Input field="locationUF" 
@@ -91,14 +153,14 @@ const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, z
                 isDisable={isDisable}
                 onChange={(e)=>{setNewSchedule({...newSchedule,uf:e.target.value})}}/>
                 <button className="trash-bin-icon">
-                    <SaveIcon className={`save-schedule-button hidden-${isDisable}`} key={`save-schedule-${scheduleId}`} id={`save-schedule-${scheduleId}`} onClick={()=> saveSchedule(newSchedule)}/>
+                    <SaveIcon className={`save-schedule-button hidden-${isDisable}`} key={`save-schedule-${scheduleId}`} id={`save-schedule-${scheduleId}`} onClick={(e) => handleSubmit(e)}/>
                     <DeleteOutlineOutlinedIcon className="delete-schedule-button" key={`delete-schedule-${scheduleId}`} id={`delete-schedule-${scheduleId}`} onClick={handleClick} />
                 </button>
             </div>
-            <div className="error-messages-container">
-                <p className="error-message">{cepError}</p>
-                <p className="error-message">{ufError}</p>
-            </div>
+ 
+                <p className="error-message">{errors.cep}</p>
+                <p className="error-message">{errors.uf}</p>
+
             <div className="location-row2">
 
                 <Input field="location-district" 
@@ -116,10 +178,10 @@ const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, z
                 isDisable={isDisable} 
                 onChange={(e)=>{setNewSchedule({...newSchedule,city:e.target.value})}}/>
                 </div>
-                <div className="error-messages-container">
-                    <p className="error-message">{districtError}</p>
-                    <p className="error-message">{cityError}</p>
-                </div>
+                
+                    <p className="error-message">{errors.district}</p>
+                    <p className="error-message">{errors.city}</p>
+                
                 <div className="form-mid2"></div>
         </section>
     );
