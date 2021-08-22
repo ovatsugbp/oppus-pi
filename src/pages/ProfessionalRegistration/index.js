@@ -10,39 +10,33 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
 import professionalsList from '../../data/professionalsList.json';
 import setPageTitle from "../../setPageTitle"
-import fetchApi, { updateInDataBase } from '../../services/consumeApi'
+import fetchApi, { updateInDataBase, saveInDataBase } from '../../services/consumeApi'
 import './style.scss';
 
-export const ProfessionalRegistration = ({userId}) => {
+export const ProfessionalRegistration = ({professionalId}) => {
     setPageTitle('Dados do Profissional')
 
+    professionalId = 4
     const [isInsertPasswordShown, setIsInsertPasswordShown] = useState(false);
     const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
-    userId = 4
     const [professionalOption, setProfessionalOption] = useState(null);
-    const [newId, setNewId] = useState(0);
-    const [scheduleList, setScheduleList] = useState([{id:0}])
+    const [scheduleList, setScheduleList] = useState([{id:1}])
     const [professionalData, setProfessionalData] = useState({})
     const [errors, setErrors] = useState({});
 
     useEffect(()=>{
-        fetchApi(`http://localhost:8080/api/professionals/me/${userId}`).then(data => {
-            let {professionalSchedule} = data.data
-            setProfessionalData(data.data)
+        fetchApi(`http://localhost:8080/api/professionals/me/${professionalId}`).then(data => {
+            let {professionalSchedule} = data
+            setProfessionalData(data)
             setScheduleList(professionalSchedule)
-            setNewId(professionalSchedule[professionalSchedule?.length - 1]?.id + 1 )
         })
     },[])
 
     function addSchedule() {
-        setScheduleList([...scheduleList,{id:newId}])
-        setNewId(newId + 1)
+        saveInDataBase(`http://localhost:8080/api/schedule/register/${professionalId}`, {}).then(response => {
+            setScheduleList([...scheduleList,response])
+        })
     }
-
-    function removeSchedule(id) {
-        let newList = scheduleList.filter(value => value.id !== id )
-        setScheduleList([...newList])
-    }    
 
     let isValid=true;
 
@@ -115,8 +109,10 @@ export const ProfessionalRegistration = ({userId}) => {
         validateInfo();
         e.preventDefault();
         if(isValid){
-            updateInDataBase(`http://localhost:8080/api/professionals/update/${userId}`,professionalData).then(data => console.log(data))
-        }
+            updateInDataBase(`http://localhost:8080/api/professionals/update/${professionalId}`,professionalData).then(data => console.log(data))
+        } else {
+            console.log(errors);
+        } 
     }
 
     return (
@@ -286,11 +282,9 @@ export const ProfessionalRegistration = ({userId}) => {
 
                     {
                         scheduleList?.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
-                            <Schedule key={id} id={id} weekDay={availableDay} startHour={startHour} finishHour={finishHour}
-                             zipCodeSchedule={cep} district={district} state={uf} city={city} professionalId={professionalData?.id}
-                             handleClick={()=> removeSchedule(id)} onClickSave={()=> saveSchedule(id)} isDisable={!!city}
-                             
-                            />
+                            <Schedule key={id} scheduleId={id} scheduleList={scheduleList} setScheduleList={setScheduleList} weekDay={availableDay} startHour={startHour} finishHour={finishHour}
+                             zipCodeSchedule={cep} district={district} state={uf} city={city} professionalId={professionalData?.id} 
+                             onClickSave={()=> saveSchedule(id)} isDisable={!!city}/>
                         )     
                     }
 

@@ -6,8 +6,10 @@ import SaveIcon from '@material-ui/icons/Save';
 import daysOfTheWeek from '../../data/daysOfTheWeek.json';
 import './style.scss';
 import getAddress from './get-address'
-import {saveInDataBase} from "../../services/consumeApi"
-const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, zipCodeSchedule, state, city, district, handleClick, isDisable}) => {
+import {saveInDataBase, deleteInDataBase} from "../../services/consumeApi"
+
+const Schedule = ({scheduleList, setScheduleList, scheduleId, professionalId, weekDay, startHour, finishHour, zipCodeSchedule,
+     state, city, district, isDisable}) => {
     const [day, setDay] = useState(null);
     const [address, SetAddress] = useState()
     const [errors, setErrors] = useState({})
@@ -72,7 +74,16 @@ const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, z
 
 
     function saveSchedule(newSchedule){        
-        saveInDataBase(`http://localhost:8080/api/schedule/register/${professionalId}`, newSchedule).then(response => console.log(response))
+        isDisable = true
+        saveInDataBase(`http://localhost:8080/api/schedule/register/${professionalId}`, newSchedule).then(response => {
+            setNewSchedule({...newSchedule, id: response.id})
+            console.log("response",response)
+        })
+    }
+
+    function deleteSchedule(scheduleId){
+        setScheduleList(scheduleList.filter(schedule => schedule.id !== scheduleId))
+        deleteInDataBase(`http://localhost:8080/api/schedule/delete/${scheduleId}`).then(response => console.log(response))
     }
 
     const handleSubmit = e => {
@@ -149,7 +160,7 @@ const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, z
                 onChange={(e)=>{setNewSchedule({...newSchedule,uf:e.target.value})}}/>
                 <button className="trash-bin-icon">
                     <SaveIcon className={`save-schedule-button hidden-${isDisable}`} key={`save-schedule-${scheduleId}`} id={`save-schedule-${scheduleId}`} onClick={(e) => handleSubmit(e)}/>
-                    <DeleteOutlineOutlinedIcon className="delete-schedule-button" key={`delete-schedule-${scheduleId}`} id={`delete-schedule-${scheduleId}`} onClick={handleClick} />
+                    <DeleteOutlineOutlinedIcon className="delete-schedule-button" key={`delete-schedule-${scheduleId}`} id={`delete-schedule-${scheduleId}`} onClick={()=> deleteSchedule(scheduleId)} />
                 </button>
             </div>
  
