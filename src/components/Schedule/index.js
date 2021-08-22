@@ -47,9 +47,14 @@ const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, z
                 data={daysOfTheWeek}  id="id" 
                 label="label" 
                 value={day} 
-                onChange={(val) => setDay(val)} 
+ 
                 isDisable={isDisable}
-                onChange={(e)=>setNewSchedule({...newSchedule,availableDay:e.label})}/>
+
+                onChange={(val) => {
+                                setDay(val)
+                                setNewSchedule({...newSchedule, nameActivity:val.label})
+                            }}
+                />
                 
                 <Input field="start-hour" 
                 pattern="time" 
