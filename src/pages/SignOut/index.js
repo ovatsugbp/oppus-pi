@@ -50,7 +50,7 @@ export const SignOut = () => {
         isValid = false;
     }
 
-    if(!userType.isProfessional){
+    if(userType.isProfessional === null || userType.isProfessional === undefined){
         errors.userType = "Escolha uma das opções";
     } else {
         isValid = true;
@@ -72,14 +72,18 @@ export const SignOut = () => {
             password: registrationData.password,
             isProfessional: userType.isProfessional,
         };
-        if(validateForm() && data.isProfessional === true){
+        
+        console.log(isValid);
+        console.log(data.isProfessional)
+        
+        if(isValid && data.isProfessional === true){
             let res = await saveInDataBase(
                 'http://localhost:8080/api/professionals/register',
                 data
             );
-            console.log(data)            
+            
             setUserId(res.id);
-            } else if (validateForm() && data.isProfessional === false) {
+            } else if (isValid && data.isProfessional === false) {
                 let res = await saveInDataBase(
                     "http://localhost:8080/api/user/register",
                     data
