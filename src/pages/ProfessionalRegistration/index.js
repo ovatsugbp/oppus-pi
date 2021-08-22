@@ -109,20 +109,14 @@ export const ProfessionalRegistration = ({userId}) => {
         setProfessionalData(
             {...professionalData, [e.target.name]: e.target.value}
     );
-    console.log(professionalData, isValid)
     }
 
     const handleSubmit = e => {
         validateInfo();
-        console.log(isValid);
-        console.log(professionalData);
         e.preventDefault();
         if(isValid){
-            console.log("entrou")
             updateInDataBase(`http://localhost:8080/api/professionals/update/${userId}`,professionalData).then(data => console.log(data))
-        } else {
-            console.log(errors);
-        } 
+        }
     }
 
     return (

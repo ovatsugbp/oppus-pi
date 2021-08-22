@@ -78,13 +78,8 @@ const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, z
     const handleSubmit = e => {
             validateSchedule();
             e.preventDefault();
-            console.log(newSchedule.uf)
-            console.log(isValid)
             if(isValid) {
-                console.log("validado")
                 saveSchedule(newSchedule);
-            } else {
-                console.log("não passou", errors);
             }
     }
         
