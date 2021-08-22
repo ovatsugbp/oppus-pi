@@ -201,7 +201,7 @@ export const ProfessionalRegistration = ({userId}) => {
 
                     {
                         scheduleList?.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
-                            <Schedule key={id} id={id} weekDay={availableDay} startHour={startHour} finishHour={finishHour}
+                            <Schedule key={id} scheduleId={id} weekDay={availableDay} startHour={startHour} finishHour={finishHour}
                              zipCodeSchedule={cep} district={district} state={uf} city={city} professionalId={professionalData?.id} 
                              handleClick={()=> removeSchedule(id)} onClickSave={()=> saveSchedule(id)} isDisable={!!city}/>
                         )     
