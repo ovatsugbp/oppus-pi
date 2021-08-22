@@ -18,7 +18,7 @@ export const ClientRegistration = ({userId}) => {
     const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
     const [userData, setUserData] = useState({});
     const [errors, setErrors] = useState({});
-    userId = 3
+    userId = 14
     console.log(userData);
     useEffect(()=>{
         fetchApi(`http://localhost:8080/api/user/me/${userId}`)
@@ -56,8 +56,8 @@ export const ClientRegistration = ({userId}) => {
         isValid = false;
     }
 
-    if(userData.photoUrl && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(userData.photoUrl)){
-        errors.photoUrl = "URL inválida";
+    if(userData.photoURL && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(userData.photoURL)){
+        errors.photoURL = "URL inválida";
         isValid = false;
     }
 
@@ -181,14 +181,14 @@ export const ClientRegistration = ({userId}) => {
                         </div>
                         <p className="error-message">{errors.confirmPassword}</p>
                         <Input
-                            field="photoUrl"
+                            field="photoURL"
                             pattern="url"
                             subtitle="Link da sua foto  (comece com //http)"
                             inputStyle="input-medium"
                             inputValue={userData.photoURL}
                             onChange={(e) => handleChange(e)}
                         />
-                        <p className="error-message">{errors.photoUrl}</p>
+                        <p className="error-message">{errors.photoURL}</p>
                         <Input
                             field="locationDistrict"
                             pattern="text"
