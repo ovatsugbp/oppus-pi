@@ -10,7 +10,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
 import professionalsList from '../../data/professionalsList.json';
 import setPageTitle from "../../setPageTitle"
-import fetchApi, { updateInDataBase, saveInDataBase } from '../../services/consumeApi'
+import fetchApi, { updateInDataBase, saveInDataBase, deleteInDataBase } from '../../services/consumeApi'
 import './style.scss';
 
 export const ProfessionalRegistration = ({professionalId}) => {
@@ -38,7 +38,11 @@ export const ProfessionalRegistration = ({professionalId}) => {
         })
     }
 
-    let isValid=true;
+    function deleteProfessionalAccount(professionalId){
+        deleteInDataBase(`http://localhost:8080/api/professionals/me/${professionalId}`).then(response => console.log(response))
+    }
+
+    let isValid = true;
 
     function validateInfo() {
     let errors={};
@@ -295,7 +299,7 @@ export const ProfessionalRegistration = ({professionalId}) => {
                                 Importante!<br></br>Preencha todos os dados
                             </p>
                         </div>
-                        <Button btnStyle="btn-delete">Excluir Cadastro</Button>
+                        <Button btnStyle="btn-delete" onClick={()=> deleteProfessionalAccount(professionalId)}>Excluir Cadastro</Button>
                         <Button btnStyle="btn-primary" onClick={(e) => handleSubmit(e)}>Salvar cadastro</Button>
                     </section>
                 </section>
