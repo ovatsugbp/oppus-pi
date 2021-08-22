@@ -70,8 +70,8 @@ export const ProfessionalRegistration = ({userId}) => {
         isValid = false;
     }
 
-    if(!professionalData.ocupationArea){
-        errors.ocupationArea = "Campo obrigatório";
+    if(!professionalData.nameActivity){
+        errors.nameActivity = "Campo obrigatório";
         isValid = false;
     }
 
@@ -177,7 +177,7 @@ export const ProfessionalRegistration = ({userId}) => {
                                 setProfessionalData({...professionalData, nameActivity:val.label})
                             }}
                         ></SelectInput>
-                        <p className="error-message">{errors.ocupationArea}</p>
+                        <p className="error-message">{errors.nameActivity}</p>
                         <Input
                             field="price"
                             pattern="number"
