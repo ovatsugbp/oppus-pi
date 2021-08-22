@@ -49,11 +49,11 @@ export const ProfessionalRegistration = ({userId}) => {
         isValid = false;
     }
 
-     if(!professionalData.photoUrl){
-        errors.photoUrl = "Campo obrigatório";
+     if(!professionalData.photoURL){
+        errors.photoURL = "Campo obrigatório";
         isValid = false;
-    } else if(professionalData.photoUrl && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.photoUrl)){
-        errors.photoUrl = "URL inválida";
+    } else if(professionalData.photoURL && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.photoURL)){
+        errors.photoURL = "URL inválida";
         isValid = false;
     }
 
@@ -93,7 +93,7 @@ export const ProfessionalRegistration = ({userId}) => {
         e.preventDefault();
 
         if(isValid){
-            updateInDataBase(`http://localhost:8080/api/professionals/update/me/${userId}`,professionalData).then(data => console.log(data))
+            updateInDataBase(`http://localhost:8080/api/professionals/update/${userId}`,professionalData).then(data => console.log(data))
         } else if(!isValid) {
             console.log(errors);
         } 
@@ -120,14 +120,14 @@ export const ProfessionalRegistration = ({userId}) => {
                         />
                         <p className="error-message">{errors.name}</p>
                         <Input
-                            field="photoUrl"
+                            field="photoURL"
                             pattern="url"
                             subtitle="Link da sua foto  (comece com //http)"
                             inputStyle="input-medium"
                             inputValue={professionalData?.photoURL}
                             onChange={handleChange}
                         />
-                         <p className="error-message">{errors.photoUrl}</p>
+                         <p className="error-message">{errors.photoURL}</p>
                         <Input
                             field="phoneNumber"
                             pattern="tel"
