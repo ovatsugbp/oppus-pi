@@ -45,4 +45,4 @@ async function fetchData(url,config = {}){
 
 export default fetchData
 
-export {saveInDataBase, updateInDataBase}
+export {saveInDataBase, updateInDataBase, deleteInDataBase}
