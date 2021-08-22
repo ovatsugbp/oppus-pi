@@ -22,8 +22,8 @@ export const ProfessionalRegistration = ({userId}) => {
 
     useEffect(()=>{
         fetchApi(`http://localhost:8080/api/professionals/me/${userId}`).then(data => {
-            let {professionalSchedule} = data.data
-            setProfessionalData(data.data)
+            let {professionalSchedule} = data
+            setProfessionalData(data)
             setScheduleList(professionalSchedule)
             setNewId(professionalSchedule[professionalSchedule?.length - 1]?.id + 1 )
         })
@@ -34,10 +34,7 @@ export const ProfessionalRegistration = ({userId}) => {
         setNewId(newId + 1)
     }
 
-    function removeSchedule(id) {
-        let newList = scheduleList.filter(value => value.id !== id )
-        setScheduleList([...newList])
-    }    
+    
 
     let isValid = true;
 
@@ -203,7 +200,7 @@ export const ProfessionalRegistration = ({userId}) => {
                         scheduleList?.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
                             <Schedule key={id} scheduleId={id} weekDay={availableDay} startHour={startHour} finishHour={finishHour}
                              zipCodeSchedule={cep} district={district} state={uf} city={city} professionalId={professionalData?.id} 
-                             handleClick={()=> removeSchedule(id)} onClickSave={()=> saveSchedule(id)} isDisable={!!city}/>
+                             onClickSave={()=> saveSchedule(id)} isDisable={!!city}/>
                         )     
                     }
 
