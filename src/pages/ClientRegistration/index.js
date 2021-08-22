@@ -8,7 +8,7 @@ import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import setPageTitle from "../../setPageTitle"
-import fetchApi, {updateInDataBase} from '../../services/consumeApi'
+import fetchApi, {updateInDataBase, deleteInDataBase} from '../../services/consumeApi'
 import './style.scss';
 
 export const ClientRegistration = ({userId}) => {
@@ -18,14 +18,18 @@ export const ClientRegistration = ({userId}) => {
     const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
     const [userData, setUserData] = useState({});
     const [errors, setErrors] = useState({});
-    userId = 3
-    console.log(userData);
+    userId = 14
+    
     useEffect(()=>{
         fetchApi(`http://localhost:8080/api/user/me/${userId}`)
         .then(data => setUserData(data))
     },[])
 
-    let isValid;
+    let isValid = true
+
+    function deleteUserAccount(userId){
+        deleteInDataBase(`http://localhost:8080/api/user/me/${userId}`).then(response => console.log(response))
+    }
 
     function validateInfo() {
     let errors = {};
@@ -56,21 +60,9 @@ export const ClientRegistration = ({userId}) => {
         isValid = false;
     }
 
-    if(userData.photoUrl && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(userData.photoUrl)){
-        errors.photoUrl = "URL inválida";
+    if(userData.photoURL && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(userData.photoURL)){
+        errors.photoURL = "URL inválida";
         isValid = false;
-    }
-
-    if(!userData.locationDistrict){
-        errors.locationDistrict = "Campo obrigatório";
-        isValid = false;
-    }
-
-    if(!userData.locationCity){
-        errors.locationCity = "Campo obrigatório";
-        isValid = false;
-    } else {
-        isValid = true;
     }
     setErrors({...errors});
     }
@@ -181,33 +173,14 @@ export const ClientRegistration = ({userId}) => {
                         </div>
                         <p className="error-message">{errors.confirmPassword}</p>
                         <Input
-                            field="photoUrl"
+                            field="photoURL"
                             pattern="url"
                             subtitle="Link da sua foto  (comece com //http)"
                             inputStyle="input-medium"
                             inputValue={userData.photoURL}
                             onChange={(e) => handleChange(e)}
                         />
-                        <p className="error-message">{errors.photoUrl}</p>
-                        <Input
-                            field="locationDistrict"
-                            pattern="text"
-                            subtitle="Bairro"
-                            inputStyle="input-medium"
-                            inputValue={userData.locationDistrict}
-                            onChange={(e) => handleChange(e)}
-
-                        />
-                        <p className="error-message">{errors.locationDistrict}</p>
-                        <Input
-                            field="locationCity"
-                            pattern="text"
-                            subtitle="Cidade"
-                            inputStyle="input-medium"
-                            inputValue={userData.locationCity}
-                            onChange={(e) => handleChange(e)}
-                        />
-                        <p className="error-message">{errors.locationCity}</p>
+                        <p className="error-message">{errors.photoURL}</p>
                     </section>
                     <section className="form-bottom">
                         <div className="attention-container">
@@ -216,7 +189,7 @@ export const ClientRegistration = ({userId}) => {
                                 Importante!<br></br>Preencha todos os dados
                             </p>
                         </div>
-                        <Button btnStyle="btn-delete">Excluir Cadastro</Button>
+                        <Button btnStyle="btn-delete" onClick={()=> deleteUserAccount(userId)}>Excluir Cadastro</Button>
                         {/* <Button btnStyle="btn-primary" onClick={(e) => handleSubmit(e)}>
                             <Link to="/pesquisa">Salvar cadastro</Link>
                         </Button> */}
