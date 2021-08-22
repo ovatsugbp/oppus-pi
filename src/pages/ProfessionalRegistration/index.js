@@ -5,6 +5,8 @@ import { Header } from '../../components/Header';
 import Input from '../../components/Input/input';
 import SelectInput from '../../components/SelectInput';
 import Schedule from '../../components/Schedule';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
 import professionalsList from '../../data/professionalsList.json';
 import setPageTitle from "../../setPageTitle"
@@ -14,20 +16,22 @@ import './style.scss';
 export const ProfessionalRegistration = () => {
     setPageTitle('Dados do Profissional')
 
+    const [isInsertPasswordShown, setIsInsertPasswordShown] = useState(false);
+    const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
     const [professionalOption, setProfessionalOption] = useState(null);
     const [errors, setErrors] = useState({});
     const [newId, setNewId] = useState(0);
     const [scheduleList, setScheduleList] = useState([{id:0}])
     const [professionalData, setProfessionalData] = useState({})
 
-    useEffect(()=>{
-        fetchApi("https://run.mocky.io/v3/0e7b7d71-de3f-4b23-b183-9f20f935605e").then(data => {
-            let {professionalSchedule} = data.data
-            setProfessionalData(data.data)
-            setScheduleList(professionalSchedule)
-            setNewId(professionalSchedule[professionalSchedule?.length - 1]?.id + 1 )
-        })
-    },[])
+    // useEffect(()=>{
+    //     fetchApi("https://run.mocky.io/v3/0e7b7d71-de3f-4b23-b183-9f20f935605e").then(data => {
+    //         let {professionalSchedule} = data.data
+    //         setProfessionalData(data.data)
+    //         setScheduleList(professionalSchedule)
+    //         setNewId(professionalSchedule[professionalSchedule?.length - 1]?.id + 1 )
+    //     })
+    // },[])
 
     function addSchedule() {
         setScheduleList([...scheduleList,{id:newId}])
@@ -46,6 +50,27 @@ export const ProfessionalRegistration = () => {
 
     if(!professionalData.name){
         errors.name = "Campo obrigatório";
+        isValid = false;
+    }
+
+    if(!professionalData.email){
+        errors.email = "Campo obrigatório";
+        isValid = false;
+    } else if(!/^[a-zA-Z0-9.!_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(professionalData.email)){
+        errors.email = "E-mail inválido";
+        isValid = false;
+    }
+
+    if(!professionalData.password){
+        errors.password = "Campo obrigatório";
+        isValid = false;
+    }
+
+    if(!professionalData.confirmPassword){
+        errors.confirmPassword = "Campo obrigatório";
+        isValid = false;
+    } else if(!(professionalData.confirmPassword === professionalData.password)) {
+        errors.confirmPassword = "A senha deve ser a mesma do campo anterior";
         isValid = false;
     }
 
@@ -70,7 +95,7 @@ export const ProfessionalRegistration = () => {
         isValid = false;
     }
 
-    if(!professionalData.ocupationArea){
+    if(!professionalOption){
         errors.ocupationArea = "Campo obrigatório";
         isValid = false;
     }
@@ -78,6 +103,46 @@ export const ProfessionalRegistration = () => {
     if(professionalData.price && !/[0-9.,]/.test(professionalData.price)){
         errors.price = "Formato de preço inválido";
         isValid = false;
+    }
+
+    if(!scheduleList.availableDay){
+        errors.availableDay = "Campo obrigatório";
+        isValid = false;
+    }
+    if(!scheduleList.startHour) {
+        errors.startHour = "Campo obrigatório";
+        isValid = false;
+    }
+    
+    if(!scheduleList.finishHour) {
+        errors.finishHour = "Campo obrigatório";
+        isValid = false;
+    }
+        
+    if(!scheduleList.cep) {
+        errors.cep = "Campo obrigatório";
+        isValid = false;
+    } else if(!/\d{8}/.test(cep)){
+        errors.cep = "Formato de CEP inválido (digite somente números)";
+        isValid = false;
+    }
+    
+    if(!scheduleList.uf) {
+        errors.uf = "Campo obrigatório";
+        isValid = false;
+    }
+    
+    if(!scheduleList.city) {
+        errors.city = "Campo obrigatório";
+        isValid = false;
+    }
+    
+    if(!scheduleList.district) {
+        errors.district = "Campo obrigatório";
+        isValid = false;
+    }
+    else {
+        isValid = true;
     }
     setErrors({...errors});
     }
@@ -119,6 +184,73 @@ export const ProfessionalRegistration = () => {
                             onChange={(e) => handleChange(e)}
                         />
                         <p className="error-message">{errors.name}</p>
+                        <Input
+                            field="email"
+                            pattern="text"
+                            subtitle="E-mail"
+                            inputStyle="input-medium"
+                            inputValue={professionalData?.email}
+                            onChange={(e) => handleChange(e)}
+                        />
+                        <p className="error-message">{errors.email}</p>
+                         <div className="form-insert-password">
+                            <Input
+                                field="password"
+                                pattern={
+                                    isInsertPasswordShown ? "text" : "password"
+                                }
+                                subtitle="Senha"
+                                inputStyle="input-medium"
+                                inputValue={professionalData?.password}
+                                onChange={(e) => handleChange(e)}
+                            />
+                           
+                            {!isInsertPasswordShown ? (
+                                <VisibilityOffIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsInsertPasswordShown(true)
+                                    }
+                                />
+                            ) : (
+                                <VisibilityIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsInsertPasswordShown(false)
+                                    }
+                                />
+                            )}
+                        </div>
+                         <p className="error-message">{errors.password}</p>
+                        <div className="form-confirm-password">
+                            <Input
+                                field="confirmPassword"
+                                pattern={
+                                    isConfirmPasswordShown ? "text" : "password"
+                                }
+                                subtitle="Confirme sua senha"
+                                inputStyle="input-medium"
+                                inputValue={professionalData?.confirmPassword}
+                                onChange={(e) => handleChange(e)}
+                            />
+                            
+                            {!isConfirmPasswordShown ? (
+                                <VisibilityOffIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsConfirmPasswordShown(true)
+                                    }
+                                />
+                            ) : (
+                                <VisibilityIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsConfirmPasswordShown(false)
+                                    }
+                                />
+                            )}
+                        </div>
+                        <p className="error-message">{errors.confirmPassword}</p>
                         <Input
                             field="photoUrl"
                             pattern="url"
@@ -198,7 +330,11 @@ export const ProfessionalRegistration = () => {
                     {
                         scheduleList?.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
                             <Schedule key={id} id={id} weekDay={availableDay} startHour={startHour} finishHour={finishHour}
-                             zipCodeSchedule={cep} district={district} state={uf} city={city} professionalId={professionalData?.id} handleClick={()=> removeSchedule(id)} onClickSave={()=> saveSchedule(id)} isDisable={!!city}/>
+                             zipCodeSchedule={cep} district={district} state={uf} city={city} professionalId={professionalData?.id}
+                             handleClick={()=> removeSchedule(id)} onClickSave={()=> saveSchedule(id)} isDisable={!!city}
+                             availableDayError={errors.availableDay} startHourError={errors.startHour} finishHourError={errors.finishHour}
+                             cepError={errors.cep} ufError={errors.uf} cityError={errors.city} districtError={errors.district}
+                            />
                         )     
                     }
 

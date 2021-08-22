@@ -8,7 +8,7 @@ import './style.scss';
 import getAddress from './get-address'
 import {saveInDataBase} from "../../services/consumeApi"
 const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, zipCodeSchedule,
-     state, city, district, handleClick, isDisable}) => {
+     state, city, district, handleClick, isDisable, availableDayError, startHourError, finishHourError, cepError, ufError, cityError, districtError}) => {
     const [day, setDay] = useState(null);
     const [address, SetAddress] = useState()
     const [newSchedule, setNewSchedule] = useState({
@@ -47,10 +47,9 @@ const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, z
                 data={daysOfTheWeek}  id="id" 
                 label="label" 
                 value={day} 
-                onChange={(val) => setDay(val)} 
+                onChange={(val) => {setDay(val); weekDay = day;}} 
                 isDisable={isDisable}
                 onChange={(e)=>setNewSchedule({...newSchedule,availableDay:e.label})}/>
-                
                 <Input field="start-hour" 
                 pattern="time" 
                 subtitle="Das" 
@@ -58,7 +57,6 @@ const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, z
                 inputValue={startHour} 
                 isDisable={isDisable}
                 onChange={(e)=>setNewSchedule({...newSchedule,startHour:e.target.value})}/>
-                {/* <p className="error-message">{errors.startTime}</p> */}
                 
                 <Input field="finish-hour" 
                 pattern="time" 
@@ -67,8 +65,12 @@ const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, z
                 inputValue={finishHour} 
                 isDisable={isDisable}
                 onChange={(e)=>setNewSchedule({...newSchedule,finishHour:e.target.value})}/>
-                {/* <p className="error-message">{errors.finishTime}</p> */}
             </div>
+             <div className="error-messages-container">
+                <p className="error-message">{availableDayError}</p>
+                <p className="error-message">{startHourError}</p>
+                <p className="error-message">{finishHourError}</p>
+             </div>
             <div className="location-row1">
 
                 <Input field="location-zipCode" 
@@ -90,8 +92,10 @@ const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, z
                     <DeleteOutlineOutlinedIcon className="delete-schedule-button" key={`delete-schedule-${scheduleId}`} id={`delete-schedule-${scheduleId}`} onClick={handleClick} />
                 </button>
             </div>
-            {/* <p className="error-message">{errors.locationCep}</p> */}
-            {/* <p className="error-message">{errors.locationUF}</p> */}
+            <div className="error-messages-container">
+                <p className="error-message">{cepError}</p>
+                <p className="error-message">{ufError}</p>
+            </div>
             <div className="location-row2">
 
                 <Input field="location-district" 
@@ -109,8 +113,10 @@ const Schedule = ({scheduleId, professionalId, weekDay, startHour, finishHour, z
                 isDisable={isDisable} 
                 onChange={(e)=>{setNewSchedule({...newSchedule,city:e.target.value})}}/>
                 </div>
-                 {/* <p className="error-message">{errors.locationDistrict}</p> */}
-            {/* <p className="error-message">{errors.locationcity}</p> */}
+                <div className="error-messages-container">
+                    <p className="error-message">{districtError}</p>
+                    <p className="error-message">{cityError}</p>
+                </div>
                 <div className="form-mid2"></div>
         </section>
     );

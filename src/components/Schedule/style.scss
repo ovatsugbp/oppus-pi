@@ -41,31 +41,29 @@
       border-color: transparent;
       color: $darkBlue;
       margin-top: 50px;
-      
-      .delete-schedule-button{
+
+      .delete-schedule-button {
         margin-left: 10px;
         margin-right: 10px;
         cursor: pointer;
-
       }
 
       .delete-schedule-button:hover {
         color: red;
       }
 
-      .hidden-true{
+      .hidden-true {
         display: none;
       }
-      
-      .save-schedule-button{
+
+      .save-schedule-button {
         margin-right: 10px;
         cursor: pointer;
-        :hover{
-          color: #04D361;
+        :hover {
+          color: #04d361;
         }
-      }  
+      }
     }
-
   }
 
   .location-row2 {
