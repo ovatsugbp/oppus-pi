@@ -12,6 +12,15 @@ async function saveInDataBase(url,data, config = {}){
    }
 }
 
+async function deleteInDataBase(url, id, config = {}){
+   try {
+      await axios.delete(url,config)
+   } catch (error) {
+      console.error(error)
+      return error
+   }
+}
+
 async function updateInDataBase(url,data, config = {}){
    try {
       let response = await axios.put(url,data, config);
