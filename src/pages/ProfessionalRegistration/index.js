@@ -39,7 +39,7 @@ export const ProfessionalRegistration = ({userId}) => {
         setScheduleList([...newList])
     }    
 
-    let isValid;
+    let isValid = true;
 
     function validateInfo() {
     let errors = {};
@@ -94,7 +94,7 @@ export const ProfessionalRegistration = ({userId}) => {
 
         if(isValid){
             updateInDataBase(`http://localhost:8080/api/professionals/update/${userId}`,professionalData).then(data => console.log(data))
-        } else if(!isValid) {
+        } else {
             console.log(errors);
         } 
     }
