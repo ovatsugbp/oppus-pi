@@ -60,18 +60,6 @@ export const ClientRegistration = ({userId}) => {
         errors.photoURL = "URL inválida";
         isValid = false;
     }
-
-    if(!userData.locationDistrict){
-        errors.locationDistrict = "Campo obrigatório";
-        isValid = false;
-    }
-
-    if(!userData.locationCity){
-        errors.locationCity = "Campo obrigatório";
-        isValid = false;
-    } else {
-        isValid = true;
-    }
     setErrors({...errors});
     }
 
@@ -93,7 +81,7 @@ export const ClientRegistration = ({userId}) => {
         }
         
     }
-
+    console.log(isValid);
     return (
         <div>
             <Header subtitle="Seja bem-vindo à nossa plataforma (:" />
@@ -189,25 +177,6 @@ export const ClientRegistration = ({userId}) => {
                             onChange={(e) => handleChange(e)}
                         />
                         <p className="error-message">{errors.photoURL}</p>
-                        <Input
-                            field="locationDistrict"
-                            pattern="text"
-                            subtitle="Bairro"
-                            inputStyle="input-medium"
-                            inputValue={userData.locationDistrict}
-                            onChange={(e) => handleChange(e)}
-
-                        />
-                        <p className="error-message">{errors.locationDistrict}</p>
-                        <Input
-                            field="locationCity"
-                            pattern="text"
-                            subtitle="Cidade"
-                            inputStyle="input-medium"
-                            inputValue={userData.locationCity}
-                            onChange={(e) => handleChange(e)}
-                        />
-                        <p className="error-message">{errors.locationCity}</p>
                     </section>
                     <section className="form-bottom">
                         <div className="attention-container">
