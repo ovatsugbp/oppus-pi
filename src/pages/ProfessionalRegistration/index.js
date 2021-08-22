@@ -155,7 +155,7 @@ export const ProfessionalRegistration = ({userId}) => {
                                 name="biography"
                                 rows="5"
                                 cols="45"
-                                value={professionalData?.bio}
+                                defaultValue={professionalData?.bio}
                             ></textarea>
                         </div>
                     </section>
