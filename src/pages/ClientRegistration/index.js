@@ -25,7 +25,7 @@ export const ClientRegistration = ({userId}) => {
         .then(data => setUserData(data))
     },[])
 
-    let isValid;
+    let isValid = true
 
     function validateInfo() {
     let errors = {};
