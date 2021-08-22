@@ -152,10 +152,11 @@ export const ProfessionalRegistration = ({userId}) => {
                             </label>
                             <textarea
                                 id="biography"
-                                name="biography"
+                                name="bio"
                                 rows="5"
                                 cols="45"
                                 defaultValue={professionalData?.bio}
+                                onChange={handleChange}
                             ></textarea>
                         </div>
                     </section>
