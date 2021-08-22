@@ -12,6 +12,7 @@ const Schedule = ({scheduleList, setScheduleList, scheduleId, professionalId, we
      state, city, district, isDisable}) => {
     const [day, setDay] = useState(null);
     const [address, SetAddress] = useState()
+    const [errors, setErrors] = useState({})
     const [newSchedule, setNewSchedule] = useState({
         id: scheduleId,
         cep: "",
@@ -24,6 +25,54 @@ const Schedule = ({scheduleList, setScheduleList, scheduleId, professionalId, we
         startHour: 0
     })
 
+    let isValid;
+
+    function validateSchedule(){
+        let errors={};
+        
+        if(!newSchedule.availableDay){
+        errors.availableDay = "Dia obrigatório";
+        isValid = false;
+        }
+        if(!newSchedule.startHour) {
+            errors.startHour = "Horário de início obrigatório";
+            isValid = false;
+        }
+        
+        if(!newSchedule.finishHour) {
+            errors.finishHour = "Horário de fim obrigatório";
+            isValid = false;
+        }
+            
+        if(!newSchedule.cep) {
+            errors.cep = "CEP obrigatório";
+            isValid = false;
+        } else if(!/\d{8}/.test(newSchedule.cep)){
+            errors.cep = "CEP inválido";
+            isValid = false;
+        }
+        
+        if(!newSchedule.uf) {
+            errors.uf = "UF obrigatória";
+            isValid = false;
+        }
+        
+        if(!newSchedule.city) {
+            errors.city = "Cidade obrigatória";
+            isValid = false;
+        }
+        
+        if(!newSchedule.district) {
+            errors.district = "Bairro obrigatório";
+            isValid = false;
+        }
+        else {
+            isValid = true;
+        }
+        setErrors({...errors});
+    }
+
+
     function saveSchedule(newSchedule){        
         isDisable = true
         saveInDataBase(`http://localhost:8080/api/schedule/register/${professionalId}`, newSchedule).then(response => {
@@ -35,6 +84,14 @@ const Schedule = ({scheduleList, setScheduleList, scheduleId, professionalId, we
     function deleteSchedule(scheduleId){
         setScheduleList(scheduleList.filter(schedule => schedule.id !== scheduleId))
         deleteInDataBase(`http://localhost:8080/api/schedule/delete/${scheduleId}`).then(response => console.log(response))
+    }
+
+    const handleSubmit = e => {
+            validateSchedule();
+            e.preventDefault();
+            if(isValid) {
+                saveSchedule(newSchedule);
+            }
     }
         
     async function updateAddress(e){
@@ -57,15 +114,12 @@ const Schedule = ({scheduleList, setScheduleList, scheduleId, professionalId, we
                 data={daysOfTheWeek}  id="id" 
                 label="label" 
                 value={day} 
- 
                 isDisable={isDisable}
-
                 onChange={(val) => {
                                 setDay(val)
-                                setNewSchedule({...newSchedule, nameActivity:val.label})
+                                setNewSchedule({...newSchedule, availableDay:val.label})
                             }}
                 />
-                
                 <Input field="start-hour" 
                 pattern="time" 
                 subtitle="Das" 
@@ -73,7 +127,6 @@ const Schedule = ({scheduleList, setScheduleList, scheduleId, professionalId, we
                 inputValue={startHour} 
                 isDisable={isDisable}
                 onChange={(e)=>setNewSchedule({...newSchedule,startHour:e.target.value})}/>
-                {/* <p className="error-message">{errors.startTime}</p> */}
                 
                 <Input field="finish-hour" 
                 pattern="time" 
@@ -82,8 +135,11 @@ const Schedule = ({scheduleList, setScheduleList, scheduleId, professionalId, we
                 inputValue={finishHour} 
                 isDisable={isDisable}
                 onChange={(e)=>setNewSchedule({...newSchedule,finishHour:e.target.value})}/>
-                {/* <p className="error-message">{errors.finishTime}</p> */}
             </div>
+                <p className="error-message">{errors.availableDay}</p>
+                <p className="error-message">{errors.startHour}</p>
+                <p className="error-message">{errors.finishHour}</p>
+            
             <div className="location-row1">
 
                 <Input field="location-zipCode" 
@@ -91,7 +147,9 @@ const Schedule = ({scheduleList, setScheduleList, scheduleId, professionalId, we
                 subtitle="CEP" 
                 inputStyle="input-medium" 
                 inputValue={zipCodeSchedule}
-                onChange={(e)=> {updateAddress(e)}}
+                onChange={(e)=> {
+                    setNewSchedule({...newSchedule,cep: e.target.value});
+                    updateAddress(e);}}
                 isDisable={isDisable}/>
 
                 <Input field="locationUF" 
@@ -101,12 +159,14 @@ const Schedule = ({scheduleList, setScheduleList, scheduleId, professionalId, we
                 isDisable={isDisable}
                 onChange={(e)=>{setNewSchedule({...newSchedule,uf:e.target.value})}}/>
                 <button className="trash-bin-icon">
-                    <SaveIcon className={`save-schedule-button hidden-${isDisable}`} key={`save-schedule-${scheduleId}`} id={`save-schedule-${scheduleId}`} onClick={()=> saveSchedule(newSchedule)}/>
+                    <SaveIcon className={`save-schedule-button hidden-${isDisable}`} key={`save-schedule-${scheduleId}`} id={`save-schedule-${scheduleId}`} onClick={(e) => handleSubmit(e)}/>
                     <DeleteOutlineOutlinedIcon className="delete-schedule-button" key={`delete-schedule-${scheduleId}`} id={`delete-schedule-${scheduleId}`} onClick={()=> deleteSchedule(scheduleId)} />
                 </button>
             </div>
-            {/* <p className="error-message">{errors.locationCep}</p> */}
-            {/* <p className="error-message">{errors.locationUF}</p> */}
+ 
+                <p className="error-message">{errors.cep}</p>
+                <p className="error-message">{errors.uf}</p>
+
             <div className="location-row2">
 
                 <Input field="location-district" 
@@ -124,8 +184,10 @@ const Schedule = ({scheduleList, setScheduleList, scheduleId, professionalId, we
                 isDisable={isDisable} 
                 onChange={(e)=>{setNewSchedule({...newSchedule,city:e.target.value})}}/>
                 </div>
-                 {/* <p className="error-message">{errors.locationDistrict}</p> */}
-            {/* <p className="error-message">{errors.locationcity}</p> */}
+                
+                    <p className="error-message">{errors.district}</p>
+                    <p className="error-message">{errors.city}</p>
+                
                 <div className="form-mid2"></div>
         </section>
     );
