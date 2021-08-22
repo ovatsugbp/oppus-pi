@@ -8,12 +8,12 @@ import Schedule from '../../components/Schedule';
 import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
 import professionalsList from '../../data/professionalsList.json';
 import setPageTitle from "../../setPageTitle"
-import fetchApi from '../../services/consumeApi'
+import fetchApi, { updateInDataBase } from '../../services/consumeApi'
 import './style.scss';
 
-export const ProfessionalRegistration = () => {
+export const ProfessionalRegistration = ({userId}) => {
     setPageTitle('Dados do Profissional')
-
+    userId = 4
     const [professionalOption, setProfessionalOption] = useState(null);
     const [errors, setErrors] = useState({});
     const [newId, setNewId] = useState(0);
@@ -21,7 +21,7 @@ export const ProfessionalRegistration = () => {
     const [professionalData, setProfessionalData] = useState({})
 
     useEffect(()=>{
-        fetchApi("https://run.mocky.io/v3/0e7b7d71-de3f-4b23-b183-9f20f935605e").then(data => {
+        fetchApi(`http://localhost:8080/api/professionals/me/${userId}`).then(data => {
             let {professionalSchedule} = data.data
             setProfessionalData(data.data)
             setScheduleList(professionalSchedule)
@@ -93,7 +93,7 @@ export const ProfessionalRegistration = () => {
         e.preventDefault();
 
         if(isValid){
-            setProfessionalData(initialprofessionalData);
+            updateInDataBase(`http://localhost:8080/api/professionals/update/me/${userId}`,professionalData).then(data => console.log(data))
         } else if(!isValid) {
             console.log(errors);
         } 
@@ -198,7 +198,8 @@ export const ProfessionalRegistration = () => {
                     {
                         scheduleList?.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
                             <Schedule key={id} id={id} weekDay={availableDay} startHour={startHour} finishHour={finishHour}
-                             zipCodeSchedule={cep} district={district} state={uf} city={city} professionalId={professionalData?.id} handleClick={()=> removeSchedule(id)} onClickSave={()=> saveSchedule(id)} isDisable={!!city}/>
+                             zipCodeSchedule={cep} district={district} state={uf} city={city} professionalId={professionalData?.id} 
+                             handleClick={()=> removeSchedule(id)} onClickSave={()=> saveSchedule(id)} isDisable={!!city}/>
                         )     
                     }
 
