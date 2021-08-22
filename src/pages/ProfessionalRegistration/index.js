@@ -172,7 +172,10 @@ export const ProfessionalRegistration = ({userId}) => {
                             id="id"
                             label="label"
                             value={professionalOption}
-                            onChange={(val) => setProfessionalOption(val)}
+                            onChange={(val) => {
+                                setProfessionalOption(val)
+                                setProfessionalData({...professionalData, nameActivity:val.label})
+                            }}
                         ></SelectInput>
                         <p className="error-message">{errors.ocupationArea}</p>
                         <Input
