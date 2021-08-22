@@ -22,7 +22,7 @@ export const ClientRegistration = ({userId}) => {
     console.log(userData);
     useEffect(()=>{
         fetchApi(`http://localhost:8080/api/user/me/${userId}`)
-        .then(({data}) => setUserData(data))
+        .then(data => setUserData(data))
     },[])
 
     let isValid;
