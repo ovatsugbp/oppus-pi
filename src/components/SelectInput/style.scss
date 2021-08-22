@@ -23,7 +23,7 @@
       transition: all 0.2s;
     }
 
-    .arrow.disable-true{
+    .arrow.disable-true {
       display: none;
     }
 
@@ -46,11 +46,10 @@
       height: 50px;
       width: 250px;
 
-      &.disable-true::placeholder{
+      &.disable-true::placeholder {
         color: #9b9b9b;
       }
     }
-
 
     input::placeholder {
       color: $mediumBlue;
@@ -62,6 +61,7 @@
     }
 
     .options {
+      font-size: 12px;
       display: none;
       color: $mediumBlue;
       background-color: $lightGray;
