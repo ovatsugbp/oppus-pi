@@ -67,14 +67,12 @@ export const SignOut = () => {
 
     const registerUser = async () => {
         validateForm();
+        console.log(isValid)
         const data = {
             email: registrationData.email,
             password: registrationData.password,
             isProfessional: userType.isProfessional,
         };
-        
-        console.log(isValid);
-        console.log(data.isProfessional)
         
         if(isValid && data.isProfessional === true){
             let res = await saveInDataBase(
