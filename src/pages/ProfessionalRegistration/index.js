@@ -57,16 +57,16 @@ export const ProfessionalRegistration = ({userId}) => {
         isValid = false;
     }
 
-    if(!professionalData.phoneNumber){
-        errors.phoneNumber = "Campo obrigatório";
+    if(!professionalData.phone){
+        errors.phone = "Campo obrigatório";
         isValid = false;
-    } else if(!/\d{11,13}/.test(professionalData.phoneNumber)){
-        errors.phoneNumber = "Número de telefone inválido"
+    } else if(!/\d{11,13}/.test(professionalData.phone)){
+        errors.phone = "Número de telefone inválido"
         isValid = false;
     }
 
-     if(professionalData.socialMediaUrl && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.socialMediaUrl)){
-        errors.socialMediaUrl = "URL inválida";
+     if(professionalData.socialMedia && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.socialMedia)){
+        errors.socialMedia = "URL inválida";
         isValid = false;
     }
 
@@ -129,23 +129,23 @@ export const ProfessionalRegistration = ({userId}) => {
                         />
                          <p className="error-message">{errors.photoURL}</p>
                         <Input
-                            field="phoneNumber"
+                            field="phone"
                             pattern="tel"
                             subtitle="Whatsapp  (somente números)"
                             inputStyle="input-medium"
                             inputValue={professionalData?.phone}
                             onChange={handleChange}
                         />
-                         <p className="error-message">{errors.phoneNumber}</p>
+                         <p className="error-message">{errors.phone}</p>
                         <Input
-                            field="socialMediaUrl"
+                            field="socialMedia"
                             pattern="url"
                             subtitle="Rede social  (Instagram, Facebook, Twitter...)"
                             inputStyle="input-medium"
                             inputValue={professionalData?.socialMedia}
                             onChange={handleChange}
                         />
-                        <p className="error-message">{errors.socialMediaUrl}</p>
+                        <p className="error-message">{errors.socialMedia}</p>
                         <div className="textarea-container">
                             <label className="input-label" htmlFor="biography">
                                 Biografia
@@ -179,7 +179,7 @@ export const ProfessionalRegistration = ({userId}) => {
                         ></SelectInput>
                         <p className="error-message">{errors.nameActivity}</p>
                         <Input
-                            field="price"
+                            field="priceActivity"
                             pattern="number"
                             subtitle="Custo da sua hora por serviço (em R$)"
                             inputStyle="input-medium"
