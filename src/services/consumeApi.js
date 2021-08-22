@@ -12,7 +12,7 @@ async function saveInDataBase(url,data, config = {}){
    }
 }
 
-async function deleteInDataBase(url, id, config = {}){
+async function deleteInDataBase(url, config = {}){
    try {
       await axios.delete(url,config)
    } catch (error) {
