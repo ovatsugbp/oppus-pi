@@ -43,6 +43,12 @@ async function fetchData(url,config = {}){
    }
 }
 
-export default fetchData
+const api = axios.create({
+    baseURL: "http://localhost:8080",
+});
 
-export {saveInDataBase, updateInDataBase, deleteInDataBase}
+
+
+export default api;
+
+export {saveInDataBase, updateInDataBase, deleteInDataBase, fetchData}

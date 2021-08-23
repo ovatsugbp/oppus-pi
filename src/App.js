@@ -1,46 +1,20 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import React from "react"
-// Pages
-import { Home } from './pages/Home';
-import { Search } from './pages/Search';
-import { SignOut } from './pages/SignOut';
-import { Login } from './pages/Login';
-import { About } from './pages/About';
-import { ClientRegistration } from './pages/ClientRegistration';
-import { ProfessionalRegistration } from './pages/ProfessionalRegistration';
+import React from "react";
+import { Router } from "react-router-dom";
+import "./App.scss";
 
+import Routes from "./routes";
+import history from "./history";
 
-
-import './App.scss'
+import { AuthProvider } from "./Context/AuthContext";
 
 function App() {
-  return (
-    <Router>
-      <Switch>
-        <Route path="/" exact>
-          <Home/>
-        </Route>
-        <Route path="/pesquisa">
-          <Search/>
-        </Route>
-        <Route path="/registro">
-          <SignOut/>
-        </Route>
-        <Route path="/entrar">
-          <Login/>
-        </Route>
-        <Route path="/usuario">
-          <ClientRegistration/>
-        </Route>
-        <Route path="/profissional">
-          <ProfessionalRegistration/>
-        </Route>
-        <Route path="/como-funciona">
-          <About />
-        </Route>
-      </Switch>
-    </Router>
-  );
+    return (
+        <AuthProvider>
+            <Router history={history}>
+                <Routes />
+            </Router>
+        </AuthProvider>
+    );
 }
 
 export default App;
