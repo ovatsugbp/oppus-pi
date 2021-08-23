@@ -19,11 +19,36 @@ export const Search = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isLoggedIn, setIsLoggedin] = useState(false);
     const [professionalList, setProfessionalData] = useState();
+    const [professionalListFiltred, SetProfessionalListFiltred] = useState([])
+
+    function filterProfessionals(professionalToFilter, cityToFilter = "", hora = "", dia = ""){
+        let newList = [...professionalList]
+        
+        if(professionalToFilter){
+            console.log("val",professionalToFilter)
+            newList = newList.filter(professional => professional.nameActivity === professionalToFilter)
+            
+        }
+        
+        if(cityToFilter){
+            newList = newList.filter(professional => professional.professionalSchedule.filter(schedule => schedule.city === cityToFilter))
+            console.log("newList", newList)
+        }
+        SetProfessionalListFiltred(newList)
+        // if(hora){
+        //     console.log("newProfessionalsFitred não vazio",newProfessionalsFitred)
+        //     SetProfessionalListFiltred(newProfessionalsFitred)
+        // }else{
+        //     SetProfessionalListFiltred(professionalListFiltred)
+        //     console.log("newProfessionalsFitred vazia",newProfessionalsFitred)
+        //     console.log("filteredListOfProfessionals",professionalListFiltred)
+        // }
+    }
 
     useEffect(()=>{
-        fetchApi("https://run.mocky.io/v3/1ff4494d-d033-4c87-b5f0-a41801b2f42d").then(data => {
-        setProfessionalData(data?.all_professional)
-    
+        fetchApi("http://localhost:8080/api/professionals").then(data => {
+        setProfessionalData(data?.content)
+        SetProfessionalListFiltred(data?.content)
     })
     },[])
 
@@ -39,7 +64,10 @@ export const Search = () => {
                         id="id"
                         label="label"
                         value={value}
-                        onChange={(val) => setValue(val)}
+                        onChange={(val) => {
+                            setValue(val)
+                            filterProfessionals(val?.label)
+                        }}
                     />
                     <Input
                         inputStyle="input-small"
@@ -55,7 +83,7 @@ export const Search = () => {
                     ></Input>
                 </section>
                 <section className="search-results">
-                    {professionalList?.map((professionalData) => {
+                    {professionalListFiltred?.map((professionalData) => {
                         return (
                             <Card
                                 name={professionalData?.name}
