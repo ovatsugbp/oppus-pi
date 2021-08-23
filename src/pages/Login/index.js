@@ -18,9 +18,8 @@ import logo from "../../assets/img/OPPUS_small.png";
 export const Login = () => {
     setPageTitle("Entrar");
 
-    const { authenticated } = useContext(Context);
+    const { handleToken, token } = useContext(Context);
     let [isRegistered, setIsRegistered] = useState(false);
-    let [token, setToken] = useState("");
     const [statusRedefinePassword, setStatusRedefinePassword] =
         useState("closed");
     const [isPasswordShowing, setIsPasswordShowing] = useState(false);
@@ -28,11 +27,11 @@ export const Login = () => {
         email: "",
         password: "",
     });
+    const {email, password} = values
+
     const [errors, setErrors] = useState({});
 
-    const handleRegister = async () => {
-        const { email, password } = values;
-
+    const handleRegister = async (email, password) => {
         try {
             await api
                 .post(
@@ -45,18 +44,14 @@ export const Login = () => {
         
     };
 
-    const handleToken = async () => {
-        const { email, password } = values;
-        await api
-            .post("/login", { email, password })
-            .then((data) => setToken(data.data));
-    };
-
+    console.log(token)
+    
     useEffect(() => {
         if(isRegistered){
-            handleToken();
+            
+            handleToken(email, password);
         } else {
-            setToken(null);
+            // setToken(null);
         }
     }, [isRegistered]);
 
@@ -97,13 +92,11 @@ export const Login = () => {
         validateInfo();
 
         if (isValid) {
-            handleRegister();            
+            handleRegister(email, password);            
         } else if (!isValid) {
             console.log(errors);
         }
     };
-
-    console.log('token', token)
 
     return (
         <div className="login-page">
