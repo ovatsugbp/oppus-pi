@@ -10,20 +10,47 @@ import Modal from "../../components/Modal";
 import { Link } from "react-router-dom";
 import image from "../../assets/img/Imagem-Login.png";
 import Button from "../../components/Button";
-import fetchApi from "../../services/consumeApi";
+import {fetchData} from "../../services/consumeApi";
 import "./style.scss";
+import daysOfTheWeek from '../../data/daysOfTheWeek.json';
 
 export const Search = () => {
     setPageTitle("Pesquisar");
     const [value, setValue] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const [isLoggedIn, setIsLoggedin] = useState(false);
-    const [professionalList, setProfessionalData] = useState([]);
+    const [professionalList, setProfessionalData] = useState();
+    const [professionalListFiltred, SetProfessionalListFiltred] = useState([])
+    const [day, setDay] = useState(null);
+
+    function filterProfessionals(professionalToFilter, cityToFilter = "", hora = "", dia = ""){
+        let newList = [...professionalList]
+        
+        if(professionalToFilter){
+            console.log("val",professionalToFilter)
+            newList = newList.filter(professional => professional.nameActivity === professionalToFilter)
+            
+        }
+        
+        if(cityToFilter){
+            newList = newList.filter(professional => professional.professionalSchedule.filter(schedule => schedule.city === cityToFilter))
+            console.log("newList", newList)
+        }
+        SetProfessionalListFiltred(newList)
+        // if(hora){
+        //     console.log("newProfessionalsFitred não vazio",newProfessionalsFitred)
+        //     SetProfessionalListFiltred(newProfessionalsFitred)
+        // }else{
+        //     SetProfessionalListFiltred(professionalListFiltred)
+        //     console.log("newProfessionalsFitred vazia",newProfessionalsFitred)
+        //     console.log("filteredListOfProfessionals",professionalListFiltred)
+        // }
+    }
 
     useEffect(()=>{
-        fetchApi("https://run.mocky.io/v3/1ff4494d-d033-4c87-b5f0-a41801b2f42d").then(data => {
-        setProfessionalData(data?.all_professional)
-    
+        fetchData("http://localhost:8080/api/professionals").then(data => {
+        setProfessionalData(data?.content)
+        SetProfessionalListFiltred(data?.content)
     })
     },[])
 
@@ -39,7 +66,10 @@ export const Search = () => {
                         id="id"
                         label="label"
                         value={value}
-                        onChange={(val) => setValue(val)}
+                        onChange={(val) => {
+                            setValue(val)
+                            filterProfessionals(val?.label)
+                        }}
                     />
                     <Input
                         inputStyle="input-small"
@@ -47,18 +77,23 @@ export const Search = () => {
                         field="where"
                         subtitle="Onde você precisa?"
                     ></Input>
-                    <Input
-                        inputStyle="input-small"
-                        pattern="datetime-local"
-                        field="when"
-                        subtitle="Quando você precisa?"
-                    ></Input>
+
+                    <SelectInput subtitle="Que dia você precisa?" 
+                    field="week-day" 
+                    prompt={"Selecione"} 
+                    data={daysOfTheWeek}  id="id" 
+                    label="label" 
+                    value={day} 
+                    onChange={(val) => {
+                        setDay(val)
+                    }}
+                    />
                 </section>
                 <section className="search-results">
                     {
                         professionalList || professionalList?.length > 0 ? (
                             
-                            professionalList.map((professionalData) => {
+                            professionalListFiltred.map((professionalData) => {
                         return (
                             <Card
                                 name={professionalData?.name}
