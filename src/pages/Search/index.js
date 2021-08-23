@@ -10,7 +10,7 @@ import Modal from "../../components/Modal";
 import { Link } from "react-router-dom";
 import image from "../../assets/img/Imagem-Login.png";
 import Button from "../../components/Button";
-import fetchApi from "../../services/consumeApi";
+import {fetchData} from "../../services/consumeApi";
 import "./style.scss";
 import daysOfTheWeek from '../../data/daysOfTheWeek.json';
 
@@ -48,7 +48,7 @@ export const Search = () => {
     }
 
     useEffect(()=>{
-        fetchApi("http://localhost:8080/api/professionals").then(data => {
+        fetchData("http://localhost:8080/api/professionals").then(data => {
         setProfessionalData(data?.content)
         SetProfessionalListFiltred(data?.content)
     })
@@ -90,7 +90,10 @@ export const Search = () => {
                     />
                 </section>
                 <section className="search-results">
-                    {professionalListFiltred?.map((professionalData) => {
+                    {
+                        professionalList || professionalList?.length > 0 ? (
+                            
+                            professionalListFiltred.map((professionalData) => {
                         return (
                             <Card
                                 name={professionalData?.name}
@@ -107,7 +110,11 @@ export const Search = () => {
                                 isLoggedIn={isLoggedIn}
                             />
                         );
-                    })}
+                    })) : (
+                        <section className="no-content">
+                            <p>Desculpe, não conseguimos encontrar nenhum profissional para os dias e horário selecionados  </p>
+                        </section>
+                    )}
                 </section>
             </section>
             <Footer />

@@ -45,6 +45,18 @@
         margin-bottom: 0;
       }
     }
+    
+    .no-content {
+        height: 200px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        p {
+          text-align: center;
+          color: $mediumBlue
+        }
+      }
 
     .form-mid2 {
       display: flex;
@@ -68,6 +80,8 @@
       .btn-schedule {
         cursor: pointer;
       }
+
+      
     }
 
     .ocupation {
@@ -186,4 +200,17 @@
       font-size: 14px;
     }
   }
+}
+
+.modal-title {
+  padding-top: 30px;
+}
+.modal-message {
+  padding: 10px;
+  text-align: center;
+}
+
+.woman-with-phone {
+  height: 250px;
+  padding-bottom: 10px;
 }
