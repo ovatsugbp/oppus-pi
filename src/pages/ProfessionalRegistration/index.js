@@ -1,13 +1,16 @@
 import React, { useState , useEffect} from 'react';
+import { Link } from "react-router-dom";
 import Button from '../../components/Button';
 import { Footer } from '../../components/Footer';
 import { Header } from '../../components/Header';
 import Input from '../../components/Input/input';
 import SelectInput from '../../components/SelectInput';
 import Schedule from '../../components/Schedule';
+import Modal from '../../components/Modal';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
+import modalImage from "../../assets/img/about-2.png";
 import professionalsList from '../../data/professionalsList.json';
 import setPageTitle from "../../setPageTitle"
 import fetchApi, { updateInDataBase, saveInDataBase, deleteInDataBase } from '../../services/consumeApi'
@@ -17,6 +20,7 @@ export const ProfessionalRegistration = ({professionalId}) => {
     setPageTitle('Dados do Profissional')
 
     professionalId = 4
+    const [isOpen, setIsOpen] = useState(false); 
     const [isInsertPasswordShown, setIsInsertPasswordShown] = useState(false);
     const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
     const [professionalOption, setProfessionalOption] = useState(null);
@@ -114,6 +118,7 @@ export const ProfessionalRegistration = ({professionalId}) => {
         e.preventDefault();
         if(isValid){
             updateInDataBase(`http://localhost:8080/api/professionals/update/${professionalId}`,professionalData).then(data => console.log(data))
+            setIsOpen(true);
         } else {
             console.log(errors);
         } 
@@ -305,6 +310,26 @@ export const ProfessionalRegistration = ({professionalId}) => {
                 </section>
             </section>
             <Footer />
+            {isOpen && isValid && (
+                <Modal
+                    onClick={() => {
+                        setIsOpen(false);
+                    }}
+                >
+                    <h4 className="modal-title">Cadastro realizado com sucesso</h4>
+                    <p className="modal-message">
+                        Seu perfil será disponibilizado em nossas buscas 
+                        e os usuários interessados entrarão em contato por Whatsapp!
+                    </p>
+                     <img className="woman-with-phone"
+                     src={modalImage} 
+                     alt="mulher com um smartphone olhando uma representação de texto"
+                     />
+                    <Link to="">
+                        <Button btnStyle="btn-primary">Página inicial</Button>
+                    </Link>
+                </Modal>
+            )}
         </div>
     );
 }
