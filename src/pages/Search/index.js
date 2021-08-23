@@ -77,12 +77,6 @@ export const Search = () => {
                         field="where"
                         subtitle="Onde você precisa?"
                     ></Input>
-                    <Input
-                        inputStyle="input-small"
-                        pattern="datetime-local"
-                        field="when"
-                        subtitle="Quando você precisa?"
-                    ></Input>
 
                     <SelectInput subtitle="Que dia você precisa?" 
                     field="week-day" 
