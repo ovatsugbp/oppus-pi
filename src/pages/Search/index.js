@@ -18,7 +18,7 @@ export const Search = () => {
     const [value, setValue] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const [isLoggedIn, setIsLoggedin] = useState(false);
-    const [professionalList, setProfessionalData] = useState();
+    const [professionalList, setProfessionalData] = useState([]);
 
     useEffect(()=>{
         fetchApi("https://run.mocky.io/v3/1ff4494d-d033-4c87-b5f0-a41801b2f42d").then(data => {
@@ -55,7 +55,10 @@ export const Search = () => {
                     ></Input>
                 </section>
                 <section className="search-results">
-                    {professionalList?.map((professionalData) => {
+                    {
+                        professionalList || professionalList?.length > 0 ? (
+                            
+                            professionalList.map((professionalData) => {
                         return (
                             <Card
                                 name={professionalData?.name}
@@ -72,7 +75,11 @@ export const Search = () => {
                                 isLoggedIn={isLoggedIn}
                             />
                         );
-                    })}
+                    })) : (
+                        <section className="no-content">
+                            <p>Desculpe, não conseguimos encontrar nenhum profissional para os dias e horário selecionados  </p>
+                        </section>
+                    )}
                 </section>
             </section>
             <Footer />
