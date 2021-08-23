@@ -41,56 +41,129 @@
                 h2 {
                     font-size: .9rem;
                     position: relative;
-                    left: 60px;
+                    left: -48px;
                     top: -20px;
                 }
                 p {
                     font-size: .7rem;
                     position: relative;
-                    left: 60px;
+                    left: -48px;
                     top: 50px;
                 }
                 img {
                     width: 150px;
                     position: relative;
-                    left: 60px;
+                    left: -48px;
                     top: -20px;
                 }
             }
-
+            @media screen and (max-width: 360px){
+                h2 {
+                    font-size: .9rem;
+                    position: relative;
+                    left: -70px;
+                    top: -20px;
+                }
+                p {
+                    font-size: .7rem;
+                    position: relative;
+                    left: -70px;
+                    top: 50px;
+                }
+                img {
+                    width: 150px;
+                    position: relative;
+                    left: -70px;
+                    top: -20px;
+                }
+            }
+            @media screen and (max-width: 280px){
+                h2 {
+                    font-size: .9rem;
+                    position: relative;
+                    left: -110px;
+                    top: -20px;
+                }
+                p {
+                    font-size: .7rem;
+                    position: relative;
+                    left: -110px;
+                    top: 50px;
+                }
+                img {
+                    width: 150px;
+                    position: relative;
+                    left: -110px;
+                    top: -20px;
+                }
+            }
         }
         &.left-container {
             justify-content: space-evenly;
-            @media screen and (max-width: 480px){
-                .btn-secondary{
-                    width: 200px;
-                    position: relative;
-                    left: 60px;
-                    top: 50px;
-                }
-            }
             @media screen and (max-width: 769px){
                 justify-content: space-around;
                 position: relative;
                 left: 150px;
             }
-        }
-        &.right-container {
             @media screen and (max-width: 480px){
-                height: 50%;
-                img{
+                .btn-secondary{
                     width: 200px;
-                    position: absolute;
-                    top: 250px;
-                    left: 60px;
+                    position: relative;
+                    left: -48px;
+                    top: 50px;
                 }
             }
+            @media screen and (max-width: 360px){
+                .btn-secondary{
+                    width: 200px;
+                    position: relative;
+                    left: -70px;
+                    top: 50px;
+                }
+            }
+            @media screen and (max-width: 280px){
+                .btn-secondary{
+                    width: 200px;
+                    position: relative;
+                    left: -110px;
+                    top: 50px;
+                }
+            }
+        }
+        &.right-container {
             @media screen and (max-width: 769px){
                 img{
                     width: 300px;
                     position: absolute;
                     top: 450px;
                     left: 250px;
+                }
+            }
+            @media screen and (max-width: 480px){
+                height: 70%;
+                img{
+                    width: 200px;
+                    position: absolute;
+                    top: 270px;
+                    left: 110px;
+                }
+            }
+            @media screen and (max-width: 360px){
+                height: 50%;
+                img{
+                    width: 200px;
+                    position: absolute;
+                    top: 250px;
+                    left: 90px;
+                }
+            }
+            @media screen and (max-width: 280px){
+                height: 50%;
+                img{
+                    width: 200px;
+                    position: absolute;
+                    top: 250px;
+                    left: 50px;
                 }
             }
         }

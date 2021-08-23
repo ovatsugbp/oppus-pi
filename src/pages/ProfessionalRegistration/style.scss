@@ -173,4 +173,77 @@
       font-size: 14px;
     }
   }
+  @media screen and (max-width: 769px) {
+    height: auto;
+    .form-container {
+      width: 70%;
+      height: 80%;
+      top: -20px;
+      .form-top h2 {
+        font-size: 1.2rem;
+      }
+      .form-content {
+        margin: 5px 70px;
+        .input-label {
+          font-size: 0.9rem;
+        }
+        .error-message {
+          color: red;
+          font-size: 14px;
+        }
+        .period {
+          flex-wrap: wrap;
+        }
+      }
+      .form-bottom {
+        .attention-container {
+          .attention-icon {
+            font-size: 1.6rem;
+          }
+          font-size: 0.9rem;
+        }
+        .btn-delete,
+        .btn-primary {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+
+
+  @media screen and (max-width: 480px) {
+    height: auto;
+    .form-container {
+      width: 85%;
+      .form-top h2 {
+        font-size: 1.2rem;
+      }
+      .form-content {
+        margin: 5px 20px;
+        .input-label {
+          font-size: 0.7rem;
+        }
+        .error-message {
+          color: red;
+          font-size: 14px;
+        }
+        .period {
+          flex-wrap: wrap;
+        }
+      }
+      .form-bottom {
+        .attention-container {
+          .attention-icon {
+            font-size: 1.6rem;
+          }
+          font-size: 0.7rem;
+        }
+        .btn-delete,
+        .btn-primary {
+          font-size: 0.6rem;
+        }
+      }
+    }
+  }
+
 }
