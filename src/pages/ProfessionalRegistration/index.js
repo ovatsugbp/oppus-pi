@@ -195,12 +195,16 @@ export const ProfessionalRegistration = ({professionalId}) => {
                         </div>
                     </div>
 
-                    {
-                        scheduleList?.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
+                    {   scheduleList.length > 0 ? (
+                        scheduleList.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
                             <Schedule key={id} scheduleId={id} scheduleList={scheduleList} setScheduleList={setScheduleList} weekDay={availableDay} startHour={startHour} finishHour={finishHour}
                              zipCodeSchedule={cep} district={district} state={uf} city={city} professionalId={professionalData?.id} 
-                             onClickSave={()=> saveSchedule(id)} isDisable={!!city}/>
-                        )     
+                             onClickSave={()=> saveSchedule(id)} isDisable={!!city}/>)
+                        ) : (
+                            <section className="no-content">
+                                <p> Nenhum horário cadastrado até o momento</p> 
+                            </section>
+                        )
                     }
 
                     <section className="form-bottom">
