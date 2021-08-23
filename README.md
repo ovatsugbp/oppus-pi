@@ -25,12 +25,13 @@ Projeto de frontend, desenvolvido durante o curso, de uma plataforma que conecta
 ## ⛏️ Tecnologias Usadas <a name = "tecnologias-usadas"></a>
 
 - [React](https://pt-br.reactjs.org/) - Estrutura
-- [SCSS](https://sass-lang.com/) - Design
+- [Sass](https://sass-lang.com/) - Design
 
 ## ✍️ Desenvolvedores <a name = "desenvolvedores"></a>
 
 - [![LinkedIn](https://icons.iconarchive.com/icons/papirus-team/papirus-apps/16/github-icon.png "GitHub")](https://github.com/CaioSilvaOliveira) Caio Oliveira
 - [![LinkedIn](https://icons.iconarchive.com/icons/papirus-team/papirus-apps/16/github-icon.png "GitHub")](https://github.com/GeovanaEspanhol) Geovana Espanhol
-- [![LinkedIn](https://icons.iconarchive.com/icons/papirus-team/papirus-apps/16/github-icon.png "GitHub")](https://github.com/) Graciela Soares de Oliveira dos Santos
+- [![LinkedIn](https://icons.iconarchive.com/icons/papirus-team/papirus-apps/16/github-icon.png "GitHub")](https://github.com/grasoares) Graciela Soares de Oliveira dos Santos
 - [![LinkedIn](https://icons.iconarchive.com/icons/papirus-team/papirus-apps/16/github-icon.png "GitHub")](https://github.com/ovatsugbp) Gustavo Goulart
-- [![LinkedIn](https://icons.iconarchive.com/icons/papirus-team/papirus-apps/16/github-icon.png "GitHub")](https://github.com/1001Josias) Josias da Paixão Junior
+- [![LinkedIn](https://icons.iconarchive.com/icons/papirus-team/papirus-apps/16/github-icon.png "GitHub")](https://github.com/1001Josias) Josias da Paixão Junior
+
