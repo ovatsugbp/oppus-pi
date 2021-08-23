@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
-  <img width=300px height=200px src="./src/assets/img/logo-CP.png" alt="Logo do curso"></a>
+  <img width=450px height=400px src="./src/assets/img/logo-CP.png" alt="Logo do curso"></a>
 </p>
 
 <h3 align="center">Projeto Integrador: Oppus - Frontend</h3>
