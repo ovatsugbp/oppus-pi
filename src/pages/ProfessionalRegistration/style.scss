@@ -45,6 +45,18 @@
         margin-bottom: 0;
       }
     }
+    
+    .no-content {
+        height: 200px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        p {
+          text-align: center;
+          color: $mediumBlue
+        }
+      }
 
     .form-mid2 {
       display: flex;
@@ -68,6 +80,8 @@
       .btn-schedule {
         cursor: pointer;
       }
+
+      
     }
 
     .ocupation {
