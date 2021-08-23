@@ -10,8 +10,6 @@ import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
 import setPageTitle from "../../setPageTitle";
 import {saveInDataBase} from "../../services/consumeApi"
 
-import api from "../../services/consumeApi"
-
 import './style.scss';
 import { Link } from 'react-router-dom';
 

@@ -1,58 +1,82 @@
 import React, { useState , useEffect} from 'react';
+import { Link } from "react-router-dom";
 import Button from '../../components/Button';
 import { Footer } from '../../components/Footer';
 import { Header } from '../../components/Header';
 import Input from '../../components/Input/input';
 import SelectInput from '../../components/SelectInput';
 import Schedule from '../../components/Schedule';
+import Modal from '../../components/Modal';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
+import modalImage from "../../assets/img/about-2.png";
 import professionalsList from '../../data/professionalsList.json';
 import setPageTitle from "../../setPageTitle"
-import fetchApi, { updateInDataBase } from '../../services/consumeApi'
+import fetchApi, { updateInDataBase, saveInDataBase, deleteInDataBase } from '../../services/consumeApi'
 import './style.scss';
 
-export const ProfessionalRegistration = ({userId}) => {
+export const ProfessionalRegistration = ({professionalId}) => {
     setPageTitle('Dados do Profissional')
-    userId = 4
+
+    professionalId = 4
+    const [isOpen, setIsOpen] = useState(false); 
+    const [isInsertPasswordShown, setIsInsertPasswordShown] = useState(false);
+    const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
     const [professionalOption, setProfessionalOption] = useState(null);
-    const [errors, setErrors] = useState({});
-    const [newId, setNewId] = useState(0);
-    const [scheduleList, setScheduleList] = useState([{id:0}])
+    const [scheduleList, setScheduleList] = useState([{id:1}])
     const [professionalData, setProfessionalData] = useState({})
+    const [errors, setErrors] = useState({});
 
     useEffect(()=>{
-        fetchApi(`http://localhost:8080/api/professionals/me/${userId}`).then(data => {
-            let {professionalSchedule} = data.data
-            setProfessionalData(data.data)
+        fetchApi(`http://localhost:8080/api/professionals/me/${professionalId}`).then(data => {
+            let {professionalSchedule} = data
+            setProfessionalData(data)
             setScheduleList(professionalSchedule)
-            setNewId(professionalSchedule[professionalSchedule?.length - 1]?.id + 1 )
         })
     },[])
 
     function addSchedule() {
-        setScheduleList([...scheduleList,{id:newId}])
-        setNewId(newId + 1)
+        saveInDataBase(`http://localhost:8080/api/schedule/register/${professionalId}`, {}).then(response => {
+            setScheduleList([...scheduleList,response])
+        })
     }
 
-    function removeSchedule(id) {
-        let newList = scheduleList.filter(value => value.id !== id )
-        setScheduleList([...newList])
-    }    
+    function deleteProfessionalAccount(professionalId){
+        deleteInDataBase(`http://localhost:8080/api/professionals/me/${professionalId}`).then(response => console.log(response))
+    }
 
     let isValid = true;
 
     function validateInfo() {
-    let errors = {};
-
+    let errors={};
     if(!professionalData.name){
         errors.name = "Campo obrigatório";
         isValid = false;
     }
 
-     if(!professionalData.photoURL){
-        errors.photoURL = "Campo obrigatório";
+    if(!professionalData.email){
+        errors.email = "Campo obrigatório";
         isValid = false;
-    } else if(professionalData.photoURL && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.photoURL)){
+    } else if(!/^[a-zA-Z0-9.!_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(professionalData.email)){
+        errors.email = "E-mail inválido";
+        isValid = false;
+    }
+
+    if(!professionalData.password){
+        errors.password = "Campo obrigatório";
+        isValid = false;
+    }
+
+    if(!professionalData.confirmPassword){
+        errors.confirmPassword = "Campo obrigatório";
+        isValid = false;
+    } else if(!(professionalData.confirmPassword === professionalData.password)) {
+        errors.confirmPassword = "A senha deve ser a mesma do campo anterior";
+        isValid = false;
+    }
+
+    if(professionalData.photoURL && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.photoURL)){
         errors.photoURL = "URL inválida";
         isValid = false;
     }
@@ -65,7 +89,7 @@ export const ProfessionalRegistration = ({userId}) => {
         isValid = false;
     }
 
-     if(professionalData.socialMedia && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.socialMedia)){
+    if(professionalData.socialMedia && !/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(professionalData.socialMedia)){
         errors.socialMedia = "URL inválida";
         isValid = false;
     }
@@ -79,6 +103,7 @@ export const ProfessionalRegistration = ({userId}) => {
         errors.price = "Formato de preço inválido";
         isValid = false;
     }
+    
     setErrors({...errors});
     }
 
@@ -91,15 +116,13 @@ export const ProfessionalRegistration = ({userId}) => {
     const handleSubmit = e => {
         validateInfo();
         e.preventDefault();
-
         if(isValid){
-            updateInDataBase(`http://localhost:8080/api/professionals/update/${userId}`,professionalData).then(data => console.log(data))
+            updateInDataBase(`http://localhost:8080/api/professionals/update/${professionalId}`,professionalData).then(data => console.log(data))
+            setIsOpen(true);
         } else {
             console.log(errors);
         } 
     }
-
-
 
     return (
         <div>
@@ -120,12 +143,79 @@ export const ProfessionalRegistration = ({userId}) => {
                         />
                         <p className="error-message">{errors.name}</p>
                         <Input
+                            field="email"
+                            pattern="text"
+                            subtitle="E-mail"
+                            inputStyle="input-medium"
+                            inputValue={professionalData?.email}
+                            onChange={(e) => handleChange(e)}
+                        />
+                        <p className="error-message">{errors.email}</p>
+                         <div className="form-insert-password">
+                            <Input
+                                field="password"
+                                pattern={
+                                    isInsertPasswordShown ? "text" : "password"
+                                }
+                                subtitle="Senha"
+                                inputStyle="input-medium"
+                                inputValue={professionalData?.password}
+                                onChange={(e) => handleChange(e)}
+                            />
+                           
+                            {!isInsertPasswordShown ? (
+                                <VisibilityOffIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsInsertPasswordShown(true)
+                                    }
+                                />
+                            ) : (
+                                <VisibilityIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsInsertPasswordShown(false)
+                                    }
+                                />
+                            )}
+                        </div>
+                         <p className="error-message">{errors.password}</p>
+                        <div className="form-confirm-password">
+                            <Input
+                                field="confirmPassword"
+                                pattern={
+                                    isConfirmPasswordShown ? "text" : "password"
+                                }
+                                subtitle="Confirme sua senha"
+                                inputStyle="input-medium"
+                                inputValue={professionalData?.confirmPassword}
+                                onChange={(e) => handleChange(e)}
+                            />
+                            
+                            {!isConfirmPasswordShown ? (
+                                <VisibilityOffIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsConfirmPasswordShown(true)
+                                    }
+                                />
+                            ) : (
+                                <VisibilityIcon
+                                    className="password-icon"
+                                    onClick={() =>
+                                        setIsConfirmPasswordShown(false)
+                                    }
+                                />
+                            )}
+                        </div>
+                        <p className="error-message">{errors.confirmPassword}</p>
+                        <Input
                             field="photoURL"
                             pattern="url"
                             subtitle="Link da sua foto  (comece com //http)"
                             inputStyle="input-medium"
                             inputValue={professionalData?.photoURL}
-                            onChange={handleChange}
+                            onChange={(e) => handleChange(e)}
                         />
                          <p className="error-message">{errors.photoURL}</p>
                         <Input
@@ -134,7 +224,7 @@ export const ProfessionalRegistration = ({userId}) => {
                             subtitle="Whatsapp  (somente números)"
                             inputStyle="input-medium"
                             inputValue={professionalData?.phone}
-                            onChange={handleChange}
+                            onChange={(e) => handleChange(e)}
                         />
                          <p className="error-message">{errors.phone}</p>
                         <Input
@@ -143,7 +233,7 @@ export const ProfessionalRegistration = ({userId}) => {
                             subtitle="Rede social  (Instagram, Facebook, Twitter...)"
                             inputStyle="input-medium"
                             inputValue={professionalData?.socialMedia}
-                            onChange={handleChange}
+                            onChange={(e) => handleChange(e)}
                         />
                         <p className="error-message">{errors.socialMedia}</p>
                         <div className="textarea-container">
@@ -156,7 +246,7 @@ export const ProfessionalRegistration = ({userId}) => {
                                 rows="5"
                                 cols="45"
                                 defaultValue={professionalData?.bio}
-                                onChange={handleChange}
+                                onChange={(e) => handleChange(e)}
                             ></textarea>
                         </div>
                     </section>
@@ -184,7 +274,7 @@ export const ProfessionalRegistration = ({userId}) => {
                             subtitle="Custo da sua hora por serviço (em R$)"
                             inputStyle="input-medium"
                             inputValue={professionalData?.priceActivity}
-                            onChange={handleChange}
+                            onChange={(e) => handleChange(e)}
                         />
                         <p className="error-message">{errors.priceActivity}</p>
                     </section>
@@ -199,12 +289,16 @@ export const ProfessionalRegistration = ({userId}) => {
                         </div>
                     </div>
 
-                    {
-                        scheduleList?.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
-                            <Schedule key={id} id={id} weekDay={availableDay} startHour={startHour} finishHour={finishHour}
+                    {   scheduleList.length > 0 ? (
+                        scheduleList.map(({id, cep, availableDay, uf, city, startHour, finishHour, district}) => 
+                            <Schedule key={id} scheduleId={id} scheduleList={scheduleList} setScheduleList={setScheduleList} weekDay={availableDay} startHour={startHour} finishHour={finishHour}
                              zipCodeSchedule={cep} district={district} state={uf} city={city} professionalId={professionalData?.id} 
-                             handleClick={()=> removeSchedule(id)} onClickSave={()=> saveSchedule(id)} isDisable={!!city}/>
-                        )     
+                             onClickSave={()=> saveSchedule(id)} isDisable={!!city}/>)
+                        ) : (
+                            <section className="no-content">
+                                <p> Nenhum horário cadastrado até o momento</p> 
+                            </section>
+                        )
                     }
 
                     <section className="form-bottom">
@@ -214,12 +308,32 @@ export const ProfessionalRegistration = ({userId}) => {
                                 Importante!<br></br>Preencha todos os dados
                             </p>
                         </div>
-                        <Button btnStyle="btn-delete">Excluir Cadastro</Button>
-                        <Button btnStyle="btn-primary" onClick={handleSubmit}>Salvar cadastro</Button>
+                        <Button btnStyle="btn-delete" onClick={()=> deleteProfessionalAccount(professionalId)}>Excluir Cadastro</Button>
+                        <Button btnStyle="btn-primary" onClick={(e) => handleSubmit(e)}>Salvar cadastro</Button>
                     </section>
                 </section>
             </section>
             <Footer />
+            {isOpen && isValid && (
+                <Modal
+                    onClick={() => {
+                        setIsOpen(false);
+                    }}
+                >
+                    <h4 className="modal-title">Cadastro realizado com sucesso</h4>
+                    <p className="modal-message">
+                        Seu perfil será disponibilizado em nossas buscas 
+                        e os usuários interessados entrarão em contato por Whatsapp!
+                    </p>
+                     <img className="woman-with-phone"
+                     src={modalImage} 
+                     alt="mulher com um smartphone olhando uma representação de texto"
+                     />
+                    <Link to="">
+                        <Button btnStyle="btn-primary">Página inicial</Button>
+                    </Link>
+                </Modal>
+            )}
         </div>
     );
 }

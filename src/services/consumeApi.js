@@ -12,6 +12,15 @@ async function saveInDataBase(url,data, config = {}){
    }
 }
 
+async function deleteInDataBase(url, config = {}){
+   try {
+      await axios.delete(url,config)
+   } catch (error) {
+      console.error(error)
+      return error
+   }
+}
+
 async function updateInDataBase(url,data, config = {}){
    try {
       let response = await axios.put(url,data, config);
@@ -35,11 +44,11 @@ async function fetchData(url,config = {}){
 }
 
 const api = axios.create({
-    baseURL: "http://localhost:8080/api/",
+    baseURL: "http://localhost:8080",
 });
+
+
 
 export default api;
 
-export {fetchData}
-
-export {saveInDataBase, updateInDataBase}
+export {saveInDataBase, updateInDataBase, deleteInDataBase, fetchData}
