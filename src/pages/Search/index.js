@@ -12,6 +12,7 @@ import image from "../../assets/img/Imagem-Login.png";
 import Button from "../../components/Button";
 import fetchApi from "../../services/consumeApi";
 import "./style.scss";
+import daysOfTheWeek from '../../data/daysOfTheWeek.json';
 
 export const Search = () => {
     setPageTitle("Pesquisar");
@@ -20,6 +21,7 @@ export const Search = () => {
     const [isLoggedIn, setIsLoggedin] = useState(false);
     const [professionalList, setProfessionalData] = useState();
     const [professionalListFiltred, SetProfessionalListFiltred] = useState([])
+    const [day, setDay] = useState(null);
 
     function filterProfessionals(professionalToFilter, cityToFilter = "", hora = "", dia = ""){
         let newList = [...professionalList]
@@ -81,6 +83,17 @@ export const Search = () => {
                         field="when"
                         subtitle="Quando você precisa?"
                     ></Input>
+
+                    <SelectInput subtitle="Que dia você precisa?" 
+                    field="week-day" 
+                    prompt={"Selecione"} 
+                    data={daysOfTheWeek}  id="id" 
+                    label="label" 
+                    value={day} 
+                    onChange={(val) => {
+                        setDay(val)
+                    }}
+                    />
                 </section>
                 <section className="search-results">
                     {professionalListFiltred?.map((professionalData) => {
