@@ -12,11 +12,10 @@
   Grupo 5
 </p>
 
-📝 Sumário
+## 📝 Sumário
 
 - [Sobre](#sobre)
 - [Tecnologias Usadas](#tecnologias-usadas)
-- [Contribuindo](./CONTRIBUTING.md)
 - [Desenvolvedores](#desenvolvedores)
 
 ## 🧐 Sobre <a name = "sobre"></a>
