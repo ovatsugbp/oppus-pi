@@ -76,14 +76,9 @@ export const ClientRegistration = ({userId}) => {
     const handleSubmit = e => {
         validateInfo();
         e.preventDefault();
-
         if(isValid){
-            console.log("submitted");
             updateInDataBase(`http://localhost:8080/api/user/update/${userId}`,userData).then(response => console.log(response))
-        } else if(!isValid) {
-            console.log(errors);
         }
-        
     }
 
     return (
