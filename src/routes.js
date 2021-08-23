@@ -1,5 +1,5 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useContext } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import { Home } from "./pages/Home";
 import { Search } from "./pages/Search";
@@ -8,31 +8,48 @@ import { Login } from "./pages/Login";
 import { About } from "./pages/About";
 import { ClientRegistration } from "./pages/ClientRegistration";
 import { ProfessionalRegistration } from "./pages/ProfessionalRegistration";
+import { Context } from "./Context/AuthContext";
+
+
+function CustomRoutes({isPrivate, ...rest}){
+    const {token, loading} = useContext(Context)
+
+    if(loading){
+        console.log("loading...")
+        return <h1>loading...</h1>
+    }
+
+    if(isPrivate && !token){
+        return <Redirect to="/entrar"></Redirect>
+    } 
+
+    return <Route {...rest}/>
+}
 
 export default function Routes() {
     return (
         <Switch>
-            <Route path="/" exact>
+            <CustomRoutes path="/" exact>
                 <Home />
-            </Route>
-            <Route path="/pesquisa">
+            </CustomRoutes>
+            <CustomRoutes path="/pesquisa">
                 <Search />
-            </Route>
-            <Route path="/registro">
+            </CustomRoutes>
+            <CustomRoutes path="/registro">
                 <SignOut />
-            </Route>
-            <Route path="/entrar">
+            </CustomRoutes>
+            <CustomRoutes path="/entrar">
                 <Login />
-            </Route>
-            <Route path="/usuario">
+            </CustomRoutes>
+            <CustomRoutes isPrivate path="/usuario">
                 <ClientRegistration />
-            </Route>
-            <Route path="/profissional">
+            </CustomRoutes>
+            <CustomRoutes isPrivate path="/profissional">
                 <ProfessionalRegistration />
-            </Route>
-            <Route path="/como-funciona">
+            </CustomRoutes>
+            <CustomRoutes path="/como-funciona">
                 <About />
-            </Route>
+            </CustomRoutes>
         </Switch>
     );
 }
